@@ -37,7 +37,7 @@ const anthropicProvider = {
  * google-generate-content endpoint and no GEMINI_AGGREGATOR_BASE_URLS entry. */
 const cherryinProvider = {
   id: 'cherryin',
-  name: 'WindIN',
+  name: 'CherryIN',
   defaultChatEndpoint: 'openai-chat-completions',
   endpointConfigs: {
     'anthropic-messages': { baseUrl: 'https://open.cherryin.net' },
@@ -102,13 +102,15 @@ describe('writeCliConfigDraft', () => {
         }
       }
     })
-    // The disk write is main-process now (`code_cli.write_config` carries
-    // `{ target, content }`, never a path). Translate each target back to the
+    // The disk mutation is main-process now (`code_cli.write_config` carries
+    // a target, never a path). Translate each write target back to the
     // same `/resolved~/…` path so the content fixtures stay unchanged.
     mocks.request.mockImplementation(async (_route: string, input: { files: CliConfigWriteFile[] }) => {
       for (const file of input.files) {
-        written = { path: `/resolved${CLI_CONFIG_FILE_SPECS[file.target].path}`, content: file.content }
-        writes.push(written)
+        if ('delete' in file) throw new Error('writeCliConfigDraft must not delete config files')
+        const nextWrite = { path: `/resolved${CLI_CONFIG_FILE_SPECS[file.target].path}`, content: file.content }
+        written = nextWrite
+        writes.push(nextWrite)
       }
       return { success: true }
     })
@@ -154,7 +156,7 @@ describe('writeCliConfigDraft', () => {
       })
     })
 
-    it('normalizes a versioned WindIN endpoint before writing Claude Code config', async () => {
+    it('normalizes a versioned CherryIN endpoint before writing Claude Code config', async () => {
       const versionedCherryinProvider = {
         ...cherryinProvider,
         endpointConfigs: {
@@ -457,8 +459,9 @@ describe('writeCliConfigDraft', () => {
       expect(writes).toEqual([])
     })
 
-    it('merges OPENAI_API_KEY into auth.json, preserving unrelated OAuth keys', async () => {
+    it('switches auth.json from ChatGPT OAuth to API-key mode while preserving the official login', async () => {
       existing['/resolved~/.codex/auth.json'] = JSON.stringify({
+        auth_mode: 'chatgpt',
         tokens: { id_token: 'oauth-jwt', access_token: 'oauth-access' }
       })
       mockGet({
@@ -473,6 +476,7 @@ describe('writeCliConfigDraft', () => {
       })
 
       const authParsed = JSON.parse(findWrite('auth.json')!.content)
+      expect(authParsed.auth_mode).toBe('apikey')
       expect(authParsed.tokens).toEqual({ id_token: 'oauth-jwt', access_token: 'oauth-access' })
       expect(authParsed.OPENAI_API_KEY).toBe('sk-secret')
     })
@@ -672,7 +676,7 @@ describe('writeCliConfigDraft', () => {
       const providerWithRequestOptions = {
         ...openaiCompatProvider,
         settings: {
-          extraHeaders: { 'HTTP-Referer': 'https://windbot.cn', 'X-Title': 'Wind Studio' }
+          extraHeaders: { 'HTTP-Referer': 'https://cherry-ai.com', 'X-Title': 'Cherry Studio' }
         }
       } as Provider
       mockGet({
@@ -688,8 +692,8 @@ describe('writeCliConfigDraft', () => {
 
       const options = JSON.parse(opencodeWrite().content).provider['cherry-DeepSeek'].options
       expect(options.headers).toEqual({
-        'HTTP-Referer': 'https://windbot.cn',
-        'X-Title': 'Wind Studio'
+        'HTTP-Referer': 'https://cherry-ai.com',
+        'X-Title': 'Cherry Studio'
       })
     })
 
@@ -832,6 +836,24 @@ describe('writeCliConfigDraft', () => {
       const parsed = JSON.parse(opencodeWrite().content)
       expect(parsed.permission).toBe('ask')
     })
+
+    it('writes automatic compaction to the OpenCode config file', async () => {
+      mockGet({
+        '/providers/deepseek': () => openaiCompatProvider,
+        '/providers/deepseek/api-keys': () => ({ keys: [enabledKey] }),
+        '/models/': () => null
+      })
+
+      await writeCliConfigDraft({
+        cliTool: CodeCli.OPEN_CODE,
+        modelId: 'deepseek::deepseek-chat',
+        configBlob: { autoCompact: true }
+      })
+
+      const parsed = JSON.parse(opencodeWrite().content)
+      expect(parsed.compaction.auto).toBe(true)
+      expect(parsed).not.toHaveProperty('autoCompact')
+    })
   })
 
   describe('gemini-cli (~/.gemini/.env + settings.json)', () => {
@@ -870,7 +892,7 @@ describe('writeCliConfigDraft', () => {
       expect(settings.advanced).toBeUndefined()
     })
 
-    it('resolves a WindIN-style aggregator base URL from its default chat endpoint', async () => {
+    it('resolves a CherryIN-style aggregator base URL from its default chat endpoint', async () => {
       mockGet({
         '/providers/cherryin': () => cherryinProvider,
         '/providers/cherryin/api-keys': () => ({ keys: [enabledKey] }),
@@ -1198,7 +1220,38 @@ describe('writeCliConfigDraft', () => {
       expect(dataApiService.get).not.toHaveBeenCalledWith('/providers/deepseek')
     })
 
-    it('rejects the WindAI managed default model and writes nothing', async () => {
+    it('writes Pi models/settings with the gateway endpoint, key, and gateway-addressed model', async () => {
+      mockGet({
+        '/models/': () => ({
+          id: 'deepseek::deepseek-chat',
+          apiModelId: 'deepseek-chat',
+          name: 'DeepSeek Chat',
+          endpointTypes: ['openai-chat-completions']
+        })
+      })
+
+      await writeCliConfigDraft({
+        cliTool: CodeCli.PI,
+        modelId: 'deepseek::deepseek-chat',
+        gateway
+      })
+
+      const models = JSON.parse(writes.find((w) => w.path.endsWith('models.json'))!.content)
+      expect(models.providers['cherry-gateway']).toMatchObject({
+        baseUrl: `${GATEWAY_BASE_URL}/v1`,
+        api: 'openai-completions',
+        apiKey: 'cs-sk-gateway',
+        models: [{ id: 'deepseek:deepseek-chat', name: 'DeepSeek Chat' }]
+      })
+      const settings = JSON.parse(writes.find((w) => w.path.endsWith('settings.json'))!.content)
+      expect(settings).toMatchObject({
+        defaultProvider: 'cherry-gateway',
+        defaultModel: 'deepseek:deepseek-chat'
+      })
+      expect(dataApiService.get).not.toHaveBeenCalledWith('/providers/deepseek')
+    })
+
+    it('rejects the CherryAI managed default model and writes nothing', async () => {
       mockGet({ '/models/': () => ({ id: 'qwen' }) })
 
       await expect(

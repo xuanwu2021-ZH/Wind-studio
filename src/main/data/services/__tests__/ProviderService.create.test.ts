@@ -3,12 +3,13 @@ import '@data/services/ProviderRegistryService'
 
 import { userProviderTable } from '@data/db/schemas/userProvider'
 import { providerService } from '@data/services/ProviderService'
+import { ErrorCode } from '@shared/data/api/errors'
 import { ENDPOINT_TYPE } from '@shared/data/types/model'
 import { setupTestDatabase } from '@test-helpers/db'
 import { eq } from 'drizzle-orm'
 import { describe, expect, it, vi } from 'vitest'
 
-// Stub the registry loader so the preset lookup returns a minimal WindIN row
+// Stub the registry loader so the preset lookup returns a minimal CherryIN row
 // (its gemini / OpenAI endpoints tagged `cherryin`) without reading the
 // shipped providers.json, whose path is mocked away in the test harness.
 vi.mock('@cherrystudio/provider-registry/node', () => {
@@ -45,8 +46,21 @@ vi.mock('@cherrystudio/provider-registry/node', () => {
 describe('ProviderService.create — endpoint config overrides', () => {
   const dbh = setupTestDatabase()
 
-  it('resolves adapterFamily from the preset for a preset-derived instance (custom WindIN host)', async () => {
-    // Mirrors the "add WindIN instance" flow: user-entered baseUrls only, no
+  it.each([
+    { providerId: 'github', presetProviderId: undefined },
+    { providerId: 'github-copy', presetProviderId: 'github' }
+  ])('rejects creation of a retired provider identity ($providerId)', ({ providerId, presetProviderId }) => {
+    expect(() =>
+      providerService.create({
+        providerId,
+        presetProviderId,
+        name: 'Retired GitHub Models'
+      })
+    ).toThrowError(expect.objectContaining({ code: ErrorCode.INVALID_OPERATION }))
+  })
+
+  it('resolves adapterFamily from the preset for a preset-derived instance (custom CherryIN host)', async () => {
+    // Mirrors the "add CherryIN instance" flow: user-entered baseUrls only, no
     // adapterFamily. Without read-time resolution the gemini endpoint resolves
     // to openai-compatible and image generation POSTs to /v1/images/generations.
     const created = providerService.create({
