@@ -54,7 +54,7 @@ describe('Link', () => {
     expect(screen.getByText('Go to section')).toBeInTheDocument()
   })
 
-  it('renders a Cherry Studio route link as an in-app navigation entry', async () => {
+  it('renders a Wind Studio route link as an in-app navigation entry', async () => {
     const user = userEvent.setup()
     render(<Link href="/app/paintings?source=assistant">打开画图功能</Link>)
 

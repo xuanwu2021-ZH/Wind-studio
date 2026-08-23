@@ -25,7 +25,7 @@ describe('formatGatewayModelId', () => {
     expect(() => formatGatewayModelId('corp:west', 'model')).toThrow(/cannot be addressed/)
   })
 
-  it('rejects the CherryAI managed default model (mirrors the gateway guard)', () => {
-    expect(() => formatGatewayModelId(CHERRYAI_PROVIDER_ID, CHERRYAI_DEFAULT_MODEL_ID)).toThrow(/CherryAI/)
+  it('rejects the WindAI managed default model (mirrors the gateway guard)', () => {
+    expect(() => formatGatewayModelId(CHERRYAI_PROVIDER_ID, CHERRYAI_DEFAULT_MODEL_ID)).toThrow(/WindAI/)
   })
 })

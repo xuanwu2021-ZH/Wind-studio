@@ -154,7 +154,7 @@ describe('TopicNamingService', () => {
     })
   })
 
-  it('falls back to the managed CherryAI default when topic naming model preference is empty', async () => {
+  it('falls back to the managed WindAI default when topic naming model preference is empty', async () => {
     MockMainPreferenceServiceUtils.setPreferenceValue('topic.naming.model_id', null)
 
     await createService().maybeRenameFromConversationSummary('topic-1', undefined, 'message-1', {
@@ -170,7 +170,7 @@ describe('TopicNamingService', () => {
     )
   })
 
-  it('falls back to the managed CherryAI default when topic naming model preference is invalid', async () => {
+  it('falls back to the managed WindAI default when topic naming model preference is invalid', async () => {
     MockMainPreferenceServiceUtils.setPreferenceValue('topic.naming.model_id', 'bad-value')
 
     await createService().maybeRenameFromConversationSummary('topic-1', undefined, 'message-1', {
@@ -189,7 +189,7 @@ describe('TopicNamingService', () => {
     )
   })
 
-  it('falls back to the managed CherryAI default when topic naming model no longer exists', async () => {
+  it('falls back to the managed WindAI default when topic naming model no longer exists', async () => {
     MockMainPreferenceServiceUtils.setPreferenceValue('topic.naming.model_id', 'ghost::missing')
     mocks.getModelByKey.mockImplementation(() => {
       throw new Error('missing model')

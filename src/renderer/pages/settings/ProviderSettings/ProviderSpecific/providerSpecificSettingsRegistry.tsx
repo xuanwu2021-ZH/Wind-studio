@@ -46,7 +46,7 @@ export const PROVIDER_SPECIFIC_SETTINGS_REGISTRY: Record<ProviderSpecificPlaceme
     },
     {
       key: 'cherryin-oauth',
-      when: ({ meta }) => meta.isCherryIN,
+      when: ({ meta }) => meta.isWindIN,
       render: (providerId) => <CherryInOauth providerId={providerId} />
     },
     {

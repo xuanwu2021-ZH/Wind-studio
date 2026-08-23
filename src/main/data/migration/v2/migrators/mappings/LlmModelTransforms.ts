@@ -26,7 +26,7 @@ function resolveChatModelPreference(preferenceKey: string, value: unknown): stri
   }
 
   if (value != null) {
-    logger.warn('Legacy model preference could not be parsed; falling back to managed CherryAI default model', {
+    logger.warn('Legacy model preference could not be parsed; falling back to managed WindAI default model', {
       preferenceKey,
       ...describeLegacyModelRef(value)
     })

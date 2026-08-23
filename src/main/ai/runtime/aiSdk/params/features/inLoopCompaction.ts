@@ -138,7 +138,7 @@ export const inLoopCompactionFeature: RequestFeature = {
     if (!compressor) return {}
     const model = compressor.languageModel
     // A budget against a known window is the whole point of compaction, but
-    // `contextWindow` is optional on `Model` (custom / v1-imported / CherryAI
+    // `contextWindow` is optional on `Model` (custom / v1-imported / WindAI
     // rows can omit it). Casting it made `trigger`/`keepBudget` `NaN`, and
     // `estimate <= NaN` is false, so the hook fired on EVERY step. With no
     // window, contribute no hook at all.

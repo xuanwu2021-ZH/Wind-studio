@@ -107,7 +107,7 @@ describe('ErrorDiagnosisService', () => {
       await expect(diagnoseError(makeError(), 'en')).rejects.toThrow('Free diagnosis model is unavailable')
     })
 
-    it('uses the persisted CherryAI free model', async () => {
+    it('uses the persisted WindAI free model', async () => {
       const mockResult = {
         summary: 'Error',
         category: 'unknown',
@@ -161,7 +161,7 @@ describe('ErrorDiagnosisService', () => {
       expect(mockReadDefaultModel).not.toHaveBeenCalled()
     })
 
-    it('uses only CherryAI when no default model', async () => {
+    it('uses only WindAI when no default model', async () => {
       const mockResult = {
         summary: 'Error',
         category: 'unknown',

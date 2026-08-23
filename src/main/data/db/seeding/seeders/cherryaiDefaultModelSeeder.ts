@@ -89,7 +89,7 @@ function createCherryAiDefaultModelRow(): CherryAiDefaultModelRow {
 export function ensureCherryAiDefaultProviderAndModelTx(tx: TxLike): void {
   const insertedProviderCount = providerService.batchUpsertTx(tx, [createCherryAiProviderRow()])
   if (insertedProviderCount > 0) {
-    logger.warn('Self-healed missing CherryAI default provider', { providerId: CHERRYAI_PROVIDER_ID })
+    logger.warn('Self-healed missing WindAI default provider', { providerId: CHERRYAI_PROVIDER_ID })
   }
 
   const [existing] = tx
@@ -101,7 +101,7 @@ export function ensureCherryAiDefaultProviderAndModelTx(tx: TxLike): void {
 
   if (existing) return
 
-  logger.warn('Self-healed missing CherryAI default model', { modelId: CHERRYAI_DEFAULT_UNIQUE_MODEL_ID })
+  logger.warn('Self-healed missing WindAI default model', { modelId: CHERRYAI_DEFAULT_UNIQUE_MODEL_ID })
   insertManyWithOrderKey(tx, userModelTable, [createCherryAiDefaultModelRow()], {
     pkColumn: userModelTable.id,
     scope: eq(userModelTable.providerId, CHERRYAI_PROVIDER_ID)
@@ -145,7 +145,7 @@ function ensureCherryAiDefaultModelSetupTx(tx: TxLike): void {
 
 export class CherryAiDefaultModelSeeder implements ISeeder {
   readonly name = 'cherryaiDefaultModel'
-  readonly description = 'Ensure CherryAI default provider, model, and default model preferences'
+  readonly description = 'Ensure WindAI default provider, model, and default model preferences'
   readonly version: string
 
   constructor() {

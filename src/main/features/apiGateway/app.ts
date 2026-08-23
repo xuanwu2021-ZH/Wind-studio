@@ -136,7 +136,7 @@ export function buildApp({ host = '127.0.0.1', port = 23333 }: BuildAppOptions =
     .get(
       '/',
       () => ({
-        name: 'Cherry Studio API',
+        name: 'Wind Studio API',
         version: '1.0.0',
         endpoints: {
           health: 'GET /health',

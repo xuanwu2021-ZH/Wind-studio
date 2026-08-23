@@ -42,7 +42,7 @@ describe('CherryAiDefaultModelSeeder', () => {
     }
   }
 
-  it('seeds CherryAI provider, Qwen model, and missing default model preferences', async () => {
+  it('seeds WindAI provider, Qwen model, and missing default model preferences', async () => {
     new CherryAiDefaultModelSeeder().run(dbh.db)
 
     const [provider] = await dbh.db
@@ -59,7 +59,7 @@ describe('CherryAiDefaultModelSeeder', () => {
     expect(provider).toMatchObject({
       providerId: CHERRYAI_PROVIDER_ID,
       presetProviderId: CHERRYAI_PROVIDER_ID,
-      name: 'CherryAI',
+      name: 'WindAI',
       defaultChatEndpoint: ENDPOINT_TYPE.OPENAI_CHAT_COMPLETIONS,
       isEnabled: true
     })
@@ -74,10 +74,10 @@ describe('CherryAiDefaultModelSeeder', () => {
       isHidden: false
     })
     await expectSeededDefaultModelPreferences()
-    expect(mockMainLoggerService.warn).toHaveBeenCalledWith('Self-healed missing CherryAI default provider', {
+    expect(mockMainLoggerService.warn).toHaveBeenCalledWith('Self-healed missing WindAI default provider', {
       providerId: CHERRYAI_PROVIDER_ID
     })
-    expect(mockMainLoggerService.warn).toHaveBeenCalledWith('Self-healed missing CherryAI default model', {
+    expect(mockMainLoggerService.warn).toHaveBeenCalledWith('Self-healed missing WindAI default model', {
       modelId: CHERRYAI_DEFAULT_UNIQUE_MODEL_ID
     })
     expect(mockMainLoggerService.warn).toHaveBeenCalledWith('Self-healed missing default model preference', {
@@ -150,11 +150,11 @@ describe('CherryAiDefaultModelSeeder', () => {
     }
   })
 
-  it('preserves an existing CherryAI provider row', async () => {
+  it('preserves an existing WindAI provider row', async () => {
     await dbh.db.insert(userProviderTable).values({
       providerId: CHERRYAI_PROVIDER_ID,
       presetProviderId: CHERRYAI_PROVIDER_ID,
-      name: 'Renamed CherryAI',
+      name: 'Renamed WindAI',
       orderKey: generateOrderKeyBetween(null, null)
     })
 
@@ -171,7 +171,7 @@ describe('CherryAiDefaultModelSeeder', () => {
       .where(eq(userModelTable.id, CHERRYAI_DEFAULT_UNIQUE_MODEL_ID))
       .limit(1)
 
-    expect(provider?.name).toBe('Renamed CherryAI')
+    expect(provider?.name).toBe('Renamed WindAI')
     expect(model?.id).toBe(CHERRYAI_DEFAULT_UNIQUE_MODEL_ID)
   })
 })

@@ -315,7 +315,7 @@ describe('importLegacySessionMessages', () => {
       .insert(userProviderTable)
       .values({
         providerId: 'cherryin',
-        name: 'CherryIN',
+        name: 'WindIN',
         orderKey: 'a0'
       })
       .onConflictDoNothing()

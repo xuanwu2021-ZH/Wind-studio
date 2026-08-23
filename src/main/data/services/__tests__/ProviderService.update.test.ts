@@ -126,10 +126,10 @@ describe('ProviderService.update', () => {
     expect(err).toMatchObject({ code: ErrorCode.NOT_FOUND })
   })
 
-  it('rejects PATCHes for the managed CherryAI provider', async () => {
+  it('rejects PATCHes for the managed WindAI provider', async () => {
     await dbh.db.insert(userProviderTable).values({
       providerId: CHERRYAI_PROVIDER_ID,
-      name: 'CherryAI',
+      name: 'WindAI',
       orderKey: 'a0',
       isEnabled: true
     })

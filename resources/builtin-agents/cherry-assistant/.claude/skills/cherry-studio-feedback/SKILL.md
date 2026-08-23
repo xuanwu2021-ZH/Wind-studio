@@ -1,9 +1,9 @@
 ---
 name: cherry-studio-feedback
-description: 收集、脱敏、预览并提交 Cherry Studio BUG、UI/UX 或功能反馈，默认提交到飞书。可在用户同意后调用内置诊断工具整理环境、错误日志、截图和用户导出的 trace，自动提交飞书表单或生成匿名上传 ZIP；也可安全解析反馈 ZIP 为表单字段。用户说“提交问题”“提交反馈”“上报 bug”“收集/上传错误信息”“整理日志/trace”“生成反馈包”，或描述 Cherry Studio 问题并希望记录时触发。只有明确要求 GitHub Issue 时才改用 issue-reporter。
+description: 收集、脱敏、预览并提交 Wind Studio BUG、UI/UX 或功能反馈，默认提交到飞书。可在用户同意后调用内置诊断工具整理环境、错误日志、截图和用户导出的 trace，自动提交飞书表单或生成匿名上传 ZIP；也可安全解析反馈 ZIP 为表单字段。用户说“提交问题”“提交反馈”“上报 bug”“收集/上传错误信息”“整理日志/trace”“生成反馈包”，或描述 Wind Studio 问题并希望记录时触发。只有明确要求 GitHub Issue 时才改用 issue-reporter。
 ---
 
-# Cherry Studio Feedback
+# Wind Studio Feedback
 
 像协作排障一样收集反馈，不把对话变成表格审问。已知信息直接复用；每次最多追问一个会改变提交内容的问题。
 
@@ -31,7 +31,7 @@ description: 收集、脱敏、预览并提交 Cherry Studio BUG、UI/UX 或功�
 给用户一份简短清单：
 
 - 问题发生时间、实际结果、期望结果和最短复现步骤
-- Cherry Studio 版本、操作系统和问题出现频率
+- Wind Studio 版本、操作系统和问题出现频率
 - 报错截图或录屏
 - 从出错会话导出的 trace，以及相关时间段的日志
 
@@ -69,7 +69,7 @@ mcp__assistant__diagnose({ action: "errors", lines: 100 })
 - 错误摘要不足 → 说明原因后调用 `logs`，最多 200 行
 - 需要主动联网探测 Provider → 先说明会发起网络请求，再调用 `health`
 
-优先使用 `info` 返回的真实应用版本，不硬编码版本号。删除绝对路径和主机名，只保留平台、系统版本、架构、内存概况、Cherry Studio/Electron/Node 版本，以及与问题有关的脱敏配置。
+优先使用 `info` 返回的真实应用版本，不硬编码版本号。删除绝对路径和主机名，只保留平台、系统版本、架构、内存概况、Wind Studio/Electron/Node 版本，以及与问题有关的脱敏配置。
 
 用户提供截图、日志、trace 或反馈 ZIP 时，使用附件句柄调用 `mcp__assistant-files__save_attachment` 保存到当前 workspace。该调用需要用户批准；拒绝或失败时继续生成不含该附件的反馈。
 
@@ -179,7 +179,7 @@ lark-cli base +form-detail --share-token shrcnsTvZpUji5ZKAPSMwzZuWHb --as user -
 脱敏环境与诊断摘要
 截图、日志、trace 或 ZIP 的文件名
 联系方式（如有）
-接收方：Cherry Studio 反馈收集飞书表单
+接收方：Wind Studio 反馈收集飞书表单
 ```
 
 用户修改后重新生成预览并再次确认。提交成功后报告摘要；失败时保留本地反馈包并给出匿名上传链接。

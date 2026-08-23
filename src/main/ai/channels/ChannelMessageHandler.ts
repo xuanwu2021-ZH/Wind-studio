@@ -521,7 +521,7 @@ export class ChannelMessageHandler {
         }
         case 'help': {
           const agent = agentService.getAgent(agentId)
-          const name = agent?.name ?? 'Cherry Studio'
+          const name = agent?.name ?? 'Wind Studio'
           const description = agent?.description ?? ''
           const commands = await this.helpCommandsForChat(agentId, adapter.channelId, command.chatId)
           const helpText = [

@@ -161,7 +161,7 @@ describe('processMessage model-id parsing', () => {
     expect(mockStreamPrompt).not.toHaveBeenCalled()
   })
 
-  it('rejects the managed CherryAI default model', async () => {
+  it('rejects the managed WindAI default model', async () => {
     await expect(
       processMessage({
         params: { model: 'cherryai:qwen', messages: [] } as any,

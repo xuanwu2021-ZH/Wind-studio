@@ -857,8 +857,8 @@ const MigrationApp: React.FC = () => {
             </Tooltip>
           </div>
           <div className="flex items-center gap-2">
-            <img src={AppLogo} alt="Cherry Studio" className="h-4.5 w-4.5 rounded-full object-cover" />
-            <span className="font-medium text-foreground text-sm">Cherry Studio</span>
+            <img src={AppLogo} alt="Wind Studio" className="h-4.5 w-4.5 rounded-full object-cover" />
+            <span className="font-medium text-foreground text-sm">Wind Studio</span>
             <span className="text-foreground-tertiary">·</span>
             <span className="text-foreground-tertiary text-xs">{t('migration.title')}</span>
           </div>

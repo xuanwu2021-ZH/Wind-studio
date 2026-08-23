@@ -216,7 +216,7 @@ describe('shellEnv – Windows registry PATH', () => {
     expect(env.Path).toContain('C:\\PlainPath')
   })
 
-  // -- Cherry Studio tool directories appended ------------------------------
+  // -- Wind Studio tool directories appended ------------------------------
 
   it('should preserve the unmodified user environment for system tools', async () => {
     process.env.MISE_DATA_DIR = 'C:\\Users\\TestUser\\mise-data'
@@ -234,7 +234,7 @@ describe('shellEnv – Windows registry PATH', () => {
     expect(env.Path).not.toContain('.cherrystudio')
   })
 
-  it('should append Cherry Studio tool directories to PATH', async () => {
+  it('should append Wind Studio tool directories to PATH', async () => {
     mockRegistryQuery((args) => {
       const keyPath = args[1]
       if (keyPath === HKLM_KEY) return regOutput(keyPath, 'C:\\Windows')

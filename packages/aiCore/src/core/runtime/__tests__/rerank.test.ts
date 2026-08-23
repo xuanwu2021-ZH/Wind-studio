@@ -95,7 +95,7 @@ describe('RuntimeExecutor.rerank', () => {
     })
   })
 
-  it('resolves CherryIN rerank models through the provider registry', async () => {
+  it('resolves WindIN rerank models through the provider registry', async () => {
     const cherryInExecutor = await createExecutor('cherryin', {
       apiKey: 'test-key',
       baseURL: 'https://open.cherryin.net/v1',

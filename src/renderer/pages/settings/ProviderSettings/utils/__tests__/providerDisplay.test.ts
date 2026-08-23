@@ -3,11 +3,11 @@ import type { Provider } from '@shared/data/types/provider'
 import { describe, expect, it, vi } from 'vitest'
 
 // isProviderSettingsListVisibleProvider only reads the provider id; stub the i18n +
-// CherryAI helpers the module imports so the test stays focused on visibility.
+// WindAI helpers the module imports so the test stays focused on visibility.
 vi.mock('@renderer/i18n', () => ({ default: { t: (k: string) => k } }))
 vi.mock('@renderer/i18n/label', () => ({ getProviderLabelKey: (id: string) => id }))
 vi.mock('@shared/utils/provider', () => ({
-  isCherryAIProvider: (p: Provider) => p.id === 'cherryai',
+  isWindAIProvider: (p: Provider) => p.id === 'cherryai',
   isLoginBasedProvider: (p: Provider) =>
     p.authMethods !== undefined && p.authMethods.length > 0 && !p.authMethods.includes('api-key')
 }))
@@ -33,7 +33,7 @@ describe('isProviderSettingsListVisibleProvider', () => {
     expect(isProviderSettingsListVisibleProvider(provider(LOCAL_EMBEDDING_PROVIDER_ID))).toBe(false)
   })
 
-  it('hides the CherryAI provider', () => {
+  it('hides the WindAI provider', () => {
     expect(isProviderSettingsListVisibleProvider(provider('cherryai'))).toBe(false)
   })
 

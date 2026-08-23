@@ -33,7 +33,7 @@
     },
     "builtin": {
       "cherry_assistant": {
-        "description": "内蔵のCherry Studioアドバイザー。問題の診断、操作ガイド、FAQの収集、バグ/機能リクエストの提出、およびスキルの検索/作成を行います。"
+        "description": "内蔵のWind Studioアドバイザー。問題の診断、操作ガイド、FAQの収集、バグ/機能リクエストの提出、およびスキルの検索/作成を行います。"
       }
     },
     "channels": {
@@ -994,23 +994,23 @@
           "description": "設定されたペインティングモデルを使用して、テキストプロンプトから画像を生成します",
           "label": "画像を生成"
         },
-        "CherryKbManage": {
+        "WindKbManage": {
           "description": "ナレッジベース内のドキュメントを追加、削除、または更新します",
           "label": "ナレッジ管理"
         },
-        "CherryKbSearch": {
+        "WindKbSearch": {
           "description": "ナレッジベースを検索します",
           "label": "ナレッジ検索"
         },
-        "CherryNotify": {
+        "WindNotify": {
           "description": "接続されたチャンネル経由で通知を送信します",
           "label": "通知"
         },
-        "CherryWebFetch": {
+        "WindWebFetch": {
           "description": "ウェブページを取得して読み取る",
           "label": "Web Fetch"
         },
-        "CherryWebSearch": {
+        "WindWebSearch": {
           "description": "設定されたプロバイダーを通じてウェブを検索します",
           "label": "ウェブ検索"
         },
@@ -1097,7 +1097,7 @@
     "authHeader": {
       "title": "認証ヘッダー"
     },
-    "description": "OpenAI 互換の HTTP API を通じて Cherry Studio の AI 機能を公開します",
+    "description": "OpenAI 互換の HTTP API を通じて Wind Studio の AI 機能を公開します",
     "documentation": {
       "title": "API ドキュメント"
     },
@@ -2138,7 +2138,7 @@
     },
     "api_gateway": {
       "description": "あらゆるCLI、すべてのモデル",
-      "requires_running": "有効化後、Cherry Studio を実行し続けてください — 外部 CLI は、Cherry Studio がホストするゲートウェイに接続します。",
+      "requires_running": "有効化後、Wind Studio を実行し続けてください — 外部 CLI は、Wind Studio がホストするゲートウェイに接続します。",
       "title": "統合ゲートウェイ"
     },
     "apply_failed": "システムファイルへのCLI設定の書き込みに失敗しました",
@@ -3052,7 +3052,7 @@
           "description": "ウェブページのURLを入力してください：",
           "help": "ページのテキストは自動的に取得され、チャンク化され、インデックスされます",
           "input_label": "ウェブページURL",
-          "placeholder": "https://docs.cherry-ai.com/",
+          "placeholder": "https://docs.windbot.cn/",
           "title": "単一のウェブページをインポート"
         }
       },
@@ -4681,7 +4681,7 @@
       "missing_model": "有効化されたプロバイダーから少なくとも1つのモデルを有効にしてください",
       "missing_provider": "プロバイダーを有効にして続行",
       "next": "次へ",
-      "subtitle": "APIキーを追加するか、CherryINでサインインしてから、プロバイダーを有効化してください。",
+      "subtitle": "APIキーを追加するか、WindINでサインインしてから、プロバイダーを有効化してください。",
       "title": "プロバイダーを選択"
     },
     "select_model": {
@@ -4693,21 +4693,21 @@
     "skip": "スキップ",
     "toast": {
       "complete_failed": "セットアップを完了できませんでした。もう一度お試しください。",
-      "connected": "CherryINに正常に接続されました"
+      "connected": "WindINに正常に接続されました"
     },
     "welcome": {
-      "login_cherryin": "CherryINでログイン",
+      "login_cherryin": "WindINでログイン",
       "or_continue_with": "または続行",
       "other_provider": "他のプロバイダーを選択",
       "select_other_provider": "他のプロバイダーを選択",
       "setup_hint": "ベストな体験のために、少なくとも1つのプロバイダーを設定してください",
       "subtitle": "プロバイダーに接続して、オールインワンAIワークステーションを始めましょう",
-      "title": "Cherry Studioへようこそ"
+      "title": "Wind Studioへようこそ"
     }
   },
   "openclaw": {
     "checking_installation": "OpenClawのインストールを確認しています...",
-    "description": "Cherry Studio プロバイダーを OpenClaw Gateway と統合し、Claude Code、Qwen-Coder などの AI コーディングエージェントを有効にします。",
+    "description": "Wind Studio プロバイダーを OpenClaw Gateway と統合し、Claude Code、Qwen-Coder などの AI コーディングエージェントを有効にします。",
     "error": {
       "select_provider_model": "プロバイダーとモデルをまず選択してください"
     },
@@ -4745,7 +4745,7 @@
       "title": "モデル設定"
     },
     "node_missing": {
-      "description": "OpenClawにはNode.js/npmが必要です。まずNode.jsをインストールしてから、Cherry Studioを再起動してください。",
+      "description": "OpenClawにはNode.js/npmが必要です。まずNode.jsをインストールしてから、Wind Studioを再起動してください。",
       "download_button": "Node.jsをダウンロード",
       "hint": "macOS: brew install node | Windows: nodejs.org から LTS 版をダウンロード",
       "title": "Node.jsが必要"
@@ -5231,8 +5231,8 @@
     "baidu-cloud": "Baidu Cloud",
     "burncloud": "BurnCloud",
     "cerebras": "Cerebras AI",
-    "cherryai": "CherryAI",
-    "cherryin": "CherryIN",
+    "cherryai": "WindAI",
+    "cherryin": "WindIN",
     "claude-code": "Claude Code",
     "copilot": "GitHub Copilot",
     "dashscope": "Alibaba Cloud",
@@ -5642,7 +5642,7 @@
           },
           "description": {
             "0": "テキスト選択ツールは、<strong>アクセシビリティー権限</strong>が必要です。",
-            "1": "「<strong>設定に移動</strong>」をクリックし、後で表示される権限要求ポップアップで「<strong>システム設定を開く</strong>」ボタンをクリックします。その後、表示されるアプリケーションリストで「<strong>Cherry Studio</strong>」を見つけ、権限スイッチをオンにしてください。",
+            "1": "「<strong>設定に移動</strong>」をクリックし、後で表示される権限要求ポップアップで「<strong>システム設定を開く</strong>」ボタンをクリックします。その後、表示されるアプリケーションリストで「<strong>Wind Studio</strong>」を見つけ、権限スイッチをオンにしてください。",
             "2": "設定が完了したら、テキスト選択ツールを再起動してください。"
           },
           "title": "アクセシビリティー権限"
@@ -5666,7 +5666,7 @@
         "wayland_checklist_subtitle": "Wayland エクスペリエンスを最適化するために、次の条件が満たされていることを確認してください：",
         "wayland_description": "Waylandセッションで実行中です。システムの制約により、一部のデスクトップ環境ではツールバーが選択したテキストに追随せず、画面中央にのみ表示される場合があります。完全な体験のためにはX11セッションへの切り替えを推奨します。",
         "wayland_title": "Waylandセッション通知",
-        "xwayland_fail": "有効ではありません。`--ozone-platform=x11` フラグを付けて Cherry Studio を起動してください。",
+        "xwayland_fail": "有効ではありません。`--ozone-platform=x11` フラグを付けて Wind Studio を起動してください。",
         "xwayland_label": "XWaylandモード:",
         "xwayland_pass": "有効"
       },
@@ -5863,12 +5863,12 @@
         "inspecting": "[to be translated]:Preparing the available information...",
         "limit": "[to be translated]:To keep the ZIP manageable, logs and detailed records are limited to {{size}}. Newer information is kept first.",
         "mail": {
-          "body": "[to be translated]:Please help investigate this Cherry Studio issue.\n\nDiagnostic bundle ID: {{bundleId}}\nVersion: {{version}}\nPlatform: {{platform}}\nTime range: {{range}}\nFile: {{fileName}}\n\nPlease attach the ZIP file to this email. The bundle was saved locally and was not uploaded automatically.",
-          "subject": "[to be translated]:Cherry Studio diagnostics {{bundleId}}"
+          "body": "[to be translated]:Please help investigate this Wind Studio issue.\n\nDiagnostic bundle ID: {{bundleId}}\nVersion: {{version}}\nPlatform: {{platform}}\nTime range: {{range}}\nFile: {{fileName}}\n\nPlease attach the ZIP file to this email. The bundle was saved locally and was not uploaded automatically.",
+          "subject": "[to be translated]:Wind Studio diagnostics {{bundleId}}"
         },
         "privacy": {
           "consent": "[to be translated]:I understand the information above and will share the ZIP only privately with support.",
-          "description": "[to be translated]:These records may contain things you entered, file locations, request and response content, and service connection information. Cherry Studio does not hide or upload them automatically. Share the ZIP only with support, and never post it on GitHub or other public sites.",
+          "description": "[to be translated]:These records may contain things you entered, file locations, request and response content, and service connection information. Wind Studio does not hide or upload them automatically. Share the ZIP only with support, and never post it on GitHub or other public sites.",
           "title": "[to be translated]:Before you share"
         },
         "range_title": "[to be translated]:Time range",
@@ -5912,10 +5912,10 @@
           "description": "チェリーアシスタントとチャットしてフィードバックを共有してください。",
           "title": "エージェントを使用する"
         },
-        "agent_error": "フィードバック用のCherry Assistantを開けません。もう一度お試しください。",
+        "agent_error": "フィードバック用のWind Assistantを開けません。もう一度お試しください。",
         "button": "フィードバック",
         "dialog": {
-          "description": "フィードバックの共有方法を選択して、Cherry Studioの改善にご協力ください。",
+          "description": "フィードバックの共有方法を選択して、Wind Studioの改善にご協力ください。",
           "title": "フィードバックチャンネルを選択してください"
         },
         "github": {
@@ -5997,7 +5997,7 @@
         "select": "ディレクトリを変更",
         "select_error": "データディレクトリの変更に失敗しました",
         "select_error_in_app_path": "新しいパスはアプリのインストールパスと同じです。別のパスを選択してください",
-        "select_error_protected_path": "選択されたパスは、オペレーティングシステムまたはCherry Studioによって保護されています。別のフォルダを選択してください。",
+        "select_error_protected_path": "選択されたパスは、オペレーティングシステムまたはWind Studioによって保護されています。別のフォルダを選択してください。",
         "select_error_root_path": "新しいパスはルートパスにできません",
         "select_error_same_path": "新しいパスは元のパスと同じです。別のパスを選択してください",
         "select_error_write_permission": "新しいパスに書き込み権限がありません",
@@ -6648,7 +6648,7 @@
         "uv": "Python package manager for MCP services and dependency installation."
       },
       "uninstall": "アンインストール",
-      "uninstallConfirmMessage": "\"{{name}}\"をアンインストールしてもよろしいですか？Cherry Studioのバックエンドコピーが削除されます。",
+      "uninstallConfirmMessage": "\"{{name}}\"をアンインストールしてもよろしいですか？Wind Studioのバックエンドコピーが削除されます。",
       "uninstallConfirmTitle": "アンインストールツール",
       "uninstallFailed": "ツールのアンインストールに失敗しました",
       "uninstallSuccess": "ツールをアンインストールしました",
@@ -7838,7 +7838,7 @@
         "cherryIn": {
           "description": "セルフホストしたNew-APIサーバーでOAuth 2.0（PKCE）を使用してログイン",
           "logged_in": "OAuth経由でログインしました",
-          "login_button": "CherryINで認証",
+          "login_button": "WindINで認証",
           "logout_button": "ログアウト",
           "not_logged_in": "未ログイン",
           "register_account": "Create account",

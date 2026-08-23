@@ -187,7 +187,7 @@ class BackupManager {
     return {
       version: DIRECT_BACKUP_VERSION,
       timestamp: Date.now(),
-      appName: 'Cherry Studio',
+      appName: 'Wind Studio',
       appVersion: app.getVersion(),
       platform: process.platform,
       arch: process.arch,
@@ -867,7 +867,7 @@ class BackupManager {
 
       if (!(await fs.pathExists(path.join(extractionDir, 'metadata.json')))) {
         throw new Error(
-          `Unsupported v1 backup. Cherry Studio v2 can only restore backup version ${DIRECT_BACKUP_VERSION}.`
+          `Unsupported v1 backup. Wind Studio v2 can only restore backup version ${DIRECT_BACKUP_VERSION}.`
         )
       }
 
@@ -895,13 +895,13 @@ class BackupManager {
 
     const existingJournal = readRestoreJournal()
     if (existingJournal.kind === 'corrupt') {
-      throw new Error('A corrupt restore journal already exists. Restart Cherry Studio before trying again.')
+      throw new Error('A corrupt restore journal already exists. Restart Wind Studio before trying again.')
     }
     if (
       existingJournal.kind === 'ok' &&
       (existingJournal.journal.state === 'staged' || existingJournal.journal.state === 'promoting')
     ) {
-      throw new Error('Another restore is already pending. Restart Cherry Studio before trying again.')
+      throw new Error('Another restore is already pending. Restart Wind Studio before trying again.')
     }
 
     // No restore is pending: terminal journals have already released their
@@ -1080,12 +1080,12 @@ class BackupManager {
   private async readDirectBackupMetadata(extractionDir: string): Promise<DirectBackupMetadata> {
     const raw = (await fs.readJson(path.join(extractionDir, 'metadata.json'))) as Record<string, unknown>
 
-    if (!raw || typeof raw !== 'object' || raw.appName !== 'Cherry Studio') {
-      throw new Error('This backup file is not from Cherry Studio and cannot be restored')
+    if (!raw || typeof raw !== 'object' || raw.appName !== 'Wind Studio') {
+      throw new Error('This backup file is not from Wind Studio and cannot be restored')
     }
     if (raw.version !== DIRECT_BACKUP_VERSION) {
       throw new Error(
-        `Unsupported backup version ${String(raw.version)}. Cherry Studio v2 can only restore backup version ${DIRECT_BACKUP_VERSION}.`
+        `Unsupported backup version ${String(raw.version)}. Wind Studio v2 can only restore backup version ${DIRECT_BACKUP_VERSION}.`
       )
     }
 

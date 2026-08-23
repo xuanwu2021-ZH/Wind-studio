@@ -2,7 +2,7 @@
 
 Covers `mcp__cherry-tools__to_markdown` — converting a supported document from the
 session workspace into Markdown. This is distinct from knowledge-base tools, which
-search documents already indexed by Cherry, and from shell runtimes or managed CLIs.
+search documents already indexed by Wind Studio, and from shell runtimes or managed CLIs.
 
 Get exact argument shapes from the live tool schema — this reference gives routing,
 sequencing, supported formats, and recovery.
@@ -12,7 +12,7 @@ sequencing, supported formats, and recovery.
 Use `mcp__cherry-tools__to_markdown` when an agent needs the structured contents of a
 workspace document that ordinary text reads cannot handle.
 
-Pass the workspace-relative path (or an absolute path inside the workspace). Cherry
+Pass the workspace-relative path (or an absolute path inside the workspace). Wind Studio
 converts the source with its bundled document converter and writes the complete result
 to an agent-private temporary Markdown file. The tool result contains only that file's
 absolute path and character count — it deliberately does not inject the whole document

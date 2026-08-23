@@ -36,7 +36,7 @@ export interface OAuthTokenStore {
    * Drop the stored OAuth tokens. `disableProvider` also flips the provider to
    * disabled — correct for providers whose only credential is the OAuth session
    * (Codex, Grok), but wrong for one that can also hold a manual API key
-   * (CherryIN), where disabling would take the manual key down with it.
+   * (WindIN), where disabling would take the manual key down with it.
    */
   clear(
     providerId: string,
@@ -84,7 +84,7 @@ export interface OAuthRuntimeProviderDefinition {
    * Whether clearing the OAuth session (logout / unrecoverable token loss) also
    * disables the provider. `true` for OAuth-only providers (Codex, Grok) where
    * no credential remains; `false`/omitted for providers that can fall back to a
-   * manual API key (CherryIN), so logout never strips that key's enablement.
+   * manual API key (WindIN), so logout never strips that key's enablement.
    */
   clearDisablesProvider?: boolean
   transport:
@@ -94,7 +94,7 @@ export interface OAuthRuntimeProviderDefinition {
   extractAccountId?(accessToken: string): string | null
   /**
    * Post-exchange side effect, run *after* the tokens are persisted so a failure
-   * here never discards a valid token (CherryIN fetches the user's API keys).
+   * here never discards a valid token (WindIN fetches the user's API keys).
    * Its result is forwarded to the deep-link initiator window.
    */
   afterPersistTokens?(

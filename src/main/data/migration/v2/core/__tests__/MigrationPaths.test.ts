@@ -17,7 +17,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
  * against an empty default directory, and the user's data appeared lost.
  *
  * Reported real config (single entry):
- *   executablePath: D:\Cherry Studio\Cherry Studio.exe   (v1 custom install dir)
+ *   executablePath: D:\Wind Studio\Wind Studio.exe   (v1 custom install dir)
  *   dataPath:       E:\Dropbox\Cherry Data\CherryStudio   (custom data dir, still on disk)
  *
  * Coverage is split in two:
@@ -302,7 +302,7 @@ describe('selectLegacyUserData', () => {
 
 const REAL_USER_CONFIG = JSON.stringify({
   appDataPath: [
-    { executablePath: 'D:\\Cherry Studio\\Cherry Studio.exe', dataPath: 'E:\\Dropbox\\Cherry Data\\CherryStudio' }
+    { executablePath: 'D:\\Wind Studio\\Wind Studio.exe', dataPath: 'E:\\Dropbox\\Cherry Data\\CherryStudio' }
   ]
 })
 
@@ -377,7 +377,7 @@ describe('resolveMigrationPaths — legacy custom userData recovery', () => {
   })
 
   it('redirects to the matching entry when the current exe matches exactly (regression guard)', () => {
-    h.normalizedExe.mockReturnValue('D:\\Cherry Studio\\Cherry Studio.exe')
+    h.normalizedExe.mockReturnValue('D:\\Wind Studio\\Wind Studio.exe')
     applyFs({
       dirs: ['E:\\Dropbox\\Cherry Data\\CherryStudio'],
       contents: {
@@ -395,7 +395,7 @@ describe('resolveMigrationPaths — legacy custom userData recovery', () => {
   })
 
   it('recovers the sole recorded dataPath when v2 was reinstalled to a new location (exe no longer matches)', () => {
-    h.normalizedExe.mockReturnValue('C:\\Users\\me\\AppData\\Local\\Programs\\cherrystudio\\Cherry Studio.exe')
+    h.normalizedExe.mockReturnValue('C:\\Users\\me\\AppData\\Local\\Programs\\cherrystudio\\Wind Studio.exe')
     applyFs({
       dirs: ['E:\\Dropbox\\Cherry Data\\CherryStudio'],
       contents: {

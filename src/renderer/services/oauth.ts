@@ -143,7 +143,7 @@ export const oauthWithPPIO = async (setKey) => {
 }
 
 export const oauthWith302AI = async (setKey) => {
-  const authUrl = 'https://dash.302.ai/sso/login?app=cherry-ai.com&name=Cherry%20Studio'
+  const authUrl = 'https://dash.302.ai/sso/login?app=windbot.cn&name=Cherry%20Studio'
 
   const popup = window.open(
     authUrl,
@@ -190,7 +190,7 @@ export interface NewApiOAuthConfig {
 }
 
 /**
- * CherryIN OAuth flow using Authorization Code with PKCE.
+ * WindIN OAuth flow using Authorization Code with PKCE.
  *
  * PKCE, token exchange and API-key fetch all happen in the main process
  * (`OAuthRuntimeService`); the deep-link callback is routed by `ProtocolService`
@@ -221,7 +221,7 @@ export const oauthWithCherryIn = async (
     let timeoutId: ReturnType<typeof setTimeout> | null = null
 
     const removeListener = ipcApi.on('oauth.deep_link_result', async (result) => {
-      // Defensive: another concurrent CherryIN flow on the same window would
+      // Defensive: another concurrent WindIN flow on the same window would
       // hit the same listener; main only ever pushes for our state, but filter
       // anyway to keep the contract explicit.
       if (result.state !== state) return

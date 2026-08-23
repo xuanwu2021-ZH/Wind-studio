@@ -289,7 +289,7 @@ export function isCustomProviderNamespace(
 /**
  * For `openai-compatible`, rename `reasoning_effort` → `reasoningEffort` —
  * AI SDK silently drops the snake_case form.
- * See https://github.com/CherryHQ/cherry-studio/issues/11987.
+ * See https://windbot.cn
  */
 export function mergeCustomProviderParameters(
   providerOptions: Record<string, Record<string, JSONValue>>,

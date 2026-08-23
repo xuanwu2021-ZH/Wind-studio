@@ -40,7 +40,7 @@ const ProviderOauth: FC<Props> = ({ providerId }) => {
     />
   )
 
-  // Logged-out: align with the CherryIN account card (bordered shell + one row:
+  // Logged-out: align with the WindIN account card (bordered shell + one row:
   // avatar/name/description on the left, login button on the right).
   if (!hasApiKeys(provider)) {
     return (
@@ -60,7 +60,7 @@ const ProviderOauth: FC<Props> = ({ providerId }) => {
                 <div className={oauthCardClasses.loggedInEmail}>{serviceDescription}</div>
               </div>
             </div>
-            {/* className="" clears OauthButton's hard-coded `rounded-full` so the emphasis variant's own radius/size matches the CherryIN login button */}
+            {/* className="" clears OauthButton's hard-coded `rounded-full` so the emphasis variant's own radius/size matches the WindIN login button */}
             <OauthButton provider={{ id: provider.id }} onSuccess={setApiKey} variant="emphasis" className="" />
           </div>
         </div>

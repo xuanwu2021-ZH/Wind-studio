@@ -3,7 +3,7 @@ name: cherry-skill-marketplace
 description: 当用户明确要求搜索、安装、查看、卸载或创建 Skill，或内置 Skill / 工具出现能力缺口、无法完成当前任务时触发。通过 `mcp__skills__search_skills` 搜索并用 `mcp__skills__install_skill` 安装；已安装 Skill 的查看和删除通过产品清单导航到 Skills UI；没有合适结果时调用内置 `skill-creator` 创建并验证自定义 Skill，再继续原任务。普通任务仍先尝试内置能力。
 ---
 
-# Cherry Skill Marketplace
+# Wind Studio Skill Marketplace
 
 市场不是普通任务的默认路由。文档、演示和表格先使用对应内置 Skill。
 

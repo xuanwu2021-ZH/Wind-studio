@@ -2,7 +2,7 @@
   "providers": [
     {
       "defaultChatEndpoint": "openai-chat-completions",
-      "description": "CherryIN - AI model provider",
+      "description": "WindIN - AI model provider",
       "endpointConfigs": {
         "anthropic-messages": {
           "adapterFamily": "cherryin",
@@ -33,7 +33,7 @@
           "official": "https://open.cherryin.ai"
         }
       },
-      "name": "CherryIN",
+      "name": "WindIN",
       "serverTools": [
         {
           "id": "web-search",
@@ -510,7 +510,7 @@
       "metadata": {
         "website": {
           "apiKey": "https://ppio.com/settings/key-management",
-          "docs": "https://docs.cherry-ai.com/pre-basic/providers/ppio",
+          "docs": "https://docs.windbot.cn/pre-basic/providers/ppio",
           "models": "https://ppio.com/model-api/product/llm-api",
           "official": "https://ppio.com/"
         }

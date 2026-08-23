@@ -189,7 +189,7 @@ export async function resolveProviderAiSdkConfig(
     { match: (p) => p.id === SystemProviderIds.copilot, build: withProviderAuth('oauth', buildCopilotConfig) },
     { match: (p) => p.id === OPENAI_CODEX_PROVIDER_ID, build: withProviderAuth('oauth', buildCodexConfig) },
     { match: (p) => p.id === GROK_CLI_PROVIDER_ID, build: withProviderAuth('oauth', buildGrokCliConfig) },
-    { match: (p) => p.id === CHERRYAI_PROVIDER_ID, build: withSelectedApiKey(buildCherryAIConfig) },
+    { match: (p) => p.id === CHERRYAI_PROVIDER_ID, build: withSelectedApiKey(buildWindAIConfig) },
     // Local embedding runs fully in-process (transformers.js in a worker): no
     // endpoint, baseURL, or apiKey. Without this entry it falls through to the
     // openai-compatible builder, which hands ai-core an empty baseURL and throws
@@ -331,7 +331,7 @@ export async function resolveProviderAiSdkConfig(
   const { config } = resolved
   // Default every provider to the proxy-aware net.fetch base so the app proxy
   // (ProxyService → session.setProxy) applies to provider HTTP traffic. Builders
-  // that install their own fetch wrapper (e.g. CherryAI request signing) compose
+  // that install their own fetch wrapper (e.g. WindAI request signing) compose
   // on top of customFetch; `??=` preserves them rather than clobbering them.
   config.providerSettings.fetch ??= customFetch
 
@@ -476,7 +476,7 @@ function buildGrokCliFetch() {
   }
 }
 
-async function buildCherryAIConfig(ctx: BuilderContext): Promise<ProviderConfig<'openai-compatible'>> {
+async function buildWindAIConfig(ctx: BuilderContext): Promise<ProviderConfig<'openai-compatible'>> {
   return {
     providerId: 'openai-compatible',
     endpoint: ctx.endpoint,

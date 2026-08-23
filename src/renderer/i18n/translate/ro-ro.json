@@ -33,7 +33,7 @@
     },
     "builtin": {
       "cherry_assistant": {
-        "description": "Consilier integrat Cherry Studio. Diagnostică probleme, ghidează operațiuni, colectează întrebări frecvente, trimite rapoarte de erori/cereri de funcționalități și caută/crează Abilități (Skills)"
+        "description": "Consilier integrat Wind Studio. Diagnostică probleme, ghidează operațiuni, colectează întrebări frecvente, trimite rapoarte de erori/cereri de funcționalități și caută/crează Abilități (Skills)"
       }
     },
     "channels": {
@@ -994,23 +994,23 @@
           "description": "Generează o imagine dintr-un prompt text folosind modelul de pictură configurat",
           "label": "Generează imagine"
         },
-        "CherryKbManage": {
+        "WindKbManage": {
           "description": "Adaugă, șterge sau reîmprospătează documente în bazele tale de cunoștințe",
           "label": "Gestionează cunoștințele"
         },
-        "CherryKbSearch": {
+        "WindKbSearch": {
           "description": "Caută în bazele tale de cunoștințe",
           "label": "Căutare de cunoștințe"
         },
-        "CherryNotify": {
+        "WindNotify": {
           "description": "Trimite o notificare printr-un canal conectat",
           "label": "Notificare"
         },
-        "CherryWebFetch": {
+        "WindWebFetch": {
           "description": "Preia și citește o pagină web",
           "label": "Preluare Web"
         },
-        "CherryWebSearch": {
+        "WindWebSearch": {
           "description": "Caută pe web prin furnizorul configurat",
           "label": "Căutare pe web"
         },
@@ -1097,7 +1097,7 @@
     "authHeader": {
       "title": "Header de autorizare"
     },
-    "description": "Expune capacitățile AI ale Cherry Studio prin API-uri HTTP compatibile cu OpenAI",
+    "description": "Expune capacitățile AI ale Wind Studio prin API-uri HTTP compatibile cu OpenAI",
     "documentation": {
       "title": "Documentație API"
     },
@@ -2138,7 +2138,7 @@
     },
     "api_gateway": {
       "description": "Orice CLI, fiecare model",
-      "requires_running": "Păstrează Cherry Studio rulând după activare — CLI-ul extern se conectează la gateway-ul pe care îl găzduiește.",
+      "requires_running": "Păstrează Wind Studio rulând după activare — CLI-ul extern se conectează la gateway-ul pe care îl găzduiește.",
       "title": "Gateway Unificat"
     },
     "apply_failed": "Nu s-a reușit scrierea configurației CLI în fișierul de sistem",
@@ -3052,7 +3052,7 @@
           "description": "Introduceți un URL de pagină web:",
           "help": "Textul paginii va fi preluat, împărțit în fragmente și indexat automat",
           "input_label": "URL pagină web",
-          "placeholder": "https://docs.cherry-ai.com/",
+          "placeholder": "https://docs.windbot.cn/",
           "title": "Importă o singură pagină web"
         }
       },
@@ -4681,7 +4681,7 @@
       "missing_model": "Activați cel puțin un model de la furnizorul activat",
       "missing_provider": "Activați un furnizor pentru a continua",
       "next": "Următorul",
-      "subtitle": "Adaugă o cheie API sau conectează-te cu CherryIN, apoi activează un furnizor.",
+      "subtitle": "Adaugă o cheie API sau conectează-te cu WindIN, apoi activează un furnizor.",
       "title": "Alegeți un furnizor"
     },
     "select_model": {
@@ -4693,21 +4693,21 @@
     "skip": "Sariți",
     "toast": {
       "complete_failed": "Nu s-a putut finaliza configurarea. Vă rugăm să încercați din nou.",
-      "connected": "Conectat cu succes la CherryIN"
+      "connected": "Conectat cu succes la WindIN"
     },
     "welcome": {
-      "login_cherryin": "Conectare cu CherryIN",
+      "login_cherryin": "Conectare cu WindIN",
       "or_continue_with": "SAU CONTINUAȚI CU",
       "other_provider": "Alegeți alți furnizori",
       "select_other_provider": "Selectați alt furnizor",
       "setup_hint": "Vă rugăm să configurați cel puțin un furnizor pentru cea mai bună experiență",
       "subtitle": "Conectați un furnizor pentru a vă activa stația de lucru AI all-in-one",
-      "title": "Bun venit la Cherry Studio"
+      "title": "Bun venit la Wind Studio"
     }
   },
   "openclaw": {
     "checking_installation": "Verificare instalare OpenClaw...",
-    "description": "Integrează furnizorii Cherry Studio cu Gateway-ul OpenClaw pentru a permite agenților de codificare AI precum Claude Code, Qwen-Coder și alții.",
+    "description": "Integrează furnizorii Wind Studio cu Gateway-ul OpenClaw pentru a permite agenților de codificare AI precum Claude Code, Qwen-Coder și alții.",
     "error": {
       "select_provider_model": "Vă rugăm să selectați mai întâi un furnizor și un model"
     },
@@ -5231,8 +5231,8 @@
     "baidu-cloud": "Baidu Cloud",
     "burncloud": "BurnCloud",
     "cerebras": "Cerebras AI",
-    "cherryai": "CherryAI",
-    "cherryin": "CherryIN",
+    "cherryai": "WindAI",
+    "cherryin": "WindIN",
     "claude-code": "Claude Code",
     "copilot": "GitHub Copilot",
     "dashscope": "Alibaba Cloud",
@@ -5642,7 +5642,7 @@
           },
           "description": {
             "0": "Asistentul de selecție necesită <strong>Permisiune de accesibilitate</strong> pentru a funcționa corect.",
-            "1": "Te rugăm să faci clic pe \"<strong>Mergi la Setări</strong>\" și să apeși butonul \"<strong>Deschide setările de sistem</strong>\" în fereastra pop-up de solicitare a permisiunii care apare ulterior. Apoi găsește \"<strong>Cherry Studio</strong>\" în lista de aplicații și activează comutatorul de permisiune.",
+            "1": "Te rugăm să faci clic pe \"<strong>Mergi la Setări</strong>\" și să apeși butonul \"<strong>Deschide setările de sistem</strong>\" în fereastra pop-up de solicitare a permisiunii care apare ulterior. Apoi găsește \"<strong>Wind Studio</strong>\" în lista de aplicații și activează comutatorul de permisiune.",
             "2": "După finalizarea setărilor, te rugăm să redeschizi asistentul de selecție."
           },
           "title": "Permisiune de accesibilitate"
@@ -5666,7 +5666,7 @@
         "wayland_checklist_subtitle": "Asigurați-vă că sunt îndeplinite următoarele condiții pentru a optimiza experiența Wayland:",
         "wayland_description": "Vă aflați într-o sesiune Wayland. Din cauza limitărilor sistemului, bara de instrumente poate apărea doar în centrul ecranului în loc să urmărească textul selectat pe unele medii desktop. Se recomandă să treceți la o sesiune X11 pentru o experiență completă.",
         "wayland_title": "Notificare sesiune Wayland",
-        "xwayland_fail": "Nu este activat, vă rugăm să lansați Cherry Studio cu steagul `--ozone-platform=x11`",
+        "xwayland_fail": "Nu este activat, vă rugăm să lansați Wind Studio cu steagul `--ozone-platform=x11`",
         "xwayland_label": "Mod XWayland:",
         "xwayland_pass": "Activat"
       },
@@ -5863,12 +5863,12 @@
         "inspecting": "[to be translated]:Preparing the available information...",
         "limit": "[to be translated]:To keep the ZIP manageable, logs and detailed records are limited to {{size}}. Newer information is kept first.",
         "mail": {
-          "body": "[to be translated]:Please help investigate this Cherry Studio issue.\n\nDiagnostic bundle ID: {{bundleId}}\nVersion: {{version}}\nPlatform: {{platform}}\nTime range: {{range}}\nFile: {{fileName}}\n\nPlease attach the ZIP file to this email. The bundle was saved locally and was not uploaded automatically.",
-          "subject": "[to be translated]:Cherry Studio diagnostics {{bundleId}}"
+          "body": "[to be translated]:Please help investigate this Wind Studio issue.\n\nDiagnostic bundle ID: {{bundleId}}\nVersion: {{version}}\nPlatform: {{platform}}\nTime range: {{range}}\nFile: {{fileName}}\n\nPlease attach the ZIP file to this email. The bundle was saved locally and was not uploaded automatically.",
+          "subject": "[to be translated]:Wind Studio diagnostics {{bundleId}}"
         },
         "privacy": {
           "consent": "[to be translated]:I understand the information above and will share the ZIP only privately with support.",
-          "description": "[to be translated]:These records may contain things you entered, file locations, request and response content, and service connection information. Cherry Studio does not hide or upload them automatically. Share the ZIP only with support, and never post it on GitHub or other public sites.",
+          "description": "[to be translated]:These records may contain things you entered, file locations, request and response content, and service connection information. Wind Studio does not hide or upload them automatically. Share the ZIP only with support, and never post it on GitHub or other public sites.",
           "title": "[to be translated]:Before you share"
         },
         "range_title": "[to be translated]:Time range",
@@ -5909,13 +5909,13 @@
       },
       "feedback": {
         "agent": {
-          "description": "Discută cu Asistentul Cherry pentru a împărtăși feedback-ul tău.",
+          "description": "Discută cu Asistentul Wind Studio pentru a împărtăși feedback-ul tău.",
           "title": "Utilizați Agentul"
         },
-        "agent_error": "Nu se poate deschide Cherry Assistant pentru feedback. Vă rugăm să încercați din nou.",
+        "agent_error": "Nu se poate deschide Wind Assistant pentru feedback. Vă rugăm să încercați din nou.",
         "button": "Feedback",
         "dialog": {
-          "description": "Alege cum să partajezi feedback-ul și ajută-ne să facem Cherry Studio mai bun.",
+          "description": "Alege cum să partajezi feedback-ul și ajută-ne să facem Wind Studio mai bun.",
           "title": "Alege un canal de feedback"
         },
         "github": {
@@ -5997,7 +5997,7 @@
         "select": "Modifică directorul",
         "select_error": "Schimbarea directorului de date a eșuat",
         "select_error_in_app_path": "Noua cale este aceeași cu calea de instalare a aplicației, te rugăm să selectezi o altă cale",
-        "select_error_protected_path": "Calea selectată este protejată de sistemul de operare sau de Cherry Studio. Vă rugăm să alegeți un alt folder.",
+        "select_error_protected_path": "Calea selectată este protejată de sistemul de operare sau de Wind Studio. Vă rugăm să alegeți un alt folder.",
         "select_error_root_path": "Noua cale nu poate fi calea rădăcină",
         "select_error_same_path": "Noua cale este aceeași cu vechea cale, te rugăm să selectezi o altă cale",
         "select_error_write_permission": "Noua cale nu are permisiuni de scriere",
@@ -6616,7 +6616,7 @@
       "remove": "Remove tool",
       "removeConfirmMessage": "Are you sure you want to remove \"{{name}}\"? The binary will be deleted.",
       "removeConfirmTitle": "Remove Tool",
-      "removeDefinitionOnlyConfirmMessage": "Cherry nu a putut curăța în siguranță \"{{name}}\". Eliminarea doar a definiției va ascunde cardul, dar va lăsa fișierele sale de backend instalate. Continuați?",
+      "removeDefinitionOnlyConfirmMessage": "Wind Studio nu a putut curăța în siguranță \"{{name}}\". Eliminarea doar a definiției va ascunde cardul, dar va lăsa fișierele sale de backend instalate. Continuați?",
       "removeDefinitionOnlyConfirmTitle": "Elimină doar definiția?",
       "removeDefinitionOnlyDependents": "Instrumentele instalate depind de el: {{dependents}}.",
       "removeError": "Nu s-a putut elimina instrumentul",
@@ -6648,7 +6648,7 @@
         "uv": "Python package manager for MCP services and dependency installation."
       },
       "uninstall": "Dezinstalare",
-      "uninstallConfirmMessage": "Sigur doriți să dezinstalați \"{{name}}\"? Copia de backend a Cherry Studio va fi ștearsă.",
+      "uninstallConfirmMessage": "Sigur doriți să dezinstalați \"{{name}}\"? Copia de backend a Wind Studio va fi ștearsă.",
       "uninstallConfirmTitle": "Instrument de dezinstalare",
       "uninstallFailed": "Nu s-a putut dezinstala instrumentul",
       "uninstallSuccess": "Instrument dezinstalat",
@@ -7838,7 +7838,7 @@
         "cherryIn": {
           "description": "Autentifică-te cu serverul tău auto-găzduit New-API folosind OAuth 2.0 (PKCE)",
           "logged_in": "Conectat prin OAuth",
-          "login_button": "Autorizează cu CherryIN",
+          "login_button": "Autorizează cu WindIN",
           "logout_button": "Deconectare",
           "not_logged_in": "Neautentificat",
           "register_account": "Create account",

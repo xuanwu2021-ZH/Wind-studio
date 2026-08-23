@@ -153,28 +153,28 @@ export class AppMenuService extends BaseService {
             type: 'custom',
             label: appMenu.website,
             click: () => {
-              void shell.openExternal('https://cherry-ai.com')
+              void shell.openExternal('https://windbot.cn')
             }
           },
           {
             type: 'custom',
             label: appMenu.documentation,
             click: () => {
-              void shell.openExternal('https://cherry-ai.com/docs')
+              void shell.openExternal('https://windbot.cn/docs')
             }
           },
           {
             type: 'custom',
             label: appMenu.feedback,
             click: () => {
-              void shell.openExternal('https://github.com/CherryHQ/cherry-studio/issues/new/choose')
+              void shell.openExternal('https://windbot.cn')
             }
           },
           {
             type: 'custom',
             label: appMenu.releases,
             click: () => {
-              void shell.openExternal('https://github.com/CherryHQ/cherry-studio/releases')
+              void shell.openExternal('https://windbot.cn')
             }
           }
         ]

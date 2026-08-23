@@ -71,7 +71,7 @@ describe('useProviderConnectionCheck', () => {
     inputApiKey = 'sk-a,sk-b'
 
     useProviderMock.mockReturnValue({
-      provider: { id: 'cherryin', name: 'CherryIN', isEnabled: false },
+      provider: { id: 'cherryin', name: 'WindIN', isEnabled: false },
       enableProvider: enableProviderMock
     })
     useModelsMock.mockReturnValue({
@@ -274,7 +274,7 @@ describe('useProviderConnectionCheck', () => {
 
   it('does not patch an already enabled provider after a successful model connection check', async () => {
     useProviderMock.mockReturnValue({
-      provider: { id: 'cherryin', name: 'CherryIN', isEnabled: true },
+      provider: { id: 'cherryin', name: 'WindIN', isEnabled: true },
       enableProvider: enableProviderMock
     })
     const { result } = renderHook(() => useProviderConnectionCheck('cherryin'))

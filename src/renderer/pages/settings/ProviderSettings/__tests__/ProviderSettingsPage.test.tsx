@@ -82,11 +82,11 @@ describe('ProviderSettingsPage', () => {
     })
   })
 
-  it('does not select CherryAI when it is remembered or requested by URL', async () => {
+  it('does not select WindAI when it is remembered or requested by URL', async () => {
     MockUseCacheUtils.setPersistCacheValue('settings.provider.last_selected_provider_id', 'cherryai')
     searchMock = { id: 'cherryai' }
     useProvidersMock.mockReturnValue({
-      providers: [{ id: 'cherryai', name: 'CherryAI', isEnabled: true }, ...providers]
+      providers: [{ id: 'cherryai', name: 'WindAI', isEnabled: true }, ...providers]
     })
 
     render(<ProviderSettingsPage />)

@@ -9,8 +9,8 @@ import { setupTestDatabase } from '@test-helpers/db'
 import { eq } from 'drizzle-orm'
 import { describe, expect, it, vi } from 'vitest'
 
-// Stub the registry loader with CherryIN plus a future `my-relay` preset.
-// `google-generate-content` is deliberately present for CherryIN but ABSENT
+// Stub the registry loader with WindIN plus a future `my-relay` preset.
+// `google-generate-content` is deliberately present for WindIN but ABSENT
 // from the persisted rows below — modelling an install seeded before the
 // registry gained that endpoint (#17096). `my-relay` models a later registry
 // id collision with an already-persisted fully custom provider.
@@ -72,7 +72,7 @@ describe('ProviderService read-time registry merge (#17096)', () => {
     await dbh.db.insert(userProviderTable).values({
       providerId: 'cherryin',
       presetProviderId: 'cherryin',
-      name: 'CherryIN',
+      name: 'WindIN',
       endpointConfigs: {
         [ENDPOINT_TYPE.OPENAI_CHAT_COMPLETIONS]: {
           baseUrl: 'https://open.cherryin.net',
@@ -101,7 +101,7 @@ describe('ProviderService read-time registry merge (#17096)', () => {
     await dbh.db.insert(userProviderTable).values({
       providerId: 'cherryin',
       presetProviderId: 'cherryin',
-      name: 'CherryIN',
+      name: 'WindIN',
       endpointConfigs: {
         [ENDPOINT_TYPE.OPENAI_CHAT_COMPLETIONS]: {
           baseUrl: 'https://proxy.corp.example/v1', // user override
@@ -156,7 +156,7 @@ describe('ProviderService read-time registry merge (#17096)', () => {
     await dbh.db.insert(userProviderTable).values({
       providerId: 'cherryin',
       presetProviderId: 'cherryin',
-      name: 'CherryIN',
+      name: 'WindIN',
       orderKey: 'a0'
     })
 
@@ -172,7 +172,7 @@ describe('ProviderService read-time registry merge (#17096)', () => {
     await dbh.db.insert(userProviderTable).values({
       providerId: 'cherryin',
       presetProviderId: 'cherryin',
-      name: 'CherryIN',
+      name: 'WindIN',
       orderKey: 'a0'
     })
 
@@ -200,14 +200,14 @@ describe('ProviderService read-time registry merge (#17096)', () => {
     await dbh.db.insert(userProviderTable).values({
       providerId: 'cherryin',
       presetProviderId: 'cherryin',
-      name: 'CherryIN',
+      name: 'WindIN',
       orderKey: 'a0'
     })
 
     // The provider editor echoes the current runtime endpoint while renaming.
     // That baseline value must not become a stored override.
     providerService.update('cherryin', {
-      name: 'Renamed CherryIN',
+      name: 'Renamed WindIN',
       defaultChatEndpoint: ENDPOINT_TYPE.OPENAI_CHAT_COMPLETIONS
     })
     let [row] = await dbh.db.select().from(userProviderTable).where(eq(userProviderTable.providerId, 'cherryin'))
@@ -232,7 +232,7 @@ describe('ProviderService read-time registry merge (#17096)', () => {
     await dbh.db.insert(userProviderTable).values({
       providerId: 'cherryin',
       presetProviderId: 'cherryin',
-      name: 'CherryIN',
+      name: 'WindIN',
       orderKey: 'a0'
     })
 
@@ -259,7 +259,7 @@ describe('ProviderService read-time registry merge (#17096)', () => {
     await dbh.db.insert(userProviderTable).values({
       providerId: 'cherryin',
       presetProviderId: 'cherryin',
-      name: 'CherryIN',
+      name: 'WindIN',
       endpointConfigs: {
         [ENDPOINT_TYPE.OPENAI_CHAT_COMPLETIONS]: {
           baseUrl: 'https://open.cherryin.net',

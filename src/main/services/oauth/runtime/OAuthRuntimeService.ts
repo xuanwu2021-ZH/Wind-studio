@@ -194,7 +194,7 @@ export class OAuthRuntimeService extends BaseService {
 
         const client = await definition.createClient(callback.context)
         const tokenData = await client.exchangeCode(callback.code, callback.codeVerifier)
-        // Persist before the side-effect fetch (CherryIN's API-key pull): the
+        // Persist before the side-effect fetch (WindIN's API-key pull): the
         // auth code is spent, so a transient key-fetch failure must not throw
         // away a valid token and force the user through the whole flow again.
         await this.persistTokens(definition, tokenData)
@@ -293,7 +293,7 @@ export class OAuthRuntimeService extends BaseService {
    * fresh token; this owns token fetch, the not-signed-in guard, and the retry —
    * keeping that logic in one place instead of per-provider fetch wrappers.
    *
-   * `options.context` is threaded into token fetch/refresh (CherryIN needs its
+   * `options.context` is threaded into token fetch/refresh (WindIN needs its
    * `apiHost`); `options.onUnauthorized` runs when the request is still 401 after
    * the retry, for the caller's diagnostic logging.
    */

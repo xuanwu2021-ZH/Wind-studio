@@ -457,13 +457,13 @@ export const oauthCardClasses = {
   loginFooterLink:
     'h-auto min-h-0 p-0 text-xs text-muted-foreground shadow-none hover:bg-transparent hover:text-foreground',
   loginFooterDivider: 'text-xs text-foreground-tertiary',
-  /** CherryIN portal link — matches scoped caption + primary link treatment. */
+  /** WindIN portal link — matches scoped caption + primary link treatment. */
   externalLink: 'mt-1 inline-block text-xs leading-tight text-link',
-  /** Logged-in CherryIN: mock CherryIN account section — one row, no stat grid. */
+  /** Logged-in WindIN: mock WindIN account section — one row, no stat grid. */
   shellLoggedIn: 'w-full min-w-0 overflow-hidden rounded-xl border border-border-subtle px-3 py-2.5',
   loggedInRow: 'flex w-full min-w-0 flex-wrap items-center justify-between gap-3',
   profileMeta: 'flex min-w-0 flex-1 items-center gap-3',
-  /** Avatar: 32px round avatar, primary fill, initials (/ CherryIN row). */
+  /** Avatar: 32px round avatar, primary fill, initials (/ WindIN row). */
   avatarSm:
     'flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground',
   nameBlock: 'min-w-0',
@@ -479,7 +479,7 @@ export const oauthCardClasses = {
   inlineBalanceLabel: 'text-xs text-muted-foreground',
   inlineBalanceValue: 'text-sm leading-tight text-foreground tabular-nums',
   balanceValueSkeleton: 'inline-block w-20',
-  /** CherryIN top-up CTA — solid primary background, white label (compact inline size). */
+  /** WindIN top-up CTA — solid primary background, white label (compact inline size). */
   topupPrimaryButton: 'h-auto min-h-0 px-2.5 py-[3px] text-xs shadow-none',
   logoutCompact:
     'h-auto min-h-0 rounded-md px-1.5 py-[3px] text-xs text-muted-foreground shadow-none hover:bg-transparent hover:text-foreground',

@@ -273,7 +273,7 @@ describe('DiagnosticBundleDialog', () => {
     expect(mocks.toastError).toHaveBeenCalledWith('settings.about.diagnostics.errors.email_client_failed')
 
     await user.click(copyButton)
-    await waitFor(() => expect(clipboardWrite).toHaveBeenCalledWith('support@cherry-ai.com'))
+    await waitFor(() => expect(clipboardWrite).toHaveBeenCalledWith('support@windbot.cn'))
     expect(mocks.toastSuccess).toHaveBeenCalledWith('settings.about.diagnostics.success.email_copied')
   })
 })

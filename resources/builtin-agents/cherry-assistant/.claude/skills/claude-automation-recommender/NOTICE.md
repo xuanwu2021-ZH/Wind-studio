@@ -8,20 +8,20 @@ sub-skill of it), authored by Anthropic and originally published at:
 - License: Apache License 2.0 (see `LICENSE` in this directory)
 - Author: Isabella He <isabella@anthropic.com>, Anthropic
 
-It is bundled into Cherry Assistant under the terms of the Apache 2.0 license.
+It is bundled into Wind Assistant under the terms of the Apache 2.0 license.
 The original `plugin.json` wrapper has been omitted — only the skill itself is
-shipped, since Cherry Studio's runtime loads `.claude/skills/*` directly.
+shipped, since Wind Studio's runtime loads `.claude/skills/*` directly.
 
 ## Modifications from upstream
 
-Per Apache License 2.0 §4(b), this section lists notable changes Cherry Studio
+Per Apache License 2.0 §4(b), this section lists notable changes Wind Studio
 made to the upstream `SKILL.md`:
 
 - **Added `## Workflow → Phase 0: Confirm Before Scanning` section** before the
   original Phase 1. The upstream skill starts scanning immediately on trigger;
-  the Cherry Studio addition requires the agent to first announce the token
+  the Wind Studio addition requires the agent to first announce the token
   budget (~20–40K) and obtain explicit user confirmation before any filesystem
-  read or Bash call. Rationale: Cherry Assistant runs in interactive chat
+  read or Bash call. Rationale: Wind Assistant runs in interactive chat
   sessions where unexpected long scans degrade the UX. The confirmation gate
   lets the user opt for a narrower scope, a verbal-only consultation, or
   deferral. No other behavior is changed.

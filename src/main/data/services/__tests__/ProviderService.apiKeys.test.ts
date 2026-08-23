@@ -60,7 +60,7 @@ describe('ProviderService API keys', () => {
   async function seedManagedCherryAiProvider() {
     await dbh.db.insert(userProviderTable).values({
       providerId: CHERRYAI_PROVIDER_ID,
-      name: 'CherryAI',
+      name: 'WindAI',
       orderKey: generateOrderKeyBetween(null, null),
       apiKeys: [{ id: 'managed-key', key: 'sk-managed', label: 'Managed', isEnabled: true }],
       isEnabled: true
@@ -323,7 +323,7 @@ describe('ProviderService API keys', () => {
     expect(err).toMatchObject({ code: ErrorCode.NOT_FOUND })
   })
 
-  it('rejects API key mutations for the managed CherryAI provider', async () => {
+  it('rejects API key mutations for the managed WindAI provider', async () => {
     await seedManagedCherryAiProvider()
 
     expect(captureError(() => providerService.addApiKey(CHERRYAI_PROVIDER_ID, 'sk-new'))).toMatchObject({

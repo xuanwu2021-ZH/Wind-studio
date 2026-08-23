@@ -1,5 +1,5 @@
 /**
- * Custom DataUIPart schemas for Cherry Studio.
+ * Custom DataUIPart schemas for Wind Studio.
  *
  * These extend AI SDK's UIMessage.parts with application-specific
  * part types that have no built-in equivalent.
@@ -113,7 +113,7 @@ export interface CodePartData {
 // ============================================================================
 
 /**
- * All custom DataUIPart types for Cherry Studio.
+ * All custom DataUIPart types for Wind Studio.
  * Used with `useChat({ dataPartSchemas })` to enable type-safe custom parts.
  */
 export type CherryDataPartTypes = {

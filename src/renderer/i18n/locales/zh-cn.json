@@ -33,7 +33,7 @@
     },
     "builtin": {
       "cherry_assistant": {
-        "description": "Cherry Studio 内置使用顾问。诊断问题、引导操作、收录 FAQ、提交 Bug/需求、搜索和创建 Skills"
+        "description": "Wind Studio 内置使用顾问。诊断问题、引导操作、收录 FAQ、提交 Bug/需求、搜索和创建 Skills"
       }
     },
     "channels": {
@@ -995,23 +995,23 @@
           "description": "使用你配置的绘画模型根据文本提示生成图片",
           "label": "生成图片"
         },
-        "CherryKbManage": {
+        "WindKbManage": {
           "description": "添加、删除或刷新知识库中的文档",
           "label": "知识库管理"
         },
-        "CherryKbSearch": {
+        "WindKbSearch": {
           "description": "搜索你的知识库",
           "label": "知识库搜索"
         },
-        "CherryNotify": {
+        "WindNotify": {
           "description": "通过已连接的频道发送通知",
           "label": "通知"
         },
-        "CherryWebFetch": {
+        "WindWebFetch": {
           "description": "抓取并读取网页",
           "label": "网页抓取"
         },
-        "CherryWebSearch": {
+        "WindWebSearch": {
           "description": "通过你配置的提供方搜索网页",
           "label": "网页搜索"
         },
@@ -1098,7 +1098,7 @@
     "authHeader": {
       "title": "授权标头"
     },
-    "description": "通过 OpenAI 和 Anthropic 兼容的 HTTP API 暴露 Cherry Studio 的 AI 功能",
+    "description": "通过 OpenAI 和 Anthropic 兼容的 HTTP API 暴露 Wind Studio 的 AI 功能",
     "documentation": {
       "title": "API 文档"
     },
@@ -1446,8 +1446,8 @@
     },
     "deeply_thought": "已深度思考（用时 {{seconds}} 秒）",
     "default": {
-      "description": "你好，我是 Cherry 助手。你可以立刻开始跟我聊天",
-      "name": "Cherry 助手",
+      "description": "你好，我是 Wind 助手。你可以立刻开始跟我聊天",
+      "name": "Wind 助手",
       "topic": {
         "name": "默认对话"
       }
@@ -2139,7 +2139,7 @@
     },
     "api_gateway": {
       "description": "任意 CLI，畅用全部模型",
-      "requires_running": "启用后请保持 Cherry Studio 运行，外部 CLI 才能连接到它托管的网关。",
+      "requires_running": "启用后请保持 Wind Studio 运行，外部 CLI 才能连接到它托管的网关。",
       "title": "统一网关"
     },
     "apply_failed": "写入 CLI 配置到系统文件失败",
@@ -4682,7 +4682,7 @@
       "missing_model": "请先启用该服务商下的至少一个模型",
       "missing_provider": "请先启用一个服务商",
       "next": "下一步",
-      "subtitle": "添加 API Key 或登录 CherryIN，然后启用一个服务商。",
+      "subtitle": "添加 API Key 或登录 WindIN，然后启用一个服务商。",
       "title": "选择服务商"
     },
     "select_model": {
@@ -4694,21 +4694,21 @@
     "skip": "稍后设置",
     "toast": {
       "complete_failed": "无法完成引导，请重试",
-      "connected": "成功连接 CherryIN"
+      "connected": "成功连接 WindIN"
     },
     "welcome": {
-      "login_cherryin": "连接 CherryIN",
+      "login_cherryin": "连接 WindIN",
       "or_continue_with": "或",
       "other_provider": "配置其他服务商",
       "select_other_provider": "选择其他服务商",
       "setup_hint": "您可以随时在设置中更换服务商",
       "subtitle": "连接服务商，开启您的全能 AI 工作站",
-      "title": "欢迎使用 Cherry Studio"
+      "title": "欢迎使用 Wind Studio"
     }
   },
   "openclaw": {
     "checking_installation": "正在检查 OpenClaw 安装状态...",
-    "description": "使用 Cherry Studio 服务商为 OpenClaw 提供支持，OpenClaw 是您的个人 AI 助手，可在 WhatsApp、Telegram、Slack、Discord 等平台上使用。",
+    "description": "使用 Wind Studio 服务商为 OpenClaw 提供支持，OpenClaw 是您的个人 AI 助手，可在 WhatsApp、Telegram、Slack、Discord 等平台上使用。",
     "error": {
       "select_provider_model": "请先选择服务商和模型"
     },
@@ -4729,7 +4729,7 @@
     },
     "installed_at": "OpenClaw 安装路径",
     "migration": {
-      "description": "检测到 PATH 中存在外部 OpenClaw 安装，但 Cherry Studio 只使用托管的 OpenClaw 二进制文件。请安装托管版本后继续。",
+      "description": "检测到 PATH 中存在外部 OpenClaw 安装，但 Wind Studio 只使用托管的 OpenClaw 二进制文件。请安装托管版本后继续。",
       "install_button": "重新安装 OpenClaw",
       "title": "OpenClaw 需要更新"
     },
@@ -5232,8 +5232,8 @@
     "baidu-cloud": "百度云千帆",
     "burncloud": "BurnCloud",
     "cerebras": "Cerebras AI",
-    "cherryai": "CherryAI",
-    "cherryin": "CherryIN",
+    "cherryai": "WindAI",
+    "cherryin": "WindIN",
     "claude-code": "Claude Code",
     "copilot": "GitHub Copilot",
     "dashscope": "阿里云百炼",
@@ -5643,7 +5643,7 @@
           },
           "description": {
             "0": "划词助手需「<strong>辅助功能权限</strong>」才能正常工作。",
-            "1": "请点击「<strong>去设置</strong>」，并在稍后弹出的权限请求弹窗中点击 「<strong>打开系统设置</strong>」 按钮，然后在之后的应用列表中找到 「<strong>Cherry Studio</strong>」，并打开权限开关。",
+            "1": "请点击「<strong>去设置</strong>」，并在稍后弹出的权限请求弹窗中点击 「<strong>打开系统设置</strong>」 按钮，然后在之后的应用列表中找到 「<strong>Wind Studio</strong>」，并打开权限开关。",
             "2": "完成设置后，请再次开启划词助手。"
           },
           "title": "辅助功能权限"
@@ -5667,7 +5667,7 @@
         "wayland_checklist_subtitle": "确认以下条件已满足，以尽可能优化 Wayland 下的体验：",
         "wayland_description": "当前为 Wayland 模式，受系统限制，部分桌面环境下工具栏只能显示在屏幕中央，无法跟随选中文本定位。建议切换到 X11 模式以获得完整体验。",
         "wayland_title": "Wayland 模式提示",
-        "xwayland_fail": "未启用，请使用 `--ozone-platform=x11` 参数启动 Cherry Studio",
+        "xwayland_fail": "未启用，请使用 `--ozone-platform=x11` 参数启动 Wind Studio",
         "xwayland_label": "XWayland 模式：",
         "xwayland_pass": "已启用"
       },
@@ -5833,7 +5833,7 @@
         "open": "打开",
         "title": "调试面板"
       },
-      "description": "一款为创造者而生的 AI 助手",
+      "description": "一款专为风资源评估而生的 AI 智能体",
       "diagnostics": {
         "actions": {
           "cancel": "取消",
@@ -5864,8 +5864,8 @@
         "inspecting": "正在准备可导出的内容...",
         "limit": "为控制文件大小，日志和详细记录最多收集 {{size}}，优先保留较新的内容。",
         "mail": {
-          "body": "请协助排查此 Cherry Studio 问题。\n\n诊断包 ID：{{bundleId}}\n版本：{{version}}\n平台：{{platform}}\n时间范围：{{range}}\n文件：{{fileName}}\n\n请将 ZIP 文件作为附件添加到此邮件。诊断包仅保存在本地，没有自动上传。",
-          "subject": "Cherry Studio 诊断包 {{bundleId}}"
+          "body": "请协助排查此 Wind Studio 问题。\n\n诊断包 ID：{{bundleId}}\n版本：{{version}}\n平台：{{platform}}\n时间范围：{{range}}\n文件：{{fileName}}\n\n请将 ZIP 文件作为附件添加到此邮件。诊断包仅保存在本地，没有自动上传。",
+          "subject": "Wind Studio 诊断包 {{bundleId}}"
         },
         "privacy": {
           "consent": "我了解以上内容，并只会私下发送给支持人员。",
@@ -5910,13 +5910,13 @@
       },
       "feedback": {
         "agent": {
-          "description": "通过与 Cherry Assistant 对话反馈问题。",
+          "description": "通过与 Wind Assistant 对话反馈问题。",
           "title": "使用 Agent 提交"
         },
-        "agent_error": "无法为反馈打开 Cherry Assistant，请重试。",
+        "agent_error": "无法为反馈打开 Wind Assistant，请重试。",
         "button": "反馈",
         "dialog": {
-          "description": "选择一种方式反馈问题，帮助我们把 Cherry Studio 做得更好。",
+          "description": "选择一种方式反馈问题，帮助我们把 Wind Studio 做得更好。",
           "title": "选择反馈方式"
         },
         "github": {
@@ -5996,9 +5996,9 @@
         "path_changed_without_copy": "路径已更改成功",
         "restart_notice": "应用可能会重启多次以应用更改",
         "select": "修改目录",
-        "select_error": "所选目录可能正被另一个 Cherry Studio 实例使用。请关闭其他实例后重试；若确认没有实例运行，请删除该目录中遗留的 SingletonLock 和 SingletonSocket 文件。",
+        "select_error": "所选目录可能正被另一个 Wind Studio 实例使用。请关闭其他实例后重试；若确认没有实例运行，请删除该目录中遗留的 SingletonLock 和 SingletonSocket 文件。",
         "select_error_in_app_path": "新路径与应用安装路径相同，请选择其他路径",
-        "select_error_protected_path": "所选路径受操作系统或 Cherry Studio 保护，请选择其他文件夹",
+        "select_error_protected_path": "所选路径受操作系统或 Wind Studio 保护，请选择其他文件夹",
         "select_error_root_path": "新路径不能是根路径",
         "select_error_same_path": "新路径与旧路径相同，请选择其他路径",
         "select_error_write_permission": "新路径没有写入权限",
@@ -6619,14 +6619,14 @@
       "notInstalled": "未安装",
       "openBinariesDir": "打开二进制文件目录",
       "remove": "移除工具",
-      "removeConfirmMessage": "要从 Cherry Studio 中移除 \"{{name}}\" 吗？其可移植工具定义将被删除；如果存在 Cherry 管理的 mise 副本，也会一并清理。系统和应用内置的可执行文件不会被修改。",
+      "removeConfirmMessage": "要从 Wind Studio 中移除 \"{{name}}\" 吗？其可移植工具定义将被删除；如果存在 Wind Studio 管理的 mise 副本，也会一并清理。系统和应用内置的可执行文件不会被修改。",
       "removeConfirmTitle": "移除工具",
-      "removeDefinitionOnlyConfirmMessage": "Cherry 无法安全清理 \"{{name}}\"：{{details}} 仅移除定义会隐藏该卡片，但后端文件仍会保留。是否继续？",
+      "removeDefinitionOnlyConfirmMessage": "Wind Studio 无法安全清理 \"{{name}}\"：{{details}} 仅移除定义会隐藏该卡片，但后端文件仍会保留。是否继续？",
       "removeDefinitionOnlyConfirmTitle": "仅移除定义？",
       "removeDefinitionOnlyDependents": "以下已安装工具依赖它：{{dependents}}。",
       "removeError": "工具移除失败",
       "removeErrorHint": "清理命令执行失败。复制下方日志以便排查或寻求帮助。",
-      "removeRuntimeConfirmMessage": "要从 Cherry Studio 中移除 \"{{name}}\" 吗？Cherry 只会清理其管理的 mise 副本，系统和应用内置的运行时不会被修改。如果已安装的 npm 或 pip 工具依赖此运行时，移除操作会被阻止。",
+      "removeRuntimeConfirmMessage": "要从 Wind Studio 中移除 \"{{name}}\" 吗？Wind Studio 只会清理其管理的 mise 副本，系统和应用内置的运行时不会被修改。如果已安装的 npm 或 pip 工具依赖此运行时，移除操作会被阻止。",
       "runtimeDependency": "运行时依赖",
       "runtimeDependencyHint": "npm/pip 工具使用的运行时",
       "searchFailed": "搜索失败，请查看日志",
@@ -6653,7 +6653,7 @@
         "uv": "用于 MCP 服务与依赖安装的 Python 包管理工具。"
       },
       "uninstall": "卸载",
-      "uninstallConfirmMessage": "确定要卸载 \"{{name}}\" 吗？Cherry Studio 管理的后端副本将被删除。",
+      "uninstallConfirmMessage": "确定要卸载 \"{{name}}\" 吗？Wind Studio 管理的后端副本将被删除。",
       "uninstallConfirmTitle": "卸载工具",
       "uninstallFailed": "工具卸载失败",
       "uninstallSuccess": "工具已卸载",
@@ -6747,7 +6747,7 @@
       "common": {
         "menu": {
           "presentation_mode": {
-            "cherry": "Cherry",
+            "cherry": "Wind",
             "native": "原生",
             "restart": {
               "content": "更改菜单样式需要重启应用才能生效，是否现在重启？",
@@ -7843,9 +7843,9 @@
         "balance_error": "获取余额失败",
         "button": "使用 {{provider}} 账号登录",
         "cherryIn": {
-          "description": "使用 OAuth 2.0 登录 CherryIN",
+          "description": "使用 OAuth 2.0 登录 WindIN",
           "logged_in": "已通过 OAuth 登录",
-          "login_button": "CherryIN 授权登录",
+          "login_button": "WindIN 授权登录",
           "logout_button": "退出登录",
           "not_logged_in": "未登录",
           "register_account": "注册账户",

@@ -17,7 +17,7 @@ const electronMocks = vi.hoisted(() => ({
 vi.mock('electron', () => ({
   app: {
     getLocale: electronMocks.getLocale,
-    getName: () => 'Cherry Studio',
+    getName: () => 'Wind Studio',
     getVersion: electronMocks.getVersion,
     isPackaged: true
   },
@@ -135,7 +135,7 @@ describe('DiagnosticBundleService', () => {
     expect(manifest.crashDumps.files).toHaveLength(1)
     expect(manifest.system.application).toEqual({
       isPackaged: true,
-      name: 'Cherry Studio',
+      name: 'Wind Studio',
       version: '2.0.0-test'
     })
     expect(manifest.system.operatingSystem).toMatchObject({ locale: 'en-US' })

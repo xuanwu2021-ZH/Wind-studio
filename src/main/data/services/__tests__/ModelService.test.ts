@@ -185,7 +185,7 @@ describe('ModelService.update', () => {
   }
 
   async function seedManagedCherryAiDefaultModel() {
-    await dbh.db.insert(userProviderTable).values(providerRow(CHERRYAI_PROVIDER_ID, 'CherryAI'))
+    await dbh.db.insert(userProviderTable).values(providerRow(CHERRYAI_PROVIDER_ID, 'WindAI'))
     await dbh.db.insert(userModelTable).values(
       modelRow(CHERRYAI_PROVIDER_ID, CHERRYAI_DEFAULT_MODEL_ID, {
         id: CHERRYAI_DEFAULT_UNIQUE_MODEL_ID,
@@ -457,7 +457,7 @@ describe('ModelService.update', () => {
     expect(result.contextWindow).toBe(128_000)
   })
 
-  it('allows an empty PATCH for the managed CherryAI default model', async () => {
+  it('allows an empty PATCH for the managed WindAI default model', async () => {
     await seedManagedCherryAiDefaultModel()
 
     const result = modelService.update(CHERRYAI_PROVIDER_ID, CHERRYAI_DEFAULT_MODEL_ID, {})
@@ -466,7 +466,7 @@ describe('ModelService.update', () => {
     expect(result.isEnabled).toBe(true)
   })
 
-  it('rejects PATCHes for the managed CherryAI default model', async () => {
+  it('rejects PATCHes for the managed WindAI default model', async () => {
     await seedManagedCherryAiDefaultModel()
 
     let err: unknown
@@ -661,8 +661,8 @@ describe('ModelService.create', () => {
     })
   })
 
-  it('rejects create for the managed CherryAI default model', async () => {
-    await dbh.db.insert(userProviderTable).values(providerRow(CHERRYAI_PROVIDER_ID, 'CherryAI'))
+  it('rejects create for the managed WindAI default model', async () => {
+    await dbh.db.insert(userProviderTable).values(providerRow(CHERRYAI_PROVIDER_ID, 'WindAI'))
 
     let err: unknown
     try {
@@ -1700,8 +1700,8 @@ describe('ModelService.delete', () => {
     })
   })
 
-  it('rejects deletion of the managed CherryAI default model and preserves pins', async () => {
-    await dbh.db.insert(userProviderTable).values(providerRow(CHERRYAI_PROVIDER_ID, 'CherryAI'))
+  it('rejects deletion of the managed WindAI default model and preserves pins', async () => {
+    await dbh.db.insert(userProviderTable).values(providerRow(CHERRYAI_PROVIDER_ID, 'WindAI'))
     await dbh.db.insert(userModelTable).values(
       modelRow(CHERRYAI_PROVIDER_ID, CHERRYAI_DEFAULT_MODEL_ID, {
         id: CHERRYAI_DEFAULT_UNIQUE_MODEL_ID,
@@ -1957,10 +1957,10 @@ describe('ModelService.bulkDelete', () => {
     expect(rows.map((row) => row.id).sort()).toEqual([siblingModelId, targetModelId].sort())
   })
 
-  it('rejects managed CherryAI default model deletes before writing other rows', async () => {
+  it('rejects managed WindAI default model deletes before writing other rows', async () => {
     await dbh.db
       .insert(userProviderTable)
-      .values([providerRow(CHERRYAI_PROVIDER_ID, 'CherryAI'), providerRow('openai', 'OpenAI')])
+      .values([providerRow(CHERRYAI_PROVIDER_ID, 'WindAI'), providerRow('openai', 'OpenAI')])
     await dbh.db.insert(userModelTable).values([
       modelRow(CHERRYAI_PROVIDER_ID, CHERRYAI_DEFAULT_MODEL_ID, {
         id: CHERRYAI_DEFAULT_UNIQUE_MODEL_ID,
@@ -2071,12 +2071,12 @@ describe('ModelService.bulkUpdate', () => {
     expect(row.name).toBeNull()
   })
 
-  it('rejects managed CherryAI default model PATCHes before writing other rows', async () => {
+  it('rejects managed WindAI default model PATCHes before writing other rows', async () => {
     const [cherryAiOrderKey, openAiOrderKey] = generateOrderKeySequence(2)
     await dbh.db
       .insert(userProviderTable)
       .values([
-        providerRow(CHERRYAI_PROVIDER_ID, 'CherryAI', cherryAiOrderKey),
+        providerRow(CHERRYAI_PROVIDER_ID, 'WindAI', cherryAiOrderKey),
         providerRow('openai', 'OpenAI', openAiOrderKey)
       ])
     await dbh.db.insert(userModelTable).values([
@@ -2333,8 +2333,8 @@ describe('ModelService.reconcileForProvider', () => {
     warnSpy.mockRestore()
   })
 
-  it('does not remove the managed CherryAI default model during reconcile', async () => {
-    await dbh.db.insert(userProviderTable).values(providerRow(CHERRYAI_PROVIDER_ID, 'CherryAI'))
+  it('does not remove the managed WindAI default model during reconcile', async () => {
+    await dbh.db.insert(userProviderTable).values(providerRow(CHERRYAI_PROVIDER_ID, 'WindAI'))
     await dbh.db.insert(userModelTable).values(
       modelRow(CHERRYAI_PROVIDER_ID, CHERRYAI_DEFAULT_MODEL_ID, {
         id: CHERRYAI_DEFAULT_UNIQUE_MODEL_ID,
@@ -2357,7 +2357,7 @@ describe('ModelService.reconcileForProvider', () => {
     const pins = await dbh.db.select().from(pinTable).where(eq(pinTable.id, pin.id))
     expect(rows).toHaveLength(1)
     expect(pins).toHaveLength(1)
-    expect(warnSpy).toHaveBeenCalledWith('Skipped managed CherryAI default model removal during reconcile', {
+    expect(warnSpy).toHaveBeenCalledWith('Skipped managed WindAI default model removal during reconcile', {
       providerId: CHERRYAI_PROVIDER_ID,
       skippedCount: 1,
       skippedIds: [CHERRYAI_DEFAULT_UNIQUE_MODEL_ID]

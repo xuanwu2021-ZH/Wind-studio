@@ -105,7 +105,7 @@ describe('ApiHost', () => {
     useProviderMetaMock.mockReturnValue({
       isConnectionFieldVisible: true,
       isAzureOpenAI: false,
-      isCherryIN: false,
+      isWindIN: false,
       isChineseUser: false
     })
   })
@@ -307,7 +307,7 @@ describe('ApiHost', () => {
     useProviderMetaMock.mockReturnValue({
       isConnectionFieldVisible: false,
       isAzureOpenAI: false,
-      isCherryIN: false,
+      isWindIN: false,
       isChineseUser: false
     })
     useProviderHostPreviewMock.mockReturnValue({

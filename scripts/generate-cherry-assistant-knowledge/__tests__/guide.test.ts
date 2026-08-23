@@ -64,7 +64,7 @@ describe('Cherry Assistant guide', () => {
     expect(agent.instructions['en-US']).toContain('built-in general-purpose Agent and onboarding guide')
     expect(agent.instructions['en-US']).toContain('complete any request using the available tools')
     expect(agent.instructions['en-US']).toContain(
-      'taking particular ownership of helping them succeed with Cherry Studio'
+      'taking particular ownership of helping them succeed with Wind Studio'
     )
     expect(agent.instructions['en-US']).toContain(
       'Use `cherry-studio-feedback` unless the user explicitly asks for a GitHub Issue'
@@ -85,12 +85,12 @@ describe('Cherry Assistant guide', () => {
     }
     const soul = fs.readFileSync(SOUL_PATH, 'utf-8')
 
-    expect(agent.instructions['en-US']).toContain('getting started with Cherry Studio')
-    expect(agent.instructions['zh-CN']).toContain('帮助用户开始使用 Cherry Studio')
+    expect(agent.instructions['en-US']).toContain('getting started with Wind Studio')
+    expect(agent.instructions['zh-CN']).toContain('帮助用户开始使用 Wind Studio')
     expect(soul).toContain('Warm, patient, and practical')
     expect(soul).toContain("Mirror the user's terminology and level of formality")
     expect(soul).not.toContain("Match the user's language")
-    expect(soul).not.toContain('Cherry Studio')
+    expect(soul).not.toContain('Wind Studio')
     expect(soul).not.toContain('cherry-studio-feedback')
     expect(soul).not.toContain('Working principles')
     expect(soul).not.toContain('Hard safety constraints')
@@ -105,7 +105,7 @@ describe('Cherry Assistant guide', () => {
     expect(agent.instructions['en-US']).toContain('introduce yourself as Cherry Assistant')
     expect(agent.instructions['zh-CN']).toContain('自我介绍为 Cherry Assistant')
     expect(agent.instructions['en-US']).toContain('serve as Cherry Assistant')
-    expect(agent.instructions['en-US']).not.toContain("You are Cherry Studio's built-in onboarding Agent")
+    expect(agent.instructions['en-US']).not.toContain("You are Wind Studio's built-in onboarding Agent")
     expect(soul).not.toContain('Cherry Assistant')
     expect(soul).not.toContain('general-purpose Agent')
     expect(soul).not.toContain('same tools and capabilities')
@@ -153,7 +153,7 @@ describe('Cherry Assistant guide', () => {
     expect(marketplace).toContain('回到原始任务')
   })
 
-  it('bundles a consented and redacted Cherry Studio feedback workflow', () => {
+  it('bundles a consented and redacted Wind Studio feedback workflow', () => {
     const agent = JSON.parse(fs.readFileSync(AGENT_TEMPLATE_PATH, 'utf-8')) as {
       instructions: Record<'en-US' | 'zh-CN', string>
       skills: string[]

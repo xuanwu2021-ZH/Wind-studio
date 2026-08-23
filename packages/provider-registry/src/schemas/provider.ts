@@ -167,7 +167,7 @@ export const ProviderConfigSchema = z
     /**
      * Which credential kinds the provider accepts — the auth UIs to surface and
      * the runtime credential semantics. A *set*, because a provider can offer
-     * more than one (CherryIN takes both a user API key and an app-managed OAuth
+     * more than one (WindIN takes both a user API key and an app-managed OAuth
      * login). Members:
      * - `'api-key'` — user-entered key (the api-key/host inputs).
      * - `'oauth'` — app-managed OAuth session the app holds and refreshes.

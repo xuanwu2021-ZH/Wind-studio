@@ -20,7 +20,7 @@ describe('DefaultAssistantSeeder', () => {
   const UUID_V4_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/
 
   async function runCherryAiModelDependencySeed() {
-    // Provides the CherryAI model row the default assistant's modelId FK requires
+    // Provides the WindAI model row the default assistant's modelId FK requires
     new CherryAiDefaultModelSeeder().run(dbh.db)
   }
 
@@ -29,7 +29,7 @@ describe('DefaultAssistantSeeder', () => {
     vi.mocked(app.getPreferredSystemLanguages).mockReturnValue(['en-US'])
   })
 
-  it('seeds the default assistant when only the CherryAI default model dependency seed has run', async () => {
+  it('seeds the default assistant when only the WindAI default model dependency seed has run', async () => {
     await runCherryAiModelDependencySeed()
 
     new DefaultAssistantSeeder().run(dbh.db)

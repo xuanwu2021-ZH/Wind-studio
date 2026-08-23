@@ -1,7 +1,7 @@
 # @cherrystudio/ai-sdk-provider
 
-CherryIN provider bundle for the [Vercel AI SDK](https://ai-sdk.dev/).  
-It exposes the CherryIN OpenAI-compatible entrypoints and dynamically routes Anthropic and Gemini model ids to their CherryIN upstream equivalents.
+WindIN provider bundle for the [Vercel AI SDK](https://ai-sdk.dev/).  
+It exposes the WindIN OpenAI-compatible entrypoints and dynamically routes Anthropic and Gemini model ids to their WindIN upstream equivalents.
 
 ## Installation
 
@@ -31,7 +31,7 @@ const openaiModel = cherryInProvider.chat('gpt-4o-mini')
 const anthropicModel = cherryInProvider.chat('claude-3-5-sonnet-latest')
 const geminiModel = cherryInProvider.chat('gemini-2.0-pro-exp')
 
-const { text } = await openaiModel.invoke('Hello CherryIN!')
+const { text } = await openaiModel.invoke('Hello WindIN!')
 ```
 
 The provider also exposes `completion`, `responses`, `embedding`, `image`, `transcription`, and `speech` helpers aligned with the upstream APIs.

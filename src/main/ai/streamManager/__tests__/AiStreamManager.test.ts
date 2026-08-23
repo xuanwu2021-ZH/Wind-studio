@@ -1036,7 +1036,7 @@ describe('AiStreamManager', () => {
         type: 'tool-input-available',
         toolCallId: 'call-1',
         toolName: 'search',
-        input: { query: 'Cherry Studio' }
+        input: { query: 'Wind Studio' }
       } as UIMessageChunk)
       approvalMgr.onChunk('a', 'provider-a::model-a', {
         type: 'tool-approval-request',
@@ -1071,7 +1071,7 @@ describe('AiStreamManager', () => {
         type: 'tool-input-available',
         toolCallId: 'call-1',
         toolName: 'search',
-        input: { query: 'Cherry Studio' }
+        input: { query: 'Wind Studio' }
       } as UIMessageChunk)
       for (let i = 0; i < 2; i++) {
         approvalMgr.onChunk('a', 'provider-a::model-a', {

@@ -37,7 +37,7 @@ const anthropicProvider = {
  * google-generate-content endpoint and no GEMINI_AGGREGATOR_BASE_URLS entry. */
 const cherryinProvider = {
   id: 'cherryin',
-  name: 'CherryIN',
+  name: 'WindIN',
   defaultChatEndpoint: 'openai-chat-completions',
   endpointConfigs: {
     'anthropic-messages': { baseUrl: 'https://open.cherryin.net' },
@@ -154,7 +154,7 @@ describe('writeCliConfigDraft', () => {
       })
     })
 
-    it('normalizes a versioned CherryIN endpoint before writing Claude Code config', async () => {
+    it('normalizes a versioned WindIN endpoint before writing Claude Code config', async () => {
       const versionedCherryinProvider = {
         ...cherryinProvider,
         endpointConfigs: {
@@ -672,7 +672,7 @@ describe('writeCliConfigDraft', () => {
       const providerWithRequestOptions = {
         ...openaiCompatProvider,
         settings: {
-          extraHeaders: { 'HTTP-Referer': 'https://cherry-ai.com', 'X-Title': 'Cherry Studio' }
+          extraHeaders: { 'HTTP-Referer': 'https://windbot.cn', 'X-Title': 'Wind Studio' }
         }
       } as Provider
       mockGet({
@@ -688,8 +688,8 @@ describe('writeCliConfigDraft', () => {
 
       const options = JSON.parse(opencodeWrite().content).provider['cherry-DeepSeek'].options
       expect(options.headers).toEqual({
-        'HTTP-Referer': 'https://cherry-ai.com',
-        'X-Title': 'Cherry Studio'
+        'HTTP-Referer': 'https://windbot.cn',
+        'X-Title': 'Wind Studio'
       })
     })
 
@@ -870,7 +870,7 @@ describe('writeCliConfigDraft', () => {
       expect(settings.advanced).toBeUndefined()
     })
 
-    it('resolves a CherryIN-style aggregator base URL from its default chat endpoint', async () => {
+    it('resolves a WindIN-style aggregator base URL from its default chat endpoint', async () => {
       mockGet({
         '/providers/cherryin': () => cherryinProvider,
         '/providers/cherryin/api-keys': () => ({ keys: [enabledKey] }),
@@ -1198,7 +1198,7 @@ describe('writeCliConfigDraft', () => {
       expect(dataApiService.get).not.toHaveBeenCalledWith('/providers/deepseek')
     })
 
-    it('rejects the CherryAI managed default model and writes nothing', async () => {
+    it('rejects the WindAI managed default model and writes nothing', async () => {
       mockGet({ '/models/': () => ({ id: 'qwen' }) })
 
       await expect(

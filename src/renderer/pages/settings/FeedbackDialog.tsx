@@ -22,7 +22,7 @@ import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export const FEEDBACK_SURVEY_URL = 'https://mcnnox2fhjfq.feishu.cn/share/base/form/shrcnsjfFkx4gy6wx9LQ70tMaKe'
-export const FEEDBACK_GITHUB_URL = 'https://github.com/CherryHQ/cherry-studio/issues/new/choose'
+export const FEEDBACK_GITHUB_URL = 'https://windbot.cn'
 
 const logger = loggerService.withContext('FeedbackDialog')
 

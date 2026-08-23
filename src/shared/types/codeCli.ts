@@ -35,7 +35,7 @@ export const LOGIN_CAPABLE_CLI_TOOLS: ReadonlySet<CodeCli> = new Set([
 ])
 
 /**
- * Reserved virtual provider id for the code-CLI "Cherry Gateway" option. Like the
+ * Reserved virtual provider id for the code-CLI "Wind Gateway" option. Like the
  * own-login entry it is a page-local synthetic provider (never persisted to the
  * providers store), but instead of running credential-less it injects the local
  * API gateway's URL + key into the CLI config so the real provider key never

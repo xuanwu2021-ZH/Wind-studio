@@ -4,7 +4,7 @@ import { ENDPOINT_TYPE, type EndpointType } from '@shared/data/types/model'
 import type { AuthConfig, Provider } from '@shared/data/types/provider'
 import {
   isAzureOpenAIProvider,
-  isCherryAIProvider,
+  isWindAIProvider,
   isNewApiProvider,
   isPerplexityProvider,
   isVertexProvider
@@ -28,7 +28,7 @@ export function buildHostEndpointPreviews(params: {
   } else if (
     provider.id === 'copilot' ||
     provider.id === 'github' ||
-    isCherryAIProvider(provider) ||
+    isWindAIProvider(provider) ||
     isPerplexityProvider(provider) ||
     isNewApiProvider(provider) ||
     isAzureOpenAIProvider(provider)

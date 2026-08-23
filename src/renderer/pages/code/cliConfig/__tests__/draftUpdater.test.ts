@@ -140,7 +140,7 @@ describe('updateCliConfigDraftConfig', () => {
     const provider = {
       ...chatProvider,
       settings: {
-        extraHeaders: { 'HTTP-Referer': 'https://cherry-ai.com' }
+        extraHeaders: { 'HTTP-Referer': 'https://windbot.cn' }
       }
     } as Provider
     const files = await buildDraft(CodeCli.OPEN_CODE, provider, 'deepseek-chat')
@@ -151,7 +151,7 @@ describe('updateCliConfigDraftConfig', () => {
     expect(config.provider['cherry-DeepSeek'].options).toEqual({
       apiKey: 'sk-secret',
       baseURL: 'https://api.deepseek.com/v1',
-      headers: { 'HTTP-Referer': 'https://cherry-ai.com' }
+      headers: { 'HTTP-Referer': 'https://windbot.cn' }
     })
   })
 

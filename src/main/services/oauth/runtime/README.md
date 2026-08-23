@@ -7,7 +7,7 @@ or before wiring a new OAuth consumer through it.
 ## Scope & boundary
 
 This runtime drives the PKCE authorization-code flow for providers whose
-credential the app itself holds and refreshes: **Codex, Grok CLI, CherryIN**. It
+credential the app itself holds and refreshes: **Codex, Grok CLI, WindIN**. It
 owns the flow (authorize → callback → token exchange → persist → refresh) plus
 the provider's enablement: a successful sign-in flips the provider `isEnabled`
 on, and logout flips it off (and resets `authConfig` to `api-key`).
@@ -48,7 +48,7 @@ Three pieces, all keyed by `providerId`:
   - `LoopbackCallbackTransport` — spins a localhost HTTP server (Codex, Grok).
   - `DeepLinkCallbackTransport` — waits for a `cherrystudio://` deep link, then
     pushes the result point-to-point to the initiator window via
-    `IpcApiService.send('oauth.deep_link_result', …)` (CherryIN). The OAuth token
+    `IpcApiService.send('oauth.deep_link_result', …)` (WindIN). The OAuth token
     never crosses to the renderer — only the side-effect API keys do.
 - **`providers/<id>.ts`** — one file per login provider: its client/urls/scope/
   transport plus optional behavior hooks. **`providerDefinitions.ts`** is the
@@ -73,7 +73,7 @@ fields and hooks:
   JWT claim). Omit if the provider has no account concept.
 - `afterPersistTokens(tokenData, context)` — post-exchange side effect, run
   *after* the tokens are persisted so a failure here never discards a valid token
-  (CherryIN fetches the user's API keys here). Omit for vanilla providers.
+  (WindIN fetches the user's API keys here). Omit for vanilla providers.
 
 But a provider is more than its OAuth flow. End-to-end, a new login-based
 provider also touches:
@@ -104,7 +104,7 @@ worth doing until a real second consumer appears (YAGNI):
   `extractAccountId` → `accountIdClaim: { jwtPath, field }`; Grok discovery →
   `discovery: { url, allowedHostSuffix }`; the nonce → a `requiresNonce` flag.
   After that a vanilla loopback PKCE provider is a pure-data entry with zero
-  OAuth code; only exotic behavior (CherryIN's side effect) stays a hook.
+  OAuth code; only exotic behavior (WindIN's side effect) stays a hook.
 
 - **General OAuth (don't, yet).** The flow engine (transports + `PkceOAuthClient`
   + orchestration) is entity-agnostic; only the token store is provider-tied.

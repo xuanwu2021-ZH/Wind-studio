@@ -233,7 +233,7 @@ export class TopicNamingService {
    * first persisted user message. Fire-and-forget callers rely on this method
    * to isolate errors and re-read before writing so manual renames win races.
    *
-   * @param sessionId Cherry Studio agent session id.
+   * @param sessionId Wind Studio agent session id.
    * @param userMessage Persisted message data, or already-extracted user text.
    */
   maybeRenameAgentSessionFromFirstUserMessage(sessionId: string, userMessage: MessageData | string | undefined): void {
@@ -273,7 +273,7 @@ export class TopicNamingService {
    * matching normal chat topic naming behavior.
    *
    * @param agentId    Agent id used as AI generation context.
-   * @param sessionId  Cherry Studio session id.
+   * @param sessionId  Wind Studio session id.
    * @param userText   Plain text of the persisted user turn, extracted by
    *                   AgentSessionRuntimeService from the saved user message.
    * @param finalMessage Accumulated assistant UIMessage for this turn.
@@ -419,7 +419,7 @@ export class TopicNamingService {
     }
 
     // A title is a lightweight summary, so prefer the user's own quick-assistant model over the
-    // managed CherryAI default whenever the dedicated naming model is unset or unusable.
+    // managed WindAI default whenever the dedicated naming model is unset or unusable.
     const quickModelId = this.toUsableNamingModelId(preferenceService.get('feature.quick_assistant.model_id'))
     if (quickModelId) return quickModelId
 

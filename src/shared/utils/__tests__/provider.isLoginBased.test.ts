@@ -22,7 +22,7 @@ describe('isLoginBasedProvider', () => {
     expect(isLoginBasedProvider(withAuthMethods(['external-cli']))).toBe(true)
   })
 
-  // CherryIN accepts both a user key and an OAuth login — its api-key inputs must
+  // WindIN accepts both a user key and an OAuth login — its api-key inputs must
   // stay, so it is NOT login-based even though it offers OAuth.
   it('is false for a multi-auth provider that still takes an api-key (cherryin)', () => {
     expect(isLoginBasedProvider(withAuthMethods(['api-key', 'oauth']))).toBe(false)

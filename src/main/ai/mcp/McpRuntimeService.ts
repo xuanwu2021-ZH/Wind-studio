@@ -400,7 +400,7 @@ export class McpRuntimeService extends BaseService {
     const initPromise = (async () => {
       try {
         // Create new client instance for each connection
-        const client = new Client({ name: 'Cherry Studio', version: app.getVersion() }, { capabilities: {} })
+        const client = new Client({ name: 'Wind Studio', version: app.getVersion() }, { capabilities: {} })
 
         let args = [...(server.args || [])]
 
@@ -434,7 +434,7 @@ export class McpRuntimeService extends BaseService {
               requestInit: {
                 headers: {
                   ...defaultAppHeaders(),
-                  APP: 'Cherry Studio'
+                  APP: 'Wind Studio'
                 }
               },
               authProvider

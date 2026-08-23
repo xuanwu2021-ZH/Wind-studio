@@ -3,14 +3,14 @@ import * as z from 'zod'
 import { defineRoute } from '../define'
 
 /**
- * CherryIN IPC schemas — the CherryIN-only balance/logout operations.
+ * WindIN IPC schemas — the WindIN-only balance/logout operations.
  *
  * The OAuth flow itself is provider-generic and lives on the `oauth.*` surface
  * (`oauth.start_deep_link_flow` + the `oauth.deep_link_result` event); only the
  * account balance/profile the loopback providers have no concept of stays here.
  */
 
-/** The CherryIN account profile, or null when the profile endpoint has nothing. */
+/** The WindIN account profile, or null when the profile endpoint has nothing. */
 const cherryInProfileSchema = z.object({
   displayName: z.string().nullable(),
   username: z.string().nullable(),

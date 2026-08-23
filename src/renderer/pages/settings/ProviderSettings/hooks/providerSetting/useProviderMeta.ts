@@ -23,7 +23,7 @@ export function useProviderMeta(providerId: string) {
       docsWebsite: provider?.websites?.docs,
       modelsWebsite: provider?.websites?.models,
       isAzureOpenAI: provider ? isAzureOpenAIProvider(provider) : false,
-      isCherryIN: provider ? matchesPreset(provider, 'cherryin') : false,
+      isWindIN: provider ? matchesPreset(provider, 'cherryin') : false,
       isDmxapi,
       isChineseUser: i18n.language.startsWith('zh'),
       showApiOptionsButton: provider ? hasVisibleProviderApiOptions(provider) : false,

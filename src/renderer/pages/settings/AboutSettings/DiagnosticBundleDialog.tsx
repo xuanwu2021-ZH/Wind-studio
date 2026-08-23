@@ -25,7 +25,7 @@ import { CircleCheck, LoaderCircle } from 'lucide-react'
 import { type FC, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-const SUPPORT_EMAIL = 'support@cherry-ai.com'
+const SUPPORT_EMAIL = 'support@windbot.cn'
 const logger = loggerService.withContext('DiagnosticBundleDialog')
 const RANGE_OPTIONS = [
   { translationKey: 'settings.about.diagnostics.ranges.24h', value: '24h' },

@@ -488,7 +488,7 @@ export class ProviderModelMigrator extends BaseMigrator {
       this.pinnedModelIds = normalizePinnedModelIds(ctx.sources.dexieSettings.get('pinned:models'), validModelIds)
 
       if (skippedManagedProviders > 0) {
-        warnings.push(`Skipped ${skippedManagedProviders} managed CherryAI provider(s)`)
+        warnings.push(`Skipped ${skippedManagedProviders} managed WindAI provider(s)`)
       }
       if (skippedRetiredProviders > 0) {
         warnings.push(`Skipped ${skippedRetiredProviders} retired provider(s)`)

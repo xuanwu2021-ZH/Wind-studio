@@ -40,7 +40,7 @@ type HeadersInput = Record<string, HeaderValue> | (() => Record<string, HeaderVa
 
 export interface CherryInProviderSettings {
   /**
-   * CherryIN API key.
+   * WindIN API key.
    *
    * If omitted, the provider will read the `CHERRYIN_API_KEY` environment variable.
    */
@@ -50,7 +50,7 @@ export interface CherryInProviderSettings {
    */
   fetch?: FetchFunction
   /**
-   * Base URL for OpenAI-compatible CherryIN endpoints.
+   * Base URL for OpenAI-compatible WindIN endpoints.
    *
    * Defaults to `https://open.cherryin.net/v1`.
    */
@@ -106,7 +106,7 @@ const resolveApiKey = (options: CherryInProviderSettings): string =>
   loadApiKey({
     apiKey: options.apiKey,
     environmentVariableName: 'CHERRYIN_API_KEY',
-    description: 'CherryIN'
+    description: 'WindIN'
   })
 
 const isAnthropicModel = (modelId: string) => ANTHROPIC_PREFIX.test(modelId)

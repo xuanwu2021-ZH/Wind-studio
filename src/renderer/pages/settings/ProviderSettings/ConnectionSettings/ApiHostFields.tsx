@@ -60,7 +60,7 @@ export function AzureApiVersionField({
 interface ApiHostFieldProps {
   providerIdForSettings: string
   apiHost: string
-  isCherryIN: boolean
+  isWindIN: boolean
   isChineseUser: boolean
   isVertexAI: boolean
   isApiHostResettable: boolean
@@ -73,7 +73,7 @@ interface ApiHostFieldProps {
 export function ApiHostField({
   providerIdForSettings,
   apiHost,
-  isCherryIN,
+  isWindIN,
   isChineseUser,
   isVertexAI,
   isApiHostResettable,
@@ -102,7 +102,7 @@ export function ApiHostField({
       }
       titleClassName="text-foreground"
       help={help}>
-      {isCherryIN && isChineseUser ? (
+      {isWindIN && isChineseUser ? (
         <div className={cn(fieldClasses.inputRow, 'group')}>
           <div className="flex min-w-0 flex-1">
             <CherryInSettings providerId={providerIdForSettings} />

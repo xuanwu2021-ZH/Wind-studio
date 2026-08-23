@@ -224,14 +224,14 @@ describe('CherryAssistantSeeder', () => {
     expect(journal?.value).toMatchObject({ version: '2' })
   })
 
-  it('falls back to a null model when the CherryAI default model is absent', () => {
+  it('falls back to a null model when the WindAI default model is absent', () => {
     new CherryAssistantSeeder().run(dbh.db)
 
     const [agent] = builtinAgents(dbh.db)
     expect(agent.model).toBeNull()
   })
 
-  it('leaves the model unconfigured when the CherryAI default is the only available model', () => {
+  it('leaves the model unconfigured when the WindAI default is the only available model', () => {
     new SeedRunner(dbh.db).runAll([new CherryAiDefaultModelSeeder(), new CherryAssistantSeeder()])
 
     const [model] = dbh.db

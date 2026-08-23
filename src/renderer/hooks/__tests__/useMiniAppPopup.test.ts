@@ -572,7 +572,7 @@ describe('useMiniAppPopup', () => {
 
       expect(mocks.request).toHaveBeenCalledWith(
         'system.shell.open_path',
-        '/Applications/Cherry Studio/resources/releases.html'
+        '/Applications/Wind Studio/resources/releases.html'
       )
       expect(mocks.request).not.toHaveBeenCalledWith('system.shell.open_website', expect.anything())
       expect(mockTabs.openTab).not.toHaveBeenCalled()
@@ -643,7 +643,7 @@ describe('useMiniAppPopup', () => {
       expect(mockClearWebviewState).toHaveBeenCalledWith('b')
     })
 
-    // Regression for https://github.com/CherryHQ/cherry-studio/pull/14049 —
+    // Regression for https://windbot.cn —
     // before the fix, switching between miniapp tabs that the user had pinned
     // in the AppShell tab bar would still evict them from keep-alive (the
     // hook didn't know about pin status), so the side-bar mini-tab list

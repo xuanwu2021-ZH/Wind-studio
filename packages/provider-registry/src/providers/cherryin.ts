@@ -28,7 +28,7 @@ const deepSeekModels = ['deepseek-chat', 'deepseek-reasoner', 'deepseek-v3-1', '
 
 export default defineProvider({
   id: 'cherryin',
-  name: 'CherryIN',
+  name: 'WindIN',
   defaultChatEndpoint: 'openai-chat-completions',
   endpointConfigs: {
     'anthropic-messages': {

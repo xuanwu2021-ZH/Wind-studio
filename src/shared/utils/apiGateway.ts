@@ -5,7 +5,7 @@ import { isManagedCherryAiDefaultModel } from '@shared/data/presets/cherryai'
  * (single colon, `apiModelId` — NOT the `::`-separated internal `UniqueModelId`). The gateway
  * splits on the first `:` (see `apiGateway/proxyStream.ts`) and advertises the same shape from
  * `/v1/models` (see `apiGateway/utils/models.ts`), so both the CLI-config writer and the in-app
- * Claude Code runtime must format ids identically. CherryAI managed default models are not
+ * Claude Code runtime must format ids identically. WindAI managed default models are not
  * routable through the gateway and throw, mirroring the gateway's own guard.
  */
 export function formatGatewayModelId(providerId: string, apiModelId: string): string {
@@ -16,7 +16,7 @@ export function formatGatewayModelId(providerId: string, apiModelId: string): st
     throw new Error(`Provider id "${providerId}" contains ":" and cannot be addressed through the API gateway`)
   }
   if (isManagedCherryAiDefaultModel(providerId, apiModelId)) {
-    throw new Error('CherryAI managed default model is not available through the API gateway')
+    throw new Error('WindAI managed default model is not available through the API gateway')
   }
   return `${providerId}:${apiModelId}`
 }

@@ -28,7 +28,7 @@ describe('LlmModelTransforms', () => {
       })
     })
 
-    it('falls back setting model preferences to CherryAI when model objects are missing', () => {
+    it('falls back setting model preferences to WindAI when model objects are missing', () => {
       const result = transformLlmModelIds({})
 
       expect(result).toEqual({
@@ -81,7 +81,7 @@ describe('LlmModelTransforms', () => {
         'feature.translate.model_id': CHERRYAI_DEFAULT_UNIQUE_MODEL_ID
       })
       expect(mockMainLoggerService.warn).toHaveBeenCalledWith(
-        'Legacy model preference could not be parsed; falling back to managed CherryAI default model',
+        'Legacy model preference could not be parsed; falling back to managed WindAI default model',
         {
           preferenceKey: 'feature.quick_assistant.model_id',
           valueType: 'object',
@@ -90,7 +90,7 @@ describe('LlmModelTransforms', () => {
         }
       )
       expect(mockMainLoggerService.warn).toHaveBeenCalledWith(
-        'Legacy model preference could not be parsed; falling back to managed CherryAI default model',
+        'Legacy model preference could not be parsed; falling back to managed WindAI default model',
         {
           preferenceKey: 'feature.translate.model_id',
           valueType: 'string'
@@ -98,7 +98,7 @@ describe('LlmModelTransforms', () => {
       )
     })
 
-    it('maps legacy CherryAI model references to the seeded Qwen model', () => {
+    it('maps legacy WindAI model references to the seeded Qwen model', () => {
       const result = transformLlmModelIds({
         defaultModel: { id: 'old-default', provider: 'cherryai' },
         topicNamingModel: { id: 'old-topic', provider: 'cherryai' },
@@ -114,7 +114,7 @@ describe('LlmModelTransforms', () => {
       })
     })
 
-    it('trims legacy CherryAI provider ids before remapping', () => {
+    it('trims legacy WindAI provider ids before remapping', () => {
       const result = transformLlmModelIds({
         defaultModel: { id: 'old-default', provider: ' cherryai ' },
         topicNamingModel: { id: 'old-topic', provider: '\tcherryai\n' }

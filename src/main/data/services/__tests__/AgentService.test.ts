@@ -1460,7 +1460,7 @@ describe('AgentService', () => {
         expect.objectContaining({
           id: 'agent_builtin_global_search',
           subtitle:
-            'Built-in Cherry Studio advisor. Diagnose issues, guide operations, collect FAQs, submit bugs/feature requests, and search/create Skills'
+            'Built-in Wind Studio advisor. Diagnose issues, guide operations, collect FAQs, submit bugs/feature requests, and search/create Skills'
         })
       ])
     })

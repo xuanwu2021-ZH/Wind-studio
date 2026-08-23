@@ -7,7 +7,7 @@ import { resolvePaintingApiHost } from '../paintingProviderRuntime'
 function provider(overrides: Partial<Provider> = {}): Provider {
   return {
     id: 'cherryin',
-    name: 'CherryIN',
+    name: 'WindIN',
     apiKeys: [],
     authType: 'api-key',
     apiFeatures: {

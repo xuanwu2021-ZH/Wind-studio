@@ -43,7 +43,7 @@ export interface ClaudeToolDescriptorDef {
 
 /**
  * The registry. Keys are stable friendly identifiers; `name` is the runtime tool name.
- * For SDK tools key === name; for MCP tools key is friendly (e.g. `CherryWebSearch`).
+ * For SDK tools key === name; for MCP tools key is friendly (e.g. `WindWebSearch`).
  */
 const CLAUDE_TOOL_REGISTRY = {
   // ── shell ────────────────────────────────────────────────────────
@@ -261,21 +261,21 @@ const CLAUDE_TOOL_REGISTRY = {
 
   // ── in-process MCP tools ─────────────────────────────────────────
   // cherry-tools (always injected today)
-  CherryWebSearch: {
+  WindWebSearch: {
     name: 'mcp__cherry-tools__web_search',
     category: 'context',
     exposure: 'user',
     description: 'Searches the web via your configured provider',
     mcpServer: 'cherry-tools'
   },
-  CherryWebFetch: {
+  WindWebFetch: {
     name: 'mcp__cherry-tools__web_fetch',
     category: 'context',
     exposure: 'user',
     description: 'Fetches and reads a web page',
     mcpServer: 'cherry-tools'
   },
-  CherryKbSearch: {
+  WindKbSearch: {
     name: 'mcp__cherry-tools__kb_search',
     category: 'context',
     exposure: 'user',
@@ -309,7 +309,7 @@ const CLAUDE_TOOL_REGISTRY = {
   },
   // The one mutating KB tool (add/delete/refresh sources) — exposed as its own toggle so the user
   // can see and disable write access; it still requires per-call approval at runtime.
-  CherryKbManage: {
+  WindKbManage: {
     name: 'mcp__cherry-tools__kb_manage',
     category: 'context',
     exposure: 'user',
@@ -328,7 +328,7 @@ const CLAUDE_TOOL_REGISTRY = {
   // notify is user-exposed and NOT channel-gated: it self-degrades at call time (reports "no connected
   // channels") when the agent has none — see cherryAutonomyTools.ts sendNotification. Do not re-add a
   // channel enable-predicate, or an agent can't notify in the same run it uses config to add its first channel.
-  CherryNotify: {
+  WindNotify: {
     name: 'mcp__cherry-tools__notify',
     category: 'orchestration',
     exposure: 'user',

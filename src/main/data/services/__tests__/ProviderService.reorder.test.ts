@@ -200,11 +200,11 @@ describe('ProviderService reorder', () => {
     })
   })
 
-  it('rejects moving the managed CherryAI provider', async () => {
+  it('rejects moving the managed WindAI provider', async () => {
     await seedProviders()
     await dbh.db.insert(userProviderTable).values({
       providerId: CHERRYAI_PROVIDER_ID,
-      name: 'CherryAI',
+      name: 'WindAI',
       orderKey: 'z0',
       isEnabled: true
     })

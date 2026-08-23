@@ -302,7 +302,7 @@ export const ProviderSchema = z.object({
   serverTools: z.array(ServerToolConfigSchema).optional(),
   /**
    * Which credential kinds this provider accepts (`'api-key'` / `'oauth'` /
-   * `'external-cli'`) — a set, since a provider can offer more than one (CherryIN
+   * `'external-cli'`) — a set, since a provider can offer more than one (WindIN
    * takes both a user key and an OAuth login). Carried from the registry; absent
    * ⇒ `['api-key']`. "Login-based" is the derived `!includes('api-key')`. See
    * {@link isLoginBasedProvider}.

@@ -8,7 +8,7 @@ import { setupTestDatabase } from '@test-helpers/db'
 import { eq } from 'drizzle-orm'
 import { describe, expect, it, vi } from 'vitest'
 
-// Stub the registry loader so the preset lookup returns a minimal CherryIN row
+// Stub the registry loader so the preset lookup returns a minimal WindIN row
 // (its anthropic / gemini / OpenAI endpoints tagged `cherryin`) without
 // reading the shipped providers.json, whose path is mocked away in the harness.
 vi.mock('@cherrystudio/provider-registry/node', () => {
@@ -142,7 +142,7 @@ describe('ProviderService.update — endpoint config overrides', () => {
     expect(runtime.endpointConfigs?.[ENDPOINT_TYPE.OPENAI_CHAT_COMPLETIONS]?.adapterFamily).toBe('newapi')
   })
 
-  it('uses the preset adapter family when adding the CherryIN Responses endpoint', async () => {
+  it('uses the preset adapter family when adding the WindIN Responses endpoint', async () => {
     providerService.create({
       providerId: 'cherryin-express-2',
       presetProviderId: 'cherryin',

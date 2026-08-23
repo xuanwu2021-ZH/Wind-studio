@@ -106,12 +106,12 @@ describe('useConfigMetadata.makeModelFilter (gateway)', () => {
     expect(filter(model('openai', 'dall-e-3', [MODEL_CAPABILITY.IMAGE_GENERATION]))).toBe(false)
   })
 
-  it('excludes the CherryAI managed default model (not routable through the gateway)', () => {
+  it('excludes the WindAI managed default model (not routable through the gateway)', () => {
     const { result } = renderHook(() => useConfigMetadata(CodeCli.CLAUDE_CODE, []))
     const filter = result.current.makeModelFilter(CLI_API_GATEWAY_PROVIDER_ID)
 
     expect(filter(model(CHERRYAI_PROVIDER_ID, CHERRYAI_DEFAULT_MODEL_ID))).toBe(false)
-    // A non-default CherryAI model is still routable.
+    // A non-default WindAI model is still routable.
     expect(filter(model(CHERRYAI_PROVIDER_ID, 'some-other-model'))).toBe(true)
   })
 

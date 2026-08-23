@@ -15,11 +15,11 @@ describe('formatGatewayModelId', () => {
     expect(formatGatewayModelId('openai', 'gpt-4o')).not.toContain('::')
   })
 
-  it('throws for the CherryAI managed default model (not routable through the gateway)', () => {
+  it('throws for the WindAI managed default model (not routable through the gateway)', () => {
     expect(() => formatGatewayModelId(CHERRYAI_PROVIDER_ID, CHERRYAI_DEFAULT_MODEL_ID)).toThrow(/gateway/)
   })
 
-  it('routes other CherryAI models normally (only the managed default is blocked)', () => {
+  it('routes other WindAI models normally (only the managed default is blocked)', () => {
     expect(formatGatewayModelId(CHERRYAI_PROVIDER_ID, 'some-other-model')).toBe('cherryai:some-other-model')
   })
 })

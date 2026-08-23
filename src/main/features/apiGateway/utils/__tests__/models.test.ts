@@ -34,7 +34,7 @@ describe('api gateway model listing', () => {
     vi.clearAllMocks()
     mocks.getProvider.mockReturnValue({ id: 'openai', name: 'OpenAI', isEnabled: true })
     mocks.listProviders.mockReturnValue([
-      { id: CHERRYAI_PROVIDER_ID, name: 'CherryAI' },
+      { id: CHERRYAI_PROVIDER_ID, name: 'WindAI' },
       { id: 'openai', name: 'OpenAI' }
     ])
     mocks.listModels.mockImplementation(({ providerId }: { providerId: string }) => {
@@ -44,7 +44,7 @@ describe('api gateway model listing', () => {
             id: 'cherryai::qwen',
             providerId: CHERRYAI_PROVIDER_ID,
             apiModelId: CHERRYAI_DEFAULT_MODEL_ID,
-            ownedBy: 'CherryAI',
+            ownedBy: 'WindAI',
             capabilities: []
           }
         ]
@@ -62,7 +62,7 @@ describe('api gateway model listing', () => {
     })
   })
 
-  it('does not expose the managed CherryAI default model', async () => {
+  it('does not expose the managed WindAI default model', async () => {
     const response = await getModels()
 
     expect(response.data.map((model) => model.id)).toEqual(['openai:gpt-4o'])

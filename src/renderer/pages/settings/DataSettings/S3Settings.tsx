@@ -57,7 +57,7 @@ const S3Settings: FC = () => {
     openSmartMiniApp({
       appId: 's3-help',
       name: 'S3 Compatible Storage Help',
-      url: 'https://docs.cherry-ai.com/data-settings/s3-compatible',
+      url: 'https://docs.windbot.cn/data-settings/s3-compatible',
       logo: AppLogo
     })
   }

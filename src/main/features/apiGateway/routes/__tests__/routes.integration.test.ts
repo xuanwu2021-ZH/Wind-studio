@@ -98,7 +98,7 @@ describe('API gateway routes (integration)', () => {
     it('GET / → 200 API info', async () => {
       const { status, body } = await read(await get(app, '/', {}))
       expect(status).toBe(200)
-      expect(body.name).toBe('Cherry Studio API')
+      expect(body.name).toBe('Wind Studio API')
       expect(body.endpoints).toBeDefined()
     })
 
@@ -120,7 +120,7 @@ describe('API gateway routes (integration)', () => {
       expect(status).toBe(200)
       expect(body.info.description).toBe('apiGateway.docs.description::en-US')
       const health = body.paths['/health'].get
-      expect(health.tags).toEqual(['Cherry Studio'])
+      expect(health.tags).toEqual(['Wind Studio'])
       expect(health.summary).toBe('Health')
       expect(health.description).toBe('apiGateway.docs.operations.health::en-US')
     })
@@ -131,7 +131,7 @@ describe('API gateway routes (integration)', () => {
         'OpenAI API',
         'Anthropic API',
         'Gemini API',
-        'Cherry Studio'
+        'Wind Studio'
       ])
       // Tag names and operation summaries are upstream identifiers: never translated,
       // so generated clients keep stable module/method names. Only prose is localized.

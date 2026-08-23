@@ -306,10 +306,10 @@ export function runDataReset(): void {
       })
       showDataResetError(
         'Data Reset Failed',
-        'Cherry Studio could not record the data reset state ' +
+        'Wind Studio could not record the data reset state ' +
           `in ${markerPath()}.\n\n` +
           'Starting now could erase data you create later, so the app will quit instead.\n\n' +
-          'Please check disk space and file permissions, then start Cherry Studio again.'
+          'Please check disk space and file permissions, then start Wind Studio again.'
       )
       return
     }
@@ -349,10 +349,10 @@ export function runDataReset(): void {
       )
       showDataResetError(
         'Data Reset Incomplete',
-        'Cherry Studio erased its data but could not record the reset as finished ' +
+        'Wind Studio erased its data but could not record the reset as finished ' +
           `in ${markerPath()}.\n\n` +
           'Starting now could erase anything you create on the next launch, so the app will quit instead.\n\n' +
-          'Please check disk space and file permissions, then start Cherry Studio again.'
+          'Please check disk space and file permissions, then start Wind Studio again.'
       )
       return
     }
@@ -371,9 +371,9 @@ export function runDataReset(): void {
     logger.error('Data reset failed — refusing to boot', error as Error)
     showDataResetError(
       'Data Reset Failed',
-      'Cherry Studio could not safely complete a pending data reset. ' +
+      'Wind Studio could not safely complete a pending data reset. ' +
         'The app will quit instead of starting with a reset marker still present.\n\n' +
-        'Please check disk space and file permissions, then start Cherry Studio again.'
+        'Please check disk space and file permissions, then start Wind Studio again.'
     )
   }
 }
@@ -441,7 +441,7 @@ function canonicalize(p: string): string {
 function showPathMismatchWarning(): void {
   dialog.showErrorBox(
     'Data Reset Cancelled',
-    'Cherry Studio did not run Data Reset because the data location changed after confirmation.\n\n' +
+    'Wind Studio did not run Data Reset because the data location changed after confirmation.\n\n' +
       'No data was removed, and the pending request has been cleared. ' +
       'Run Data Reset again from Settings if you still want to erase this profile.'
   )
@@ -450,7 +450,7 @@ function showPathMismatchWarning(): void {
 function showIncompleteResetWarning(): void {
   dialog.showErrorBox(
     'Data Reset Incomplete',
-    'Cherry Studio could not remove some of its data during the data reset.\n\n' +
+    'Wind Studio could not remove some of its data during the data reset.\n\n' +
       'The app will start with whatever remains. ' +
       'Please check file permissions (or antivirus locks) and run Data Reset again from Settings.'
   )

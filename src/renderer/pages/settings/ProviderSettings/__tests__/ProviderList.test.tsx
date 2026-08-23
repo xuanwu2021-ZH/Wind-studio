@@ -216,13 +216,13 @@ describe('ProviderList', () => {
     expect(onSelectProvider).toHaveBeenCalledWith('anthropic')
   })
 
-  it('hides CherryAI from the provider list', () => {
+  it('hides WindAI from the provider list', () => {
     useProvidersMock.mockReturnValue({
       providers: [
         ...providers,
         {
           id: 'cherryai',
-          name: 'CherryAI',
+          name: 'WindAI',
           defaultChatEndpoint: ENDPOINT_TYPE.OPENAI_CHAT_COMPLETIONS,
           isEnabled: true
         }
@@ -233,7 +233,7 @@ describe('ProviderList', () => {
     render(<ProviderList selectedProviderId="openai" onSelectProvider={vi.fn()} />)
 
     expect(screen.getByText('OpenAI')).toBeInTheDocument()
-    expect(screen.queryByText('CherryAI')).not.toBeInTheDocument()
+    expect(screen.queryByText('WindAI')).not.toBeInTheDocument()
     expect(screen.queryByTestId('provider-list-item-cherryai')).not.toBeInTheDocument()
   })
 

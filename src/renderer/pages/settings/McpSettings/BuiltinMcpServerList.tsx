@@ -78,7 +78,7 @@ const BuiltinMcpServerList: FC = () => {
                   <span className="truncate text-[14px] leading-5">{server.name}</span>
                   {server?.shouldConfig && (
                     <a
-                      href="https://docs.cherry-ai.com/advanced-basic/mcp/buildin"
+                      href="https://docs.windbot.cn/advanced-basic/mcp/buildin"
                       target="_blank"
                       rel="noopener noreferrer">
                       <Badge

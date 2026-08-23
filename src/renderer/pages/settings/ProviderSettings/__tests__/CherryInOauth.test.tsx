@@ -61,7 +61,7 @@ describe('CherryInOauth', () => {
     useProviderMock.mockReturnValue({
       provider: {
         id: 'cherryin',
-        name: 'CherryIN',
+        name: 'WindIN',
         apiKeys: [{ id: 'oauth-1', label: 'OAuth', isEnabled: true }],
         isEnabled: true
       },
@@ -94,7 +94,7 @@ describe('CherryInOauth', () => {
     useProviderMock.mockReturnValue({
       provider: {
         id: 'cherryin',
-        name: 'CherryIN',
+        name: 'WindIN',
         apiKeys: [{ id: 'oauth-1', label: 'OAuth', isEnabled: true }],
         isEnabled: true
       },
@@ -116,7 +116,7 @@ describe('CherryInOauth', () => {
     useProviderMock.mockReturnValue({
       provider: {
         id: 'cherryin',
-        name: 'CherryIN',
+        name: 'WindIN',
         apiKeys: [],
         isEnabled: true
       },
@@ -130,7 +130,7 @@ describe('CherryInOauth', () => {
 
     render(<CherryInOauth providerId="cherryin" />)
 
-    const loginButton = screen.getByRole('button', { name: /CherryIN|授权/i })
+    const loginButton = screen.getByRole('button', { name: /WindIN|授权/i })
     const tagline = screen.getByText(/登录后即可使用所有模型服务|all model services/i)
 
     expect(loginButton).toBeInTheDocument()
@@ -144,7 +144,7 @@ describe('CherryInOauth', () => {
     useProviderMock.mockReturnValue({
       provider: {
         id: 'cherryin',
-        name: 'CherryIN',
+        name: 'WindIN',
         apiKeys: [
           { id: 'oauth-1', label: 'OAuth', isEnabled: true },
           { id: 'oauth-2', label: 'OAuth', isEnabled: true },
@@ -184,7 +184,7 @@ describe('CherryInOauth', () => {
     useProviderMock.mockReturnValue({
       provider: {
         id: 'cherryin',
-        name: 'CherryIN',
+        name: 'WindIN',
         apiKeys: [
           { id: 'oauth-1', label: 'OAuth', isEnabled: true },
           { id: 'oauth-2', label: 'OAuth', isEnabled: true }

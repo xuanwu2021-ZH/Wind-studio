@@ -51,7 +51,7 @@ const UserSelfResponseSchema = z
   })
 
 /**
- * CherryIN's REST operations (balance/profile/logout) layered over the OAuth
+ * WindIN's REST operations (balance/profile/logout) layered over the OAuth
  * session that `OAuthRuntimeService` owns. Stateless orchestration — owns no
  * long-lived resources and registers no side effects — so it is a direct-import
  * singleton, not a lifecycle service (see lifecycle-decision-guide.md).
@@ -73,7 +73,7 @@ export class CherryInOAuthService {
       // can't produce a token right now. The sole caller is logout, which must
       // still clear the local session — treat it as "no token to revoke".
       if (error instanceof OAuthTransientError) {
-        logger.debug('CherryIN token temporarily unavailable, skipping remote revoke', describeOAuthError(error))
+        logger.debug('WindIN token temporarily unavailable, skipping remote revoke', describeOAuthError(error))
         return null
       }
       throw error
@@ -123,7 +123,7 @@ export class CherryInOAuthService {
         return this.redactDiagnosticValue(text)
       }
     } catch (error) {
-      logger.warn('Failed to read CherryIN error response body for diagnostics:', error as Error)
+      logger.warn('Failed to read WindIN error response body for diagnostics:', error as Error)
       return null
     }
   }
@@ -134,7 +134,7 @@ export class CherryInOAuthService {
     response: Response,
     requestOptions: RequestInit
   ): Promise<void> => {
-    logger.error('CherryIN request returned 401 Unauthorized', {
+    logger.error('WindIN request returned 401 Unauthorized', {
       stage: endpoint,
       request: {
         url: `${apiHost}${endpoint}`,
@@ -152,7 +152,7 @@ export class CherryInOAuthService {
   }
 
   // Token fetch, the not-signed-in guard and the 401 force-refresh+retry live in
-  // OAuthRuntimeService.authenticatedFetch (shared with Codex/Grok). CherryIN only
+  // OAuthRuntimeService.authenticatedFetch (shared with Codex/Grok). WindIN only
   // shapes the request (apiHost + bearer/json headers), threads its `apiHost`
   // context for refresh, and supplies the 401 diagnostic log.
   private authenticatedFetch = (apiHost: string, endpoint: string, options: RequestInit = {}): Promise<Response> => {
@@ -191,7 +191,7 @@ export class CherryInOAuthService {
       const response = await this.authenticatedFetch(apiHost, '/api/user/self')
 
       if (!response.ok) {
-        logger.warn('Failed to fetch CherryIN profile', {
+        logger.warn('Failed to fetch WindIN profile', {
           status: response.status,
           statusText: response.statusText,
           body: await this.readResponseBodyForDiagnostics(response)
@@ -203,9 +203,9 @@ export class CherryInOAuthService {
       return UserSelfResponseSchema.parse(json)
     } catch (error) {
       if (error instanceof z.ZodError) {
-        logger.warn('Failed to parse CherryIN profile response:', error.issues)
+        logger.warn('Failed to parse WindIN profile response:', error.issues)
       } else {
-        logger.warn('Failed to fetch CherryIN profile:', error as Error)
+        logger.warn('Failed to fetch WindIN profile:', error as Error)
       }
       return null
     }
@@ -273,7 +273,7 @@ export class CherryInOAuthService {
       }
 
       await application.get('OAuthRuntimeService').logout(SystemProviderIds.cherryin)
-      logger.debug('Successfully cleared CherryIN OAuth tokens from auth config')
+      logger.debug('Successfully cleared WindIN OAuth tokens from auth config')
     } catch (error) {
       logger.error('Failed to logout:', error as Error)
       throw new CherryInOAuthServiceError('Failed to logout', error)

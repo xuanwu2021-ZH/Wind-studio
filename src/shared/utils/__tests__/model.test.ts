@@ -139,7 +139,7 @@ describe('shared model capability helpers', () => {
       expect(isGatewayRoutableModel(createModel([MODEL_CAPABILITY.AUDIO_TRANSCRIPT]))).toBe(false)
     })
 
-    it('excludes the CherryAI managed default model', () => {
+    it('excludes the WindAI managed default model', () => {
       const managedDefault: Model = {
         ...createModel(),
         id: `${CHERRYAI_PROVIDER_ID}::qwen`,

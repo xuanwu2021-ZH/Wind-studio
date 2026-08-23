@@ -318,7 +318,7 @@ describe('resolveInFlightTruncateThreshold', () => {
   })
 
   // `Model.contextWindow` is `z.number().optional()` — custom / v1-imported /
-  // CherryAI rows really do arrive without it. Multiplying `undefined` yields
+  // WindAI rows really do arrive without it. Multiplying `undefined` yields
   // `NaN`, and the truncator's `text.length <= NaN` is false for EVERY result,
   // so ordinary tool output would be offloaded as if oversized.
   it.each([[undefined], [0], [Number.NaN], [-1], [Number.POSITIVE_INFINITY]])(

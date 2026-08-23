@@ -20,8 +20,8 @@ describe('isAppRendererUrl', () => {
     const fixtureRoot = mkdtempSync(join(tmpdir(), 'cherry-sender-link-'))
     const realProgramsDir = join(fixtureRoot, 'real-programs')
     const linkedProgramsDir = join(fixtureRoot, 'linked-programs')
-    const appRootFromLaunchPath = join(linkedProgramsDir, 'Cherry Studio', 'resources', 'app.asar')
-    const realAppRoot = join(realProgramsDir, 'Cherry Studio', 'resources', 'app.asar')
+    const appRootFromLaunchPath = join(linkedProgramsDir, 'Wind Studio', 'resources', 'app.asar')
+    const realAppRoot = join(realProgramsDir, 'Wind Studio', 'resources', 'app.asar')
 
     try {
       mkdirSync(dirname(realAppRoot), { recursive: true })

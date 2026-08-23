@@ -513,7 +513,7 @@ describe('buildClaudeCodeQueryRequestForAgentSession resume-token precedence', (
       ANTHROPIC_DEFAULT_HAIKU_MODEL: 'claude-sonnet'
     })
     expect(request?.settings.env?.ANTHROPIC_CUSTOM_HEADERS).toBe(
-      'HTTP-Referer: https://cherry-ai.com\nX-Title: Cherry Studio'
+      'HTTP-Referer: https://windbot.cn\nX-Title: Wind Studio'
     )
     expect(request?.usageCapture).toEqual({
       owner: 'agent-sdk',

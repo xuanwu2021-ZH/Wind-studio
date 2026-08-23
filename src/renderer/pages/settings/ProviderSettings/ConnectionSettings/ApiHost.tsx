@@ -95,7 +95,7 @@ export default function ApiHost({ providerId, onRequestModelPullGuide }: ApiHost
           <ApiHostField
             providerIdForSettings={provider.id}
             apiHost={apiHost}
-            isCherryIN={meta.isCherryIN}
+            isWindIN={meta.isWindIN}
             isChineseUser={meta.isChineseUser}
             isVertexAI={provider.id === 'vertexai'}
             isApiHostResettable={hostPreview.isApiHostResettable}

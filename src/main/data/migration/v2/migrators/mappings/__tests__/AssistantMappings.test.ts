@@ -88,7 +88,7 @@ describe('AssistantMappings', () => {
       expect(result.assistant.modelId).toBe('openai::gpt-3.5')
     })
 
-    it('should map legacy CherryAI model refs to the seeded Qwen model', () => {
+    it('should map legacy WindAI model refs to the seeded Qwen model', () => {
       const result = transformAssistant({
         id: 'ast-4c',
         model: { id: 'legacy-qwen', provider: CHERRYAI_PROVIDER_ID }

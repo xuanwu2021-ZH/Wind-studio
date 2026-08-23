@@ -819,7 +819,7 @@ describe('Model drawers', () => {
 
   it('shows and preserves the image-edit endpoint when adding another endpoint type', async () => {
     useProviderMock.mockReturnValue({
-      provider: { id: 'cherryin', name: 'CherryIN' }
+      provider: { id: 'cherryin', name: 'WindIN' }
     })
 
     render(
@@ -863,7 +863,7 @@ describe('Model drawers', () => {
 
   it('allows clearing the last endpoint type from the edit drawer', async () => {
     useProviderMock.mockReturnValue({
-      provider: { id: 'cherryin', name: 'CherryIN' }
+      provider: { id: 'cherryin', name: 'WindIN' }
     })
 
     render(

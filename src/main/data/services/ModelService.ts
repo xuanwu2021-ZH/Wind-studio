@@ -112,7 +112,7 @@ function assertManagedCherryAiDefaultModelMutationAllowed(
     return
   }
 
-  throw DataApiErrorFactory.invalidOperation(operation, 'managed CherryAI default model cannot be modified')
+  throw DataApiErrorFactory.invalidOperation(operation, 'managed WindAI default model cannot be modified')
 }
 
 /**
@@ -575,7 +575,7 @@ class ModelService {
     const removableCustomModelIds = new Set([...customModelIds].filter((id) => !userDefaultIds.has(id)))
 
     if (managedDefaultIds.size > 0) {
-      logger.warn('Skipped managed CherryAI default model removal during reconcile', {
+      logger.warn('Skipped managed WindAI default model removal during reconcile', {
         providerId,
         skippedCount: managedDefaultIds.size,
         skippedIds: [...managedDefaultIds]

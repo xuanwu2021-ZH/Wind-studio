@@ -1,7 +1,7 @@
 /**
- * Builds ClaudeCodeSettings from Cherry Studio's agent session configuration.
+ * Builds ClaudeCodeSettings from Wind Studio's agent session configuration.
  *
- * Maps Cherry Studio's internal data model (agent sessions, providers, MCP servers,
+ * Maps Wind Studio's internal data model (agent sessions, providers, MCP servers,
  * tool permissions, prompt builder) to ai-sdk-provider-claude-code's ClaudeCodeSettings.
  *
  * Usage:
@@ -106,7 +106,7 @@ const logger = loggerService.withContext('ClaudeCodeSettingsBuilder')
 const MIN_AUTO_COMPACT_WINDOW = 100_000
 const MAX_AUTO_COMPACT_WINDOW = 1_000_000
 const MINIMAL_CHERRY_ASSISTANT_INSTRUCTIONS =
-  'Within Cherry Studio, serve as Cherry Assistant, its built-in general-purpose Agent and onboarding guide. Help the user complete any request using the available tools.'
+  'Within Wind Studio, serve as Windbot, its built-in general-purpose Agent and onboarding guide. Help the user complete any request using the available tools.'
 const require_ = createRequire(import.meta.url)
 
 function resolveAutoCompactWindow(contextWindow: number | undefined): number | undefined {
@@ -352,7 +352,7 @@ export type LinkedChannelSnapshot = Pick<AgentChannelEntity, 'id'> | null
 // ── Main builder ────────────────────────────────────────────────────
 
 /**
- * Build session-level ClaudeCodeSettings from Cherry Studio's agent session.
+ * Build session-level ClaudeCodeSettings from Wind Studio's agent session.
  */
 export async function buildClaudeCodeSessionSettings(
   session: AgentSessionEntity,
@@ -1062,7 +1062,7 @@ async function buildToolPermissions(
         hookEventName: 'PreToolUse',
         permissionDecision: 'deny',
         permissionDecisionReason:
-          'Headless channel or scheduled turns cannot mutate agent configuration. Ask the user to make this change in Cherry Studio.'
+          'Headless channel or scheduled turns cannot mutate agent configuration. Ask the user to make this change in Wind Studio.'
       }
     }
   }
@@ -1159,7 +1159,7 @@ async function buildToolPermissions(
           hookEventName: 'PreToolUse',
           permissionDecision: 'deny',
           permissionDecisionReason:
-            'Headless channel or scheduled turns cannot submit Cherry Studio feedback. Keep the local feedback draft for an interactive user to review and submit.'
+            'Headless channel or scheduled turns cannot submit Wind Studio feedback. Keep the local feedback draft for an interactive user to review and submit.'
         }
       }
     }
@@ -1167,7 +1167,7 @@ async function buildToolPermissions(
       hookSpecificOutput: {
         hookEventName: 'PreToolUse',
         permissionDecision: 'ask',
-        permissionDecisionReason: 'Submitting Cherry Studio feedback to Feishu requires live per-call user approval.'
+        permissionDecisionReason: 'Submitting Wind Studio feedback to Feishu requires live per-call user approval.'
       }
     }
   }

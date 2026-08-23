@@ -49,7 +49,7 @@ const SAMPLE_SERVERS = [
     name: '@cherry/fetch',
     type: 'inMemory',
     isActive: true,
-    provider: 'CherryAI',
+    provider: 'WindAI',
     installSource: 'builtin',
     isTrusted: true
   },

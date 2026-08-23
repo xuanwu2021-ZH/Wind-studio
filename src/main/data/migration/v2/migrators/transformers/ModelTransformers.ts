@@ -77,7 +77,7 @@ export function legacyModelToUniqueId(
 /**
  * Opt-in chat/default-model migration rule.
  *
- * Legacy CherryAI model references are managed by the v2 seeded default model,
+ * Legacy WindAI model references are managed by the v2 seeded default model,
  * but this rule must not apply to every model reference type (for example,
  * embedding/rerank preferences keep their original domain semantics).
  */

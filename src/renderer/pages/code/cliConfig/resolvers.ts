@@ -39,7 +39,7 @@ export function resolveGeminiBaseUrl(provider: Provider): string {
     return `${withoutTrailingSlash(chatBaseUrl).replace(/\/v1$/, '')}/gemini`
   }
   // Aggregators allow-listed for Gemini CLI (CLI_TOOL_PROVIDER_MAP) without a dedicated
-  // google-generate-content endpoint or an entry above (e.g. CherryIN, DMXAPI) proxy every
+  // google-generate-content endpoint or an entry above (e.g. WindIN, DMXAPI) proxy every
   // protocol off the same host as their default chat endpoint — mirrors the fallback
   // buildCherryinConfig/dmxapiProvider.ts already rely on for real chat requests.
   return chatBaseUrl || ''

@@ -13,8 +13,8 @@ the legacy Dexie `pinned:models` value.
 | Pinned models | Dexie `pinned:models` |
 | Provider logos | Dexie `image://provider-<providerId>` |
 
-Managed CherryAI rows are not copied from Redux. The v2 seeder owns the
-canonical CherryAI provider/default model, and legacy CherryAI pins are
+Managed WindAI rows are not copied from Redux. The v2 seeder owns the
+canonical WindAI provider/default model, and legacy WindAI pins are
 rewritten to that seeded model.
 
 ## Preset Ownership Projection
@@ -62,7 +62,7 @@ Projection rules:
   `endpointTypes` is also preserved when the current provider-model registry
   cannot re-derive the legacy routing metadata, including dynamic models from
   built-in NewAPI providers and custom providers with legacy `type='new-api'`.
-  CherryIN models without legacy endpoint metadata restore its prefix routing
+  WindIN models without legacy endpoint metadata restore its prefix routing
   (`anthropic/`, `google/`, or OpenAI-compatible fallback) explicitly.
 - The v1 editor's synthetic `0/0` pricing value is treated as equivalent to an
   absent final-v1 price.
@@ -142,7 +142,7 @@ providers always take routing families from the current registry.
 
 Provider rows and their model rows are inserted in one synchronous
 `withWriteTx` transaction. Order keys preserve the prepared provider/model
-sequence, after the seeded CherryAI row.
+sequence, after the seeded WindAI row.
 
 ## Implementation Files
 

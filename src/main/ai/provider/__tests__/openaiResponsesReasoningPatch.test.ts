@@ -9,7 +9,7 @@ const prompt: LanguageModelV3CallOptions['prompt'] = [
 // Guards patches/@ai-sdk__openai@3.0.53.patch. DeepSeek's Responses API emits
 // response.reasoning_text.delta rather than OpenAI's reasoning summary delta event.
 // Without the patch, the SDK accepts the event as an unknown chunk and silently
-// drops the reasoning text before it reaches Cherry Studio's stream pipeline.
+// drops the reasoning text before it reaches Wind Studio's stream pipeline.
 describe('patched @ai-sdk/openai Responses reasoning parser', () => {
   it('normalizes response.reasoning_text.delta into reasoning stream parts', async () => {
     const events = [

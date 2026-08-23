@@ -299,7 +299,7 @@ describe('OAuthRuntimeService', () => {
     expect(doFetch).toHaveBeenCalledTimes(1)
   })
 
-  // CherryIN path: still 401 after the forced-refresh retry → onUnauthorized fires
+  // WindIN path: still 401 after the forced-refresh retry → onUnauthorized fires
   // once with the final response, and the 401 is returned (not thrown) for the
   // caller to surface. `context` is accepted and threaded into token refresh.
   it('authenticatedFetch reports a persistent 401 to onUnauthorized and returns it', async () => {
@@ -411,7 +411,7 @@ describe('OAuthRuntimeService', () => {
     })
   })
 
-  // M1: the post-persist side effect (CherryIN's API-key fetch) runs AFTER the
+  // M1: the post-persist side effect (WindIN's API-key fetch) runs AFTER the
   // token is stored, so a transient failure there keeps the minted token rather
   // than discarding it and forcing the user through the whole flow again.
   it('keeps the persisted token when the post-persist side effect fails', async () => {

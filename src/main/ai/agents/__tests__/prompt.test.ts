@@ -112,7 +112,7 @@ describe('PromptBuilder', () => {
     // No system.md → keep the Claude Code preset as the base and append Cherry content;
     // the old embedded "personal assistant" preamble must be gone.
     expect(base).toEqual({ kind: 'claude_code' })
-    expect(result).not.toContain('You are a personal assistant running inside Cherry Studio')
+    expect(result).not.toContain('You are a personal assistant running inside Wind Studio')
     expect(result).toContain('## Memories')
     expect(result).toContain('`/workspace/SOUL.md`')
   })
@@ -216,13 +216,13 @@ describe('PromptBuilder', () => {
 
   it('includes memory/FACT.md in memories section', async () => {
     setupFiles({
-      '/workspace/memory/FACT.md': '# Active Projects\n\n- Cherry Studio'
+      '/workspace/memory/FACT.md': '# Active Projects\n\n- Wind Studio'
     })
 
     const { context: result } = await builder.buildPromptParts('/workspace')
 
     expect(result).toContain('<facts>')
-    expect(result).toContain('Cherry Studio')
+    expect(result).toContain('Wind Studio')
     expect(result).toContain('</facts>')
     expect(result).toContain('WHAT you know')
   })
@@ -231,7 +231,7 @@ describe('PromptBuilder', () => {
     setupFiles({
       '/workspace/soul.md': 'Be concise.',
       '/workspace/user.md': 'Name: V',
-      '/workspace/memory/FACT.md': 'Project: Cherry Studio'
+      '/workspace/memory/FACT.md': 'Project: Wind Studio'
     })
 
     const { context: result } = await builder.buildPromptParts('/workspace')
@@ -247,7 +247,7 @@ describe('PromptBuilder', () => {
     setupFiles({
       '/workspace/SOUL.md': 'Be concise.',
       '/workspace/USER.md': 'Name: V',
-      '/workspace/memory/FACT.md': 'Project: Cherry Studio'
+      '/workspace/memory/FACT.md': 'Project: Wind Studio'
     })
 
     const result = await builder.buildMemoriesSection('/workspace')
@@ -255,8 +255,8 @@ describe('PromptBuilder', () => {
     expect(result).toContain('## Memories')
     expect(result).toContain('Be concise.')
     expect(result).toContain('Name: V')
-    expect(result).toContain('Project: Cherry Studio')
-    expect(result).not.toContain('You are a personal assistant running inside Cherry Studio')
+    expect(result).toContain('Project: Wind Studio')
+    expect(result).not.toContain('You are a personal assistant running inside Wind Studio')
     expect(result).not.toContain('## Autonomy Tools')
   })
 

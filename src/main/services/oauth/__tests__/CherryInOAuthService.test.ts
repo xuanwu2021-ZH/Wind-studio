@@ -39,7 +39,7 @@ describe('CherryInOAuthService', () => {
     // Faithful stand-in for OAuthRuntimeService.authenticatedFetch: token
     // resolution + 401 force-refresh live in the runtime (covered by its own
     // tests). Here we only drive the request shaping/response handling the
-    // CherryIN service owns — build with a fixed credential, run doFetch, and
+    // WindIN service owns — build with a fixed credential, run doFetch, and
     // fire onUnauthorized on a 401 so the diagnostic log is exercised.
     runtimeMocks.authenticatedFetch.mockImplementation(async (_providerId, buildRequest, doFetch, options = {}) => {
       const { input, init } = buildRequest({ accessToken: 'oauth-access', accountId: null })
@@ -118,7 +118,7 @@ describe('CherryInOAuthService', () => {
     )
 
     expect(errorSpy).toHaveBeenCalledWith(
-      'CherryIN request returned 401 Unauthorized',
+      'WindIN request returned 401 Unauthorized',
       expect.objectContaining({
         stage: '/api/v1/oauth/balance',
         response: expect.objectContaining({ body: expect.objectContaining({ access_token: '<redacted>' }) })

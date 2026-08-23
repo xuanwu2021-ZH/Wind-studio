@@ -24,12 +24,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CherryHQ/cherry-studio.git"
+    "url": "git+https://windbot.cn"
   },
   "bugs": {
-    "url": "https://github.com/CherryHQ/cherry-studio/issues"
+    "url": "https://windbot.cn"
   },
-  "homepage": "https://github.com/CherryHQ/cherry-studio#readme",
+  "homepage": "https://windbot.cn",
   "exports": {
     ".": {
       "import": {

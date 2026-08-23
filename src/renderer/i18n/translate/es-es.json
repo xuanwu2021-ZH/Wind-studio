@@ -33,7 +33,7 @@
     },
     "builtin": {
       "cherry_assistant": {
-        "description": "Asesor integrado de Cherry Studio. Diagnosticar problemas, guiar operaciones, recopilar preguntas frecuentes, enviar errores/solicitudes de funciones y buscar/crear Habilidades"
+        "description": "Asesor integrado de Wind Studio. Diagnosticar problemas, guiar operaciones, recopilar preguntas frecuentes, enviar errores/solicitudes de funciones y buscar/crear Habilidades"
       }
     },
     "channels": {
@@ -994,23 +994,23 @@
           "description": "Genera una imagen a partir de un texto descriptivo utilizando tu modelo de pintura configurado",
           "label": "Generar Imagen"
         },
-        "CherryKbManage": {
+        "WindKbManage": {
           "description": "Agrega, elimina o actualiza documentos en tus bases de conocimiento",
           "label": "Gestionar conocimiento"
         },
-        "CherryKbSearch": {
+        "WindKbSearch": {
           "description": "Busca en tus bases de conocimiento",
           "label": "Búsqueda de conocimiento"
         },
-        "CherryNotify": {
+        "WindNotify": {
           "description": "Envía una notificación a través de un canal conectado",
           "label": "Notificar"
         },
-        "CherryWebFetch": {
+        "WindWebFetch": {
           "description": "Obtiene y lee una página web",
           "label": "Obtención web"
         },
-        "CherryWebSearch": {
+        "WindWebSearch": {
           "description": "Busca en la web a través de tu proveedor configurado",
           "label": "Búsqueda en la web"
         },
@@ -1097,7 +1097,7 @@
     "authHeader": {
       "title": "Encabezado de autorización"
     },
-    "description": "Expone las capacidades de IA de Cherry Studio a través de APIs HTTP compatibles con OpenAI",
+    "description": "Expone las capacidades de IA de Wind Studio a través de APIs HTTP compatibles con OpenAI",
     "documentation": {
       "title": "Documentación API"
     },
@@ -2138,7 +2138,7 @@
     },
     "api_gateway": {
       "description": "Cualquier CLI, cualquier modelo",
-      "requires_running": "Mantén Cherry Studio en ejecución después de habilitarlo: la CLI externa se conecta a la puerta de enlace que aloja.",
+      "requires_running": "Mantén Wind Studio en ejecución después de habilitarlo: la CLI externa se conecta a la puerta de enlace que aloja.",
       "title": "Puerta de enlace unificada"
     },
     "apply_failed": "Error al escribir la configuración de la CLI en el archivo del sistema",
@@ -3052,7 +3052,7 @@
           "description": "Introduce una URL de página web:",
           "help": "El texto de la página se obtendrá, se dividirá en fragmentos y se indexará automáticamente.",
           "input_label": "URL de la página web",
-          "placeholder": "https://docs.cherry-ai.com/",
+          "placeholder": "https://docs.windbot.cn/",
           "title": "Importar una sola página web"
         }
       },
@@ -4681,7 +4681,7 @@
       "missing_model": "Habilita al menos un modelo del proveedor habilitado",
       "missing_provider": "Habilitar un proveedor para continuar",
       "next": "Siguiente",
-      "subtitle": "Añade una clave API o inicia sesión con CherryIN, luego habilita un proveedor.",
+      "subtitle": "Añade una clave API o inicia sesión con WindIN, luego habilita un proveedor.",
       "title": "Elige un Proveedor"
     },
     "select_model": {
@@ -4693,21 +4693,21 @@
     "skip": "Saltar",
     "toast": {
       "complete_failed": "No se puede completar la configuración. Inténtalo de nuevo.",
-      "connected": "Conectado con éxito a CherryIN"
+      "connected": "Conectado con éxito a WindIN"
     },
     "welcome": {
-      "login_cherryin": "Iniciar sesión con CherryIN",
+      "login_cherryin": "Iniciar sesión con WindIN",
       "or_continue_with": "O CONTINUAR CON",
       "other_provider": "Elegir Otros Proveedores",
       "select_other_provider": "Seleccionar Otro Proveedor",
       "setup_hint": "Por favor, configura al menos un proveedor para obtener la mejor experiencia.",
       "subtitle": "Conecta un proveedor para activar tu estación de trabajo de IA todo en uno",
-      "title": "Bienvenido a Cherry Studio"
+      "title": "Bienvenido a Wind Studio"
     }
   },
   "openclaw": {
     "checking_installation": "Comprobando la instalación de OpenClaw...",
-    "description": "Integra los proveedores de Cherry Studio con OpenClaw Gateway para habilitar agentes de codificación con IA como Claude Code, Qwen-Coder y más.",
+    "description": "Integra los proveedores de Wind Studio con OpenClaw Gateway para habilitar agentes de codificación con IA como Claude Code, Qwen-Coder y más.",
     "error": {
       "select_provider_model": "Por favor, selecciona primero un proveedor y un modelo."
     },
@@ -4745,7 +4745,7 @@
       "title": "Configuración del modelo"
     },
     "node_missing": {
-      "description": "OpenClaw requiere Node.js/npm. Por favor, instala Node.js primero y luego reinicia Cherry Studio.",
+      "description": "OpenClaw requiere Node.js/npm. Por favor, instala Node.js primero y luego reinicia Wind Studio.",
       "download_button": "Descargar Node.js",
       "hint": "macOS: brew install node | Windows: Descarga la versión LTS desde nodejs.org",
       "title": "Node.js Requerido"
@@ -5231,8 +5231,8 @@
     "baidu-cloud": "Baidu Nube Qiánfān",
     "burncloud": "BurnCloud",
     "cerebras": "Cerebras AI",
-    "cherryai": "CherryAI",
-    "cherryin": "CherryIN",
+    "cherryai": "WindAI",
+    "cherryin": "WindIN",
     "claude-code": "Claude Code",
     "copilot": "GitHub Copiloto",
     "dashscope": "Álibaba Nube BaiLiàn",
@@ -5642,7 +5642,7 @@
           },
           "description": {
             "0": "El asistente de selección de texto necesita el permiso de «<strong>Accesibilidad</strong>» para funcionar correctamente.",
-            "1": "Haga clic en «<strong>Ir a configuración</strong>», luego, en la ventana emergente de solicitud de permisos que aparecerá, haga clic en el botón «<strong>Abrir configuración del sistema</strong>» y, a continuación, busque «<strong>Cherry Studio</strong>» en la lista de aplicaciones y active el interruptor de permisos.",
+            "1": "Haga clic en «<strong>Ir a configuración</strong>», luego, en la ventana emergente de solicitud de permisos que aparecerá, haga clic en el botón «<strong>Abrir configuración del sistema</strong>» y, a continuación, busque «<strong>Wind Studio</strong>» en la lista de aplicaciones y active el interruptor de permisos.",
             "2": "Una vez completada la configuración, vuelva a activar el asistente de selección de texto."
           },
           "title": "Permisos de accesibilidad"
@@ -5666,7 +5666,7 @@
         "wayland_checklist_subtitle": "Asegúrate de que se cumplan las siguientes condiciones para optimizar la experiencia con Wayland:",
         "wayland_description": "Estás en una sesión de Wayland. Debido a limitaciones del sistema, la barra de herramientas puede aparecer solo en el centro de la pantalla en lugar de seguir el texto seleccionado en algunos entornos de escritorio. Se recomienda cambiar a una sesión de X11 para disfrutar de la experiencia completa.",
         "wayland_title": "Aviso de sesión de Wayland",
-        "xwayland_fail": "No habilitado; por favor, inicia Cherry Studio con la bandera `--ozone-platform=x11`.",
+        "xwayland_fail": "No habilitado; por favor, inicia Wind Studio con la bandera `--ozone-platform=x11`.",
         "xwayland_label": "Modo XWayland:",
         "xwayland_pass": "Habilitado"
       },
@@ -5863,12 +5863,12 @@
         "inspecting": "[to be translated]:Preparing the available information...",
         "limit": "[to be translated]:To keep the ZIP manageable, logs and detailed records are limited to {{size}}. Newer information is kept first.",
         "mail": {
-          "body": "[to be translated]:Please help investigate this Cherry Studio issue.\n\nDiagnostic bundle ID: {{bundleId}}\nVersion: {{version}}\nPlatform: {{platform}}\nTime range: {{range}}\nFile: {{fileName}}\n\nPlease attach the ZIP file to this email. The bundle was saved locally and was not uploaded automatically.",
-          "subject": "[to be translated]:Cherry Studio diagnostics {{bundleId}}"
+          "body": "[to be translated]:Please help investigate this Wind Studio issue.\n\nDiagnostic bundle ID: {{bundleId}}\nVersion: {{version}}\nPlatform: {{platform}}\nTime range: {{range}}\nFile: {{fileName}}\n\nPlease attach the ZIP file to this email. The bundle was saved locally and was not uploaded automatically.",
+          "subject": "[to be translated]:Wind Studio diagnostics {{bundleId}}"
         },
         "privacy": {
           "consent": "[to be translated]:I understand the information above and will share the ZIP only privately with support.",
-          "description": "[to be translated]:These records may contain things you entered, file locations, request and response content, and service connection information. Cherry Studio does not hide or upload them automatically. Share the ZIP only with support, and never post it on GitHub or other public sites.",
+          "description": "[to be translated]:These records may contain things you entered, file locations, request and response content, and service connection information. Wind Studio does not hide or upload them automatically. Share the ZIP only with support, and never post it on GitHub or other public sites.",
           "title": "[to be translated]:Before you share"
         },
         "range_title": "[to be translated]:Time range",
@@ -5909,13 +5909,13 @@
       },
       "feedback": {
         "agent": {
-          "description": "Chatea con Cherry Assistant para compartir tus comentarios.",
+          "description": "Chatea con Wind Assistant para compartir tus comentarios.",
           "title": "Usar Agente"
         },
-        "agent_error": "No se puede abrir Cherry Assistant para enviar comentarios. Inténtalo de nuevo.",
+        "agent_error": "No se puede abrir Wind Assistant para enviar comentarios. Inténtalo de nuevo.",
         "button": "Enviar feedback",
         "dialog": {
-          "description": "Elige cómo compartir comentarios y ayúdanos a mejorar Cherry Studio.",
+          "description": "Elige cómo compartir comentarios y ayúdanos a mejorar Wind Studio.",
           "title": "Elige un canal de retroalimentación"
         },
         "github": {
@@ -5997,7 +5997,7 @@
         "select": "Modificar directorio",
         "select_error": "Error al cambiar el directorio de datos",
         "select_error_in_app_path": "La nueva ruta es la misma que la ruta de instalación de la aplicación. Por favor, seleccione otra ruta",
-        "select_error_protected_path": "La ruta seleccionada está protegida por el sistema operativo o Cherry Studio. Por favor, elija otra carpeta.",
+        "select_error_protected_path": "La ruta seleccionada está protegida por el sistema operativo o Wind Studio. Por favor, elija otra carpeta.",
         "select_error_root_path": "La nueva ruta no puede ser la ruta raíz",
         "select_error_same_path": "La nueva ruta es igual a la antigua. Por favor, seleccione otra ruta",
         "select_error_write_permission": "La nueva ruta no tiene permisos de escritura",
@@ -6616,7 +6616,7 @@
       "remove": "Remove tool",
       "removeConfirmMessage": "Are you sure you want to remove \"{{name}}\"? The binary will be deleted.",
       "removeConfirmTitle": "Remove Tool",
-      "removeDefinitionOnlyConfirmMessage": "Cherry no pudo limpiar de forma segura \"{{name}}\". Eliminar solo su definición ocultará la tarjeta pero dejará sus archivos de backend instalados. ¿Continuar?",
+      "removeDefinitionOnlyConfirmMessage": "Wind Studio no pudo limpiar de forma segura \"{{name}}\". Eliminar solo su definición ocultará la tarjeta pero dejará sus archivos de backend instalados. ¿Continuar?",
       "removeDefinitionOnlyConfirmTitle": "¿Eliminar solo definición?",
       "removeDefinitionOnlyDependents": "Las herramientas instaladas dependen de ello: {{dependents}}.",
       "removeError": "Error al eliminar la herramienta",
@@ -6648,7 +6648,7 @@
         "uv": "Python package manager for MCP services and dependency installation."
       },
       "uninstall": "Desinstalar",
-      "uninstallConfirmMessage": "¿Estás seguro de que quieres desinstalar \"{{name}}\"? Se eliminará la copia de backend de Cherry Studio.",
+      "uninstallConfirmMessage": "¿Estás seguro de que quieres desinstalar \"{{name}}\"? Se eliminará la copia de backend de Wind Studio.",
       "uninstallConfirmTitle": "Herramienta de desinstalación",
       "uninstallFailed": "Error al desinstalar la herramienta",
       "uninstallSuccess": "Herramienta desinstalada",
@@ -7838,7 +7838,7 @@
         "cherryIn": {
           "description": "Inicia sesión con tu servidor New-API autoalojado mediante OAuth 2.0 (PKCE)",
           "logged_in": "Conectado a través de OAuth",
-          "login_button": "Autorizar con CherryIN",
+          "login_button": "Autorizar con WindIN",
           "logout_button": "Cerrar sesión",
           "not_logged_in": "No has iniciado sesión",
           "register_account": "Create account",

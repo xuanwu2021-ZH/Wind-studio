@@ -423,7 +423,7 @@ describe('buildSystemPrompt — builtin Cherry Assistant definition', () => {
   })
 
   it('injects the bundled Assistant role exactly once', async () => {
-    const role = 'Within Cherry Studio, you serve as Cherry Assistant, its built-in general-purpose Agent'
+    const role = 'Within Wind Studio, you serve as Cherry Assistant, its built-in general-purpose Agent'
     mockLoadBuiltinAgentDefinition.mockReturnValue({ instructions: role })
     mockBuildPrompt.mockResolvedValue({
       base: { kind: 'claude_code' },

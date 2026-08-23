@@ -63,7 +63,7 @@ describe('resolveGeminiBaseUrl', () => {
     expect(resolveGeminiBaseUrl(provider({ id: 'aihubmix' }))).toBe('https://aihubmix.com/gemini')
   })
 
-  it('uses the default-chat-endpoint host as-is for aggregators without a /gemini sub-path (CherryIN)', () => {
+  it('uses the default-chat-endpoint host as-is for aggregators without a /gemini sub-path (WindIN)', () => {
     expect(
       resolveGeminiBaseUrl(
         provider({

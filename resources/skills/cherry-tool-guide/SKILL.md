@@ -1,16 +1,16 @@
 ---
 name: cherry-tool-guide
-description: Cherry Studio first-party tool and bundled-shell routing for general agents. For straightforward local work in shell-capable sessions, run JS/TS with `bun <file>` and one-off JS tools with `bun x`; run Python with `uv run [--with <pkg>] python` and one-off Python CLIs with `uvx`; search with `rg`. Load this guide before changing project dependencies, deciding whether a tool should be ephemeral or reusable, reading or converting workspace Office/PDF files, or using Cherry-owned web/browser, knowledge, persistent memory, schedules/notifications, IM channels, image generation, artifact reporting, managed CLI, or skill capabilities—even if the user names no tool. Consult it before shell/file workarounds; live tool schemas are authoritative.
+description: Wind Studio first-party tool and bundled-shell routing for general agents. For straightforward local work in shell-capable sessions, run JS/TS with `bun <file>` and one-off JS tools with `bun x`; run Python with `uv run [--with <pkg>] python` and one-off Python CLIs with `uvx`; search with `rg`. Load this guide before changing project dependencies, deciding whether a tool should be ephemeral or reusable, reading or converting workspace Office/PDF files, or using Wind Studio-owned web/browser, knowledge, persistent memory, schedules/notifications, IM channels, image generation, artifact reporting, managed CLI, or skill capabilities—even if the user names no tool. Consult it before shell/file workarounds; live tool schemas are authoritative.
 version: 1.2.0
 ---
 
-# Cherry Tool Guide
+# Wind Studio Tool Guide
 
-Cherry Studio injects first-party tools into your session over three MCP servers
+Wind Studio injects first-party tools into your session over three MCP servers
 (`mcp__cherry-tools__*`, `mcp__agent-memory__*`, `mcp__skills__*`) and gives
 shell-capable general agents bundled runtimes for local execution. The MCP tools act on
 the running app — the user's knowledge bases, IM channels, schedules, managed CLIs, and
-skill library — through boundaries only Cherry owns. Shell and file tools cannot reach
+skill library — through boundaries only Wind Studio owns. Shell and file tools cannot reach
 those app boundaries correctly; use the bundled runtimes only for the local execution
 cases routed below.
 
@@ -31,7 +31,7 @@ parameter names, enums, and required fields. Read it before every call.
   which). If a tool is not in your live tool list, its capability is unavailable *in
   this session* — say so honestly and stop; never pretend a call succeeded or fabricate
   a result.
-- **Don't reach around Cherry's mutation boundaries.** Knowledge bases, IM channels,
+- **Don't reach around Wind Studio's mutation boundaries.** Knowledge bases, IM channels,
   schedules, managed CLIs, and skills are mutated only through these tools. Do not shell
   out to `npm install`, `git clone`, `crontab`, or hand-edit knowledge files to
   accomplish these — the tool does bookkeeping (registration, scoping, approval, sync)
@@ -57,7 +57,7 @@ parameter names, enums, and required fields. Read it before every call.
 | Read or convert a workspace document | `mcp__cherry-tools__to_markdown` → read the returned temporary Markdown path as needed | [documents.md](references/documents.md) |
 | Recall a past fact, correction, or preference | `mcp__agent-memory__memory` (`search`) before re-asking | [memory.md](references/memory.md) |
 | Save durable knowledge vs. a one-off event | `mcp__agent-memory__memory` (`update` vs. `append`) | [memory.md](references/memory.md) |
-| Schedule a recurring / future task | `mcp__cherry-tools__cron` (Cherry scheduling only) | [autonomy.md](references/autonomy.md) |
+| Schedule a recurring / future task | `mcp__cherry-tools__cron` (Wind Studio scheduling only) | [autonomy.md](references/autonomy.md) |
 | Proactively message the user or send a file | `mcp__cherry-tools__notify` | [autonomy.md](references/autonomy.md) |
 | Inspect / connect / repair IM channels, rename agent | `mcp__cherry-tools__config` | [autonomy.md](references/autonomy.md) |
 | Generate an image | `mcp__cherry-tools__generate_image` (needs a painting model) | [outputs.md](references/outputs.md) |
@@ -89,5 +89,5 @@ approval**, stop and report — never re-attempt the mutation through a differen
 Not covered here: SDK-native `Read`/`Edit`/`Bash` and orchestration tools; third-party
 (user-configured) MCP servers; the AI-SDK chat `read_file` attachment reader (a
 chat-path tool, not exposed on this MCP surface); and the role-specific
-`mcp__assistant__*` navigation/diagnosis tools, which belong to the Cherry Assistant and
+`mcp__assistant__*` navigation/diagnosis tools, which belong to the Wind Assistant and
 its own guide.

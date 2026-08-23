@@ -545,7 +545,7 @@ describe('providerToAiSdkConfig — builder dispatch matrix', () => {
       expect(settings.geminiBaseURL).toBeDefined()
     })
 
-    it('routes a CherryIN OpenAI model on the Responses endpoint through the CherryIN provider', async () => {
+    it('routes a WindIN OpenAI model on the Responses endpoint through the WindIN provider', async () => {
       const provider = makeProvider({
         id: 'cherryin',
         defaultChatEndpoint: ENDPOINT_TYPE.OPENAI_CHAT_COMPLETIONS,
@@ -569,10 +569,10 @@ describe('providerToAiSdkConfig — builder dispatch matrix', () => {
     })
 
     it('routes a CherryIn google-generate-content model (e.g. nano-banana image) to the cherryin extension, not openai-compatible (REGRESSION)', async () => {
-      // CherryIN relays its Google models via Gemini's native `generateContent`; its
+      // WindIN relays its Google models via Gemini's native `generateContent`; its
       // registry declares `google-generate-content` → adapterFamily 'cherryin'.
       // Without that declaration the endpoint fell through to `openai-compatible`,
-      // whose image model POSTs edits to `/v1/images/edits` — which CherryIN serves
+      // whose image model POSTs edits to `/v1/images/edits` — which WindIN serves
       // only for imagen (500 "only imagen models supported"). The declaration routes
       // it to the cherryin extension so createImageModel() drives editing through
       // `generateContent`.
@@ -622,8 +622,8 @@ describe('providerToAiSdkConfig — builder dispatch matrix', () => {
       expect(config.providerId).toBe('openai-compatible')
     })
 
-    it('routes a preset-derived CherryIN instance (custom host) through buildCherryinConfig with ITS OWN relay base URLs (REGRESSION)', async () => {
-      // A user-created / enterprise CherryIN instance: UUID id, presetProviderId
+    it('routes a preset-derived WindIN instance (custom host) through buildCherryinConfig with ITS OWN relay base URLs (REGRESSION)', async () => {
+      // A user-created / enterprise WindIN instance: UUID id, presetProviderId
       // 'cherryin', custom host. `matchesPreset` (not a bare `id === 'cherryin'`)
       // must still dispatch to buildCherryinConfig, and its gemini/anthropic base
       // URLs must come from THIS instance — reading the hardcoded preset would send
@@ -659,7 +659,7 @@ describe('providerToAiSdkConfig — builder dispatch matrix', () => {
     })
   })
 
-  describe('CherryAI routing', () => {
+  describe('WindAI routing', () => {
     it('uses custom fetch to sign chat completions requests', async () => {
       resolveApiKeyMock.mockReturnValue({ value: '', apiKeySelection: { attribution: 'unknown' } })
       generateSignatureMock.mockReturnValue({

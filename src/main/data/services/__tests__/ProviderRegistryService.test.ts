@@ -686,7 +686,7 @@ describe('ProviderRegistryService', () => {
           },
           {
             id: 'cherryin',
-            name: 'CherryIN',
+            name: 'WindIN',
             defaultChatEndpoint: null,
             metadata: {}
           }

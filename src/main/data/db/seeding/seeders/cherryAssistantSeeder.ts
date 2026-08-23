@@ -12,11 +12,11 @@ import type { DbType, ISeeder } from '../../types'
 // keeping this seed local avoids either direction crossing the Data/AI boundary.
 const CHERRY_ASSISTANT_SEED = {
   name: {
-    default: 'Cherry Assistant',
-    zh: 'Cherry 小助手'
+    default: 'Windbot Assistant',
+    zh: 'Windbot 助手'
   },
   configuration: {
-    avatar: '🍒',
+    avatar: '🌀',
     permission_mode: 'acceptEdits',
     max_turns: 100,
     bootstrap_completed: true,
@@ -46,7 +46,7 @@ export class CherryAssistantSeeder implements ISeeder {
         name: this.getNameForPreferredSystemLanguage(),
         description: '',
         instructions: '',
-        // The managed CherryAI model cannot run the agent runtime. Onboarding
+        // The managed WindAI model cannot run the agent runtime. Onboarding
         // assigns the user's default model when they choose one.
         model: null,
         configuration: { ...CHERRY_ASSISTANT_SEED.configuration }

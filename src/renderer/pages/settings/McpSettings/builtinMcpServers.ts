@@ -34,12 +34,12 @@ export const builtinMcpServers: BuiltinMcpServer[] = [
   {
     id: nanoid(),
     name: BuiltinMcpServerNames.mcpAutoInstall,
-    reference: 'https://docs.cherry-ai.com/advanced-basic/mcp/auto-install',
+    reference: 'https://docs.windbot.cn/advanced-basic/mcp/auto-install',
     type: 'stdio',
     command: 'npx',
     args: ['-y', '@mcpmarket/mcp-auto-install', 'connect', '--json'],
     isActive: false,
-    provider: 'CherryAI',
+    provider: 'WindAI',
     installSource: 'builtin',
     isTrusted: true
   },
@@ -53,7 +53,7 @@ export const builtinMcpServers: BuiltinMcpServer[] = [
       MEMORY_FILE_PATH: 'YOUR_MEMORY_FILE_PATH'
     },
     shouldConfig: true,
-    provider: 'CherryAI',
+    provider: 'WindAI',
     installSource: 'builtin',
     isTrusted: true
   },
@@ -62,7 +62,7 @@ export const builtinMcpServers: BuiltinMcpServer[] = [
     name: BuiltinMcpServerNames.sequentialThinking,
     type: 'inMemory',
     isActive: true,
-    provider: 'CherryAI',
+    provider: 'WindAI',
     installSource: 'builtin',
     isTrusted: true
   },
@@ -75,7 +75,7 @@ export const builtinMcpServers: BuiltinMcpServer[] = [
       BRAVE_API_KEY: 'YOUR_API_KEY'
     },
     shouldConfig: true,
-    provider: 'CherryAI',
+    provider: 'WindAI',
     installSource: 'builtin',
     isTrusted: true
   },
@@ -84,7 +84,7 @@ export const builtinMcpServers: BuiltinMcpServer[] = [
     name: BuiltinMcpServerNames.fetch,
     type: 'inMemory',
     isActive: true,
-    provider: 'CherryAI',
+    provider: 'WindAI',
     installSource: 'builtin',
     isTrusted: true
   },
@@ -96,7 +96,7 @@ export const builtinMcpServers: BuiltinMcpServer[] = [
     disabledAutoApproveTools: [...filesystemManualApprovalTools],
     shouldConfig: true,
     isActive: false,
-    provider: 'CherryAI',
+    provider: 'WindAI',
     installSource: 'builtin',
     isTrusted: true
   },
@@ -109,7 +109,7 @@ export const builtinMcpServers: BuiltinMcpServer[] = [
       DIFY_KEY: 'YOUR_DIFY_KEY'
     },
     shouldConfig: true,
-    provider: 'CherryAI',
+    provider: 'WindAI',
     installSource: 'builtin',
     isTrusted: true
   },
@@ -118,7 +118,7 @@ export const builtinMcpServers: BuiltinMcpServer[] = [
     name: BuiltinMcpServerNames.python,
     type: 'inMemory',
     isActive: false,
-    provider: 'CherryAI',
+    provider: 'WindAI',
     installSource: 'builtin',
     isTrusted: true
   },
@@ -132,7 +132,7 @@ export const builtinMcpServers: BuiltinMcpServer[] = [
       DIDI_API_KEY: 'YOUR_DIDI_API_KEY'
     },
     shouldConfig: true,
-    provider: 'CherryAI',
+    provider: 'WindAI',
     installSource: 'builtin',
     isTrusted: true
   },
@@ -141,7 +141,7 @@ export const builtinMcpServers: BuiltinMcpServer[] = [
     name: BuiltinMcpServerNames.browser,
     type: 'inMemory',
     isActive: false,
-    provider: 'CherryAI',
+    provider: 'WindAI',
     installSource: 'builtin',
     isTrusted: true
   },

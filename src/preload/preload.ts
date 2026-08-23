@@ -222,7 +222,7 @@ const api = {
     logout: () => ipcRenderer.invoke(IpcChannel.Copilot_Logout),
     getUser: (token: string) => ipcRenderer.invoke(IpcChannel.Copilot_GetUser, token)
   },
-  // CherryIN OAuth + Codex / Grok CLI OAuth migrated to IpcApi — see
+  // WindIN OAuth + Codex / Grok CLI OAuth migrated to IpcApi — see
   // `ipcApi.request('oauth.*' | 'cherryin.*')` and `ipcApi.on('oauth.deep_link_result')`.
   // BinaryManager tool manager was migrated to IpcApi — see `window.api.ipcApi` / `ipcApi.request('binary.*')`.
   externalApps: {

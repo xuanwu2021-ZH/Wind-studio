@@ -18,7 +18,7 @@ export function useProviderEndpoints(provider: Provider | undefined) {
   const providerApiHost = topology.primaryBaseUrl
   const providerAnthropicHost = topology.anthropicBaseUrl
   const providerApiVersion = provider?.settings?.apiVersion ?? ''
-  const isCherryIN = provider?.id === 'cherryin'
+  const isWindIN = provider?.id === 'cherryin'
 
   const [apiHost, setApiHostValue] = useState(providerApiHost)
   const [anthropicApiHost, setAnthropicApiHost] = useState(providerAnthropicHost)
@@ -60,6 +60,6 @@ export function useProviderEndpoints(provider: Provider | undefined) {
     providerAnthropicHost,
     isVertexProvider: provider ? isVertexProvider(provider) : false,
     isAnthropicProvider: provider ? isAnthropicProvider(provider) : false,
-    isCherryIN
+    isWindIN
   }
 }

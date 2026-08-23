@@ -162,7 +162,7 @@ describe('createOpenAICompatibleRerankingModel', () => {
     ).rejects.toThrow()
   })
 
-  it('is reused by CherryIN reranking models', async () => {
+  it('is reused by WindIN reranking models', async () => {
     const fetchMock = vi.fn().mockResolvedValue(
       new Response(
         JSON.stringify({

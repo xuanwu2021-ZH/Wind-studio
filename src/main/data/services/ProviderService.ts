@@ -100,7 +100,7 @@ function assertManagedCherryAiProviderMutationAllowed(providerId: string, operat
     return
   }
 
-  throw DataApiErrorFactory.invalidOperation(operation, 'managed CherryAI provider cannot be modified')
+  throw DataApiErrorFactory.invalidOperation(operation, 'managed WindAI provider cannot be modified')
 }
 
 function normalizeApiKeyEntry(entry: ApiKeyEntry): ApiKeyEntry {

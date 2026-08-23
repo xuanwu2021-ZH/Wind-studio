@@ -11,7 +11,7 @@ const state = vi.hoisted(() => ({
     modelId: 'qwen',
     name: 'Qwen',
     providerId: 'cherryai',
-    group: 'CherryAI'
+    group: 'WindAI'
   },
   messages: [] as never[],
   activeExecutions: [] as never[],

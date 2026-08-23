@@ -142,7 +142,7 @@ describe('ProviderModelMigrator', () => {
       expect(result.warnings?.some((w) => w.includes('duplicate'))).toBe(true)
     })
 
-    it('skips legacy CherryAI provider rows because CherryAI is seeded', async () => {
+    it('skips legacy WindAI provider rows because WindAI is seeded', async () => {
       const migrationContext = createContext(dbh.db, {
         llm: {
           providers: [makeProvider(CHERRYAI_PROVIDER_ID, [{ id: 'qwen' }]), makeProvider('openai', [{ id: 'gpt-4o' }])]
@@ -153,7 +153,7 @@ describe('ProviderModelMigrator', () => {
 
       expect(result.success).toBe(true)
       expect(result.itemCount).toBe(1)
-      expect(result.warnings?.some((w) => w.includes('managed CherryAI'))).toBe(true)
+      expect(result.warnings?.some((w) => w.includes('managed WindAI'))).toBe(true)
     })
 
     it('returns an error ID when preparation fails', async () => {
@@ -213,7 +213,7 @@ describe('ProviderModelMigrator', () => {
       expect(migratedProviders[0].providerId).toBe('openai')
     })
 
-    it('assigns migrated provider order keys after the seeded CherryAI provider', async () => {
+    it('assigns migrated provider order keys after the seeded WindAI provider', async () => {
       const migrationContext = createContext(dbh.db, {
         llm: {
           providers: [makeProvider('openai'), makeProvider('anthropic')]
@@ -276,7 +276,7 @@ describe('ProviderModelMigrator', () => {
       expect(pinRows[0].orderKey < pinRows[1].orderKey).toBe(true)
     })
 
-    it('keeps legacy CherryAI default model pins pointed at the seeded Qwen model', async () => {
+    it('keeps legacy WindAI default model pins pointed at the seeded Qwen model', async () => {
       const migrationContext = createContext(
         dbh.db,
         {
@@ -313,7 +313,7 @@ describe('ProviderModelMigrator', () => {
       expect(cherryAiModelRows).toHaveLength(1)
     })
 
-    it('migrates legacy CherryAI pins even when all providers are managed', async () => {
+    it('migrates legacy WindAI pins even when all providers are managed', async () => {
       const migrationContext = createContext(
         dbh.db,
         {
@@ -340,7 +340,7 @@ describe('ProviderModelMigrator', () => {
       expect(cherryAiModelRows).toHaveLength(1)
     })
 
-    it('keeps migrated assistants pointed at the managed CherryAI default model', async () => {
+    it('keeps migrated assistants pointed at the managed WindAI default model', async () => {
       const migrationContext = createContext(dbh.db, {
         llm: {
           providers: [makeProvider(CHERRYAI_PROVIDER_ID, [{ id: 'qwen' }])]
@@ -349,7 +349,7 @@ describe('ProviderModelMigrator', () => {
           assistants: [
             {
               id: 'ast-cherryai',
-              name: 'CherryAI Assistant',
+              name: 'WindAI Assistant',
               model: { id: 'qwen', provider: CHERRYAI_PROVIDER_ID }
             }
           ],
@@ -1010,7 +1010,7 @@ describe('ProviderModelMigrator', () => {
     it.each([
       {
         providerId: 'cherryin',
-        providerName: 'CherryIN',
+        providerName: 'WindIN',
         providerType: 'openai',
         modelId: 'anthropic/claude-sonnet-5',
         endpointType: 'anthropic',
@@ -1072,8 +1072,8 @@ describe('ProviderModelMigrator', () => {
       }
     )
 
-    it('restores CherryIN prefix routing when the legacy model omitted endpoint metadata', async () => {
-      registryFixtures.providers = [{ id: 'cherryin', name: 'CherryIN', endpointConfigs: {} }]
+    it('restores WindIN prefix routing when the legacy model omitted endpoint metadata', async () => {
+      registryFixtures.providers = [{ id: 'cherryin', name: 'WindIN', endpointConfigs: {} }]
       registryFixtures.models.set('google/gemini-3.1-pro-preview', {
         id: 'google/gemini-3.1-pro-preview',
         name: 'Gemini 3.1 Pro Preview'
@@ -1083,7 +1083,7 @@ describe('ProviderModelMigrator', () => {
           providers: [
             {
               id: 'cherryin',
-              name: 'CherryIN',
+              name: 'WindIN',
               type: 'openai',
               enabled: true,
               models: [

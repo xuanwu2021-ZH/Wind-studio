@@ -47,7 +47,7 @@ const CherryInOauth: FC<CherryInOauthProps> = ({ providerId }) => {
     try {
       setRemoteHasOAuthToken(await ipcApi.request('oauth.has_token', { providerId }))
     } catch (error) {
-      logger.warn('Failed to check CherryIN OAuth token status:', error as Error)
+      logger.warn('Failed to check WindIN OAuth token status:', error as Error)
       setRemoteHasOAuthToken(false)
     }
   }, [providerId])
@@ -134,7 +134,7 @@ const CherryInOauth: FC<CherryInOauthProps> = ({ providerId }) => {
       const deleteResults = await Promise.allSettled(oauthKeys.map((key) => deleteApiKey(key.id)))
       const rejectedDeletes = deleteResults.filter((result) => result.status === 'rejected')
       if (rejectedDeletes.length > 0) {
-        logger.warn(`Failed to delete ${rejectedDeletes.length} CherryIN OAuth key(s) after logout`)
+        logger.warn(`Failed to delete ${rejectedDeletes.length} WindIN OAuth key(s) after logout`)
         toast.warning(t('settings.provider.oauth.logout_warning'))
         return
       }

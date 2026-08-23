@@ -1,7 +1,7 @@
 # Web research
 
 Covers `mcp__cherry-tools__web_search` and `mcp__cherry-tools__web_fetch`, plus the hard
-limits of Cherry's web built-ins.
+limits of Wind Studio's web built-ins.
 
 Get exact argument shapes from the live tool schema — this reference gives routing,
 sequencing, and limits only.
@@ -25,7 +25,7 @@ fetch low-relevance URLs just because they came back.
 
 ## Browser limitation (important)
 
-Cherry's web built-ins **search and fetch only**. They cannot:
+Wind Studio's web built-ins **search and fetch only**. They cannot:
 
 - click, hover, or otherwise interact with a page,
 - fill or submit forms,

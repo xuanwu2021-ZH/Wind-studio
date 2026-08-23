@@ -114,7 +114,7 @@ export const Bordered: Story = {
   render: () => (
     <div className="w-[420px] rounded-xl border border-border bg-background">
       <PageHeader
-        title="CherryIN"
+        title="WindIN"
         bordered
         action={
           <button

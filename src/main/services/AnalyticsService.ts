@@ -68,7 +68,8 @@ export class AnalyticsService extends BaseService implements Activatable {
 
     this.client = new AnalyticsClient({
       clientId,
-      channel: 'cherry-studio',
+      baseUrl: 'https://analytics.windbot.cn',
+      channel: 'wind-studio',
       onError: (error) => logger.error('Analytics error:', error),
       headers: {
         'User-Agent': generateUserAgent(),

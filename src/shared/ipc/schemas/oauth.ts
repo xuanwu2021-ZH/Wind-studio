@@ -13,7 +13,7 @@ import { defineRoute } from '../define'
  * provider definition entry — so the IPC surface stays flat as the set grows.
  *
  * Two flow shapes share this surface: a loopback callback (Codex, Grok CLI,
- * via `sign_in`) and a deep-link callback (CherryIN, via `start_deep_link_flow`
+ * via `sign_in`) and a deep-link callback (WindIN, via `start_deep_link_flow`
  * whose outcome arrives out-of-band on the `oauth.deep_link_result` event).
  *
  * `sign_in`/`get_account` return the account superset (just the account id);
