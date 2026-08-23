@@ -27,7 +27,7 @@ describe('CherrySupportSeeder', () => {
     vi.mocked(app.getPreferredSystemLanguages).mockReturnValue(['en-US'])
   })
 
-  it('creates Cherry Support beside Cherry Assistant with a system session and copied model', () => {
+  it('creates Cherry Support beside Windbot Assistant with a system session and copied model', () => {
     new CherryAiDefaultModelSeeder().run(dbh.db)
     new CherryAssistantSeeder().run(dbh.db)
     const [assistant] = builtinAgents(dbh.db, BUILTIN_AGENT_ROLE.ASSISTANT)

@@ -62,7 +62,7 @@ describe('provider reasoning contracts', () => {
     ])
   })
 
-  it('binds CherryIN DeepSeek reasoning to a currently served API identity', () => {
+  it('binds WindIN DeepSeek reasoning to a currently served API identity', () => {
     const deepSeekOverrides = provider('cherryin').overrides?.filter(({ modelId }) => modelId?.startsWith('deepseek'))
 
     expect(deepSeekOverrides?.map(({ apiModelId, modelId }) => ({ apiModelId, modelId }))).toEqual([
@@ -70,7 +70,7 @@ describe('provider reasoning contracts', () => {
     ])
   })
 
-  it('uses CherryIN extra_body thinking controls for the served DeepSeek V3.2 model', () => {
+  it('uses WindIN extra_body thinking controls for the served DeepSeek V3.2 model', () => {
     const wire = provider('cherryin').overrides?.find(({ apiModelId }) => apiModelId === 'deepseek/deepseek-v3.2')
       ?.reasoningContracts?.['openai-chat-completions']?.wire
 

@@ -232,7 +232,7 @@ describe('DeepSeekHarnessService', () => {
     await service.stop()
   })
 
-  it('uses an enabled API key obtained through CherryIN-style OAuth in direct mode', async () => {
+  it('uses an enabled API key obtained through WindIN-style OAuth in direct mode', async () => {
     mocks.providerGet.mockReturnValue({ ...provider, authType: 'oauth' })
     spawnChild((child) => child.stdout.write('dsh web: http://127.0.0.1:43123\n'))
     const service = new DeepSeekHarnessService()

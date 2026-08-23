@@ -172,7 +172,7 @@ describe('TopicNamingService', () => {
     expect(mocks.generateText.mock.calls[0][0]).not.toHaveProperty('assistantId')
   })
 
-  it('falls back to the managed CherryAI default when the quick and chat default models are empty', async () => {
+  it('falls back to the managed WindAI default when the quick and chat default models are empty', async () => {
     MockMainPreferenceServiceUtils.setPreferenceValue('feature.quick_assistant.model_id', null)
     MockMainPreferenceServiceUtils.setPreferenceValue('chat.default_model_id', null)
 
@@ -188,7 +188,7 @@ describe('TopicNamingService', () => {
     )
   })
 
-  it('falls back to the managed CherryAI default when the quick model preference is invalid', async () => {
+  it('falls back to the managed WindAI default when the quick model preference is invalid', async () => {
     MockMainPreferenceServiceUtils.setPreferenceValue('feature.quick_assistant.model_id', 'bad-value')
     MockMainPreferenceServiceUtils.setPreferenceValue('chat.default_model_id', 'anthropic::claude-3-haiku')
 
@@ -203,12 +203,12 @@ describe('TopicNamingService', () => {
       })
     )
     expect(mockMainLoggerService.warn).toHaveBeenCalledWith(
-      'Quick assistant model is not usable for topic naming; falling back to managed CherryAI default',
+      'Quick assistant model is not usable for topic naming; falling back to managed WindAI default',
       { configured: 'bad-value' }
     )
   })
 
-  it('falls back to the managed CherryAI default when the quick model no longer exists', async () => {
+  it('falls back to the managed WindAI default when the quick model no longer exists', async () => {
     MockMainPreferenceServiceUtils.setPreferenceValue('feature.quick_assistant.model_id', 'ghost::missing')
     mocks.getModelByKey.mockImplementation(() => {
       throw new Error('missing model')
@@ -226,7 +226,7 @@ describe('TopicNamingService', () => {
       })
     )
     expect(mockMainLoggerService.warn).toHaveBeenCalledWith(
-      'Quick assistant model is not usable for topic naming; falling back to managed CherryAI default',
+      'Quick assistant model is not usable for topic naming; falling back to managed WindAI default',
       { configured: 'ghost::missing' }
     )
   })
@@ -645,7 +645,7 @@ describe('TopicNamingService', () => {
       })
     )
     expect(mockMainLoggerService.warn).toHaveBeenCalledWith(
-      'Quick assistant model is not usable for topic naming; falling back to managed CherryAI default',
+      'Quick assistant model is not usable for topic naming; falling back to managed WindAI default',
       { configured: 'claude-code::haiku' }
     )
   })

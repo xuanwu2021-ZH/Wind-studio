@@ -1,9 +1,9 @@
 ---
 name: cherry-pr-test
-description: Test Cherry Studio PRs by resolving and checking out a PR, statically inspecting its changes, running interactive UI tests against a safely tracked Electron instance through CDP, producing a structured report, cleaning up only the owned test instance, and restoring the original branch.
+description: Test Wind Studio PRs by resolving and checking out a PR, statically inspecting its changes, running interactive UI tests against a safely tracked Electron instance through CDP, producing a structured report, cleaning up only the owned test instance, and restoring the original branch.
 ---
 
-# Cherry Studio PR Test
+# Wind Studio PR Test
 
 Use this workflow for a bounded PR test. Use `cherry-electron-dev` for ongoing
 implementation or debugging in the current checkout.

@@ -95,7 +95,7 @@ describe('Pi config builders', () => {
         apiKey: 'sk-test',
         baseUrl: 'https://api.example.com/v1',
         contextWindow: 128000,
-        headers: { 'X-Title': 'Cherry Studio' },
+        headers: { 'X-Title': 'Wind Studio' },
         input: ['text', 'image'],
         maxTokens: 8192,
         model: 'model-id',
@@ -113,7 +113,7 @@ describe('Pi config builders', () => {
           baseUrl: 'https://api.example.com/v1',
           api: 'openai-completions',
           apiKey: 'sk-test',
-          headers: { 'X-Title': 'Cherry Studio' },
+          headers: { 'X-Title': 'Wind Studio' },
           models: [
             {
               id: 'model-id',

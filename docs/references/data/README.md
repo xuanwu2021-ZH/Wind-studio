@@ -1,5 +1,5 @@
 ---
-description: Entry point for Cherry Studio data systems - decision guide across BootConfig, Cache, Preference, DataApi, app_state
+description: Entry point for Wind Studio data systems - decision guide across BootConfig, Cache, Preference, DataApi, app_state
 sources:
   - src/main/data
   - src/renderer/data
@@ -8,7 +8,7 @@ sources:
 
 # Data System Reference
 
-This is the main entry point for Cherry Studio's data management documentation. The application uses four data systems based on data characteristics and loading requirements.
+This is the main entry point for Wind Studio's data management documentation. The application uses four data systems based on data characteristics and loading requirements.
 
 ## Quick Navigation
 

@@ -13,14 +13,14 @@ function isLegacyMcpAutoInstall(row: McpServerRow): boolean {
     row.installSource === null &&
     row.name === BuiltinMcpServerNames.mcpAutoInstall &&
     row.type === 'inMemory' &&
-    row.reference === 'https://docs.cherry-ai.com/advanced-basic/mcp/auto-install' &&
+    row.reference === 'https://docs.windbot.cn/advanced-basic/mcp/auto-install' &&
     row.baseUrl === null &&
     row.command === 'npx' &&
     row.registryUrl === null &&
     JSON.stringify(row.args) === JSON.stringify(legacyMcpAutoInstallArgs) &&
     row.env === null &&
     row.headers === null &&
-    row.provider === 'CherryAI'
+    row.provider === 'WindAI'
   )
 }
 

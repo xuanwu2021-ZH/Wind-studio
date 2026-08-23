@@ -19,10 +19,10 @@
     },
     "builtin": {
       "cherry_assistant": {
-        "description": "Built-in Cherry Studio advisor. Diagnose issues, guide operations, collect FAQs, submit bugs/feature requests, and search/create Skills"
+        "description": "Built-in Wind Studio advisor. Diagnose issues, guide operations, collect FAQs, submit bugs/feature requests, and search/create Skills"
       },
       "cherry_support": {
-        "description": "Official Cherry Studio support Agent for setup guidance, troubleshooting, FAQs, and feedback"
+        "description": "Official Wind Studio support Agent for setup guidance, troubleshooting, FAQs, and feedback"
       }
     },
     "channels": {
@@ -629,7 +629,7 @@
           "description": "Fetches and reads a web page",
           "label": "Web Fetch"
         },
-        "CherryWebSearch": {
+        "WindWebSearch": {
           "description": "Searches the web via your configured provider",
           "label": "Web Search"
         },
@@ -797,7 +797,7 @@
     "authHeader": {
       "title": "Authorization Header"
     },
-    "description": "Expose Cherry Studio's AI capabilities through OpenAI- and Anthropic-compatible HTTP APIs",
+    "description": "Expose Wind Studio's AI capabilities through OpenAI- and Anthropic-compatible HTTP APIs",
     "documentation": {
       "title": "API Documentation"
     },
@@ -829,7 +829,7 @@
     },
     "required": {
       "confirm": "Enable",
-      "description": "This agent's model must be bridged through Cherry Studio's local API Gateway. Enabling it also starts the gateway automatically on future launches; you can turn it off again in Settings.",
+      "description": "This agent's model must be bridged through Wind Studio's local API Gateway. Enabling it also starts the gateway automatically on future launches; you can turn it off again in Settings.",
       "title": "Enable the API Gateway?"
     },
     "status": {
@@ -995,7 +995,7 @@
       "new": "New Chat"
     },
     "default": {
-      "name": "Cherry Assistant",
+      "name": "Windbot Assistant",
       "topic": {
         "name": "Default Conversation"
       }
@@ -1559,7 +1559,7 @@
     },
     "api_gateway": {
       "description": "Any CLI, every model",
-      "requires_running": "Keep Cherry Studio running after enabling — the external CLI connects to the gateway it hosts.",
+      "requires_running": "Keep Wind Studio running after enabling — the external CLI connects to the gateway it hosts.",
       "title": "Unified Gateway"
     },
     "apply_failed": "Failed to write CLI config to the system file",
@@ -1850,7 +1850,7 @@
     "openai-response": "OpenAI-Response"
   },
   "error": {
-    "api_gateway_required": "This model must be bridged through Cherry Studio's local API Gateway, which is currently disabled. Enable it to run this agent.",
+    "api_gateway_required": "This model must be bridged through Wind Studio's local API Gateway, which is currently disabled. Enable it to run this agent.",
     "availableProviders": "Available Providers",
     "availableTools": "Available Tools",
     "backup": {
@@ -1926,7 +1926,7 @@
       "503": "Service unavailable. Please try again later",
       "504": "Gateway timeout. Please try again later"
     },
-    "image_unreadable_for_non_vision_model": "The selected model isn't configured for image input, and Cherry Studio couldn't extract readable text from the attachment. Enable Vision for this model in Provider Settings, choose another vision-capable model, or remove the image and try again.",
+    "image_unreadable_for_non_vision_model": "The selected model isn't configured for image input, and Wind Studio couldn't extract readable text from the attachment. Enable Vision for this model in Provider Settings, choose another vision-capable model, or remove the image and try again.",
     "lastError": "Last Error",
     "maxEmbeddingsPerCall": "Max Embeddings Per Call",
     "message": "Error Message",
@@ -3799,15 +3799,15 @@
     "skip": "Set up later",
     "toast": {
       "complete_failed": "Unable to complete setup. Please try again.",
-      "connected": "Successfully connected to CherryIN"
+      "connected": "Successfully connected to WindIN"
     },
     "welcome": {
-      "login_cherryin": "Connect CherryIN",
+      "login_cherryin": "Connect WindIN",
       "or_continue_with": "or",
       "other_provider": "Set up another provider",
       "setup_hint": "You can change providers anytime in Settings",
       "subtitle": "Connect a provider to unlock your All-in-One AI Workstation",
-      "title": "Welcome to Cherry Studio"
+      "title": "Welcome to Wind Studio"
     }
   },
   "openclaw": {
@@ -4128,8 +4128,8 @@
     "baidu-cloud": "Baidu Cloud",
     "burncloud": "BurnCloud",
     "cerebras": "Cerebras AI",
-    "cherryai": "CherryAI",
-    "cherryin": "CherryIN",
+    "cherryai": "WindAI",
+    "cherryin": "WindIN",
     "claude-code": "Claude Code",
     "copilot": "GitHub Copilot",
     "dashscope": "Alibaba Cloud",
@@ -4579,7 +4579,7 @@
           },
           "description": {
             "0": "Selection Assistant requires <strong>Accessibility Permission</strong> to work properly.",
-            "1": "Please click \"<strong>Go to Settings</strong>\" and click the \"<strong>Open System Settings</strong>\" button in the permission request popup that appears later. Then find \"<strong>Cherry Studio</strong>\" in the application list that appears later and turn on the permission switch.",
+            "1": "Please click \"<strong>Go to Settings</strong>\" and click the \"<strong>Open System Settings</strong>\" button in the permission request popup that appears later. Then find \"<strong>Wind Studio</strong>\" in the application list that appears later and turn on the permission switch.",
             "2": "After completing the settings, please reopen the selection assistant."
           },
           "title": "Accessibility Permission"
@@ -4602,7 +4602,7 @@
         "wayland_checklist_subtitle": "Ensure the following conditions are met to optimize the Wayland experience:",
         "wayland_description": "You are in a Wayland session. Due to system limitations, the toolbar may only appear at the center of the screen instead of following the selected text on some desktop environments. It is recommended to switch to an X11 session for the full experience.",
         "wayland_title": "Wayland Session Notice",
-        "xwayland_fail": "Not enabled, please launch Cherry Studio with the `--ozone-platform=x11` flag",
+        "xwayland_fail": "Not enabled, please launch Wind Studio with the `--ozone-platform=x11` flag",
         "xwayland_label": "XWayland mode: ",
         "xwayland_pass": "Enabled"
       },
@@ -4762,7 +4762,7 @@
         "open": "Open",
         "title": "Debug"
       },
-      "description": "A powerful AI assistant built for creators",
+      "description": "An AI agent purpose-built for wind resource assessment",
       "diagnostics": {
         "actions": {
           "cancel": "Cancel",
@@ -4793,12 +4793,12 @@
         "inspecting": "Preparing the available information...",
         "limit": "To keep the ZIP manageable, logs and detailed records are limited to {{size}}. Newer information is kept first.",
         "mail": {
-          "body": "Please help investigate this Cherry Studio issue.\n\nDiagnostic bundle ID: {{bundleId}}\nVersion: {{version}}\nPlatform: {{platform}}\nTime range: {{range}}\nFile: {{fileName}}\n\nPlease attach the ZIP file to this email. The bundle was saved locally and was not uploaded automatically.",
-          "subject": "Cherry Studio diagnostics {{bundleId}}"
+          "body": "Please help investigate this Wind Studio issue.\n\nDiagnostic bundle ID: {{bundleId}}\nVersion: {{version}}\nPlatform: {{platform}}\nTime range: {{range}}\nFile: {{fileName}}\n\nPlease attach the ZIP file to this email. The bundle was saved locally and was not uploaded automatically.",
+          "subject": "Wind Studio diagnostics {{bundleId}}"
         },
         "privacy": {
           "consent": "I understand the information above and will share the ZIP only privately with support.",
-          "description": "These records may contain things you entered, file locations, request and response content, and service connection information. Cherry Studio does not redact or upload them automatically. Share the ZIP only with support, and never post it on GitHub or other public sites.",
+          "description": "These records may contain things you entered, file locations, request and response content, and service connection information. Wind Studio does not redact or upload them automatically. Share the ZIP only with support, and never post it on GitHub or other public sites.",
           "title": "Before you share"
         },
         "range_title": "Time range",
@@ -4838,7 +4838,7 @@
             "uploading": "Uploading..."
           },
           "dialog": {
-            "description": "Build a diagnostic bundle and send it anonymously to the Cherry Studio team.",
+            "description": "Build a diagnostic bundle and send it anonymously to the Wind Studio team.",
             "title": "Upload diagnostic bundle"
           },
           "errors": {
@@ -4881,7 +4881,7 @@
       },
       "feedback": {
         "agent": {
-          "description": "Chat with the built-in Cherry Support Agent for help with Cherry Studio or to share feedback.",
+          "description": "Chat with the built-in Cherry Support Agent for help with Wind Studio or to share feedback.",
           "title": "Ask Cherry Support"
         },
         "agent_error": "Unable to open Cherry Support. Please try again.",
@@ -4891,7 +4891,7 @@
           "title": "Upload diagnostic bundle"
         },
         "dialog": {
-          "description": "Choose how to share feedback and help us make Cherry Studio better.",
+          "description": "Choose how to share feedback and help us make Wind Studio better.",
           "title": "Choose a feedback channel"
         },
         "github": {
@@ -4951,8 +4951,8 @@
         "path_change_failed": "Failed to change data directory",
         "restart_notice": "The app may need to restart multiple times to apply the changes",
         "select": "Modify Directory",
-        "select_error": "The selected directory may be used by another Cherry Studio instance. Close other instances and try again. If none are running, remove stale SingletonLock and SingletonSocket files from that directory.",
-        "select_error_protected_path": "The selected path is protected by the operating system or Cherry Studio. Please choose another folder.",
+        "select_error": "The selected directory may be used by another Wind Studio instance. Close other instances and try again. If none are running, remove stale SingletonLock and SingletonSocket files from that directory.",
+        "select_error_protected_path": "The selected path is protected by the operating system or Wind Studio. Please choose another folder.",
         "select_error_root_path": "New path cannot be the root path",
         "select_error_same_path": "New path is the same as the old path, please select another path",
         "select_error_write_permission": "New path does not have write permission",
@@ -5003,7 +5003,7 @@
         "title": "Clear Cache",
         "total_partial": "{{size}} counted; some sizes are unknown",
         "unavailable": "Unable to calculate",
-        "waiting_for_legacy_database": "Waiting for the old database to be released. Close other Cherry Studio windows; cleanup will continue after their connections close."
+        "waiting_for_legacy_database": "Waiting for the old database to be released. Close other Wind Studio windows; cleanup will continue after their connections close."
       },
       "data": {
         "title": "Data Directory"
@@ -5607,14 +5607,14 @@
       },
       "openBinariesDir": "Open binaries directory",
       "remove": "Remove tool",
-      "removeConfirmMessage": "Remove \"{{name}}\" from Cherry Studio? Its portable definition will be deleted. Cherry will also clean up an exact mise-managed copy when present. System and bundled executables are never changed.",
+      "removeConfirmMessage": "Remove \"{{name}}\" from Wind Studio? Its portable definition will be deleted. Cherry will also clean up an exact mise-managed copy when present. System and bundled executables are never changed.",
       "removeConfirmTitle": "Remove Tool",
       "removeDefinitionOnlyConfirmMessage": "Cherry could not safely clean up \"{{name}}\": {{details}} Removing only its definition will hide the card but leave its backend files installed. Continue?",
       "removeDefinitionOnlyConfirmTitle": "Remove Definition Only?",
       "removeDefinitionOnlyDependents": "Installed tools depend on it: {{dependents}}.",
       "removeError": "Failed to remove tool",
       "removeErrorHint": "The cleanup command failed. Copy the log below to troubleshoot or share it for help.",
-      "removeRuntimeConfirmMessage": "Remove \"{{name}}\" from Cherry Studio? Cherry will clean up only an exact mise-managed copy. System and bundled runtimes are never changed. Installed npm or pip tools may block removal if they depend on this runtime.",
+      "removeRuntimeConfirmMessage": "Remove \"{{name}}\" from Wind Studio? Cherry will clean up only an exact mise-managed copy. System and bundled runtimes are never changed. Installed npm or pip tools may block removal if they depend on this runtime.",
       "runtimeDependency": "Runtime",
       "runtimeDependencyHint": "Runtime for npm/pip tools",
       "searchFailed": "Search failed, check logs",
@@ -5642,7 +5642,7 @@
         "uv": "Python package manager for MCP services and dependency installation."
       },
       "uninstall": "Uninstall",
-      "uninstallConfirmMessage": "Are you sure you want to uninstall \"{{name}}\"? Cherry Studio's backend copy will be deleted.",
+      "uninstallConfirmMessage": "Are you sure you want to uninstall \"{{name}}\"? Wind Studio's backend copy will be deleted.",
       "uninstallConfirmTitle": "Uninstall Tool",
       "uninstallFailed": "Failed to uninstall tool",
       "uninstallSuccess": "Tool uninstalled",
@@ -6185,7 +6185,7 @@
         "max_messages": "Recent messages kept",
         "max_messages_description": "Send only the most recent messages; earlier ones are excluded from context. Leave empty for no limit. Assistants can override this",
         "max_messages_unlimited": "Unlimited",
-        "scope_description": "Applies only to assistant conversations in Cherry Studio. Assistants can override these settings individually.",
+        "scope_description": "Applies only to assistant conversations in Wind Studio. Assistants can override these settings individually.",
         "title": "Context Management",
         "truncate_threshold": "Tool-output truncation threshold (chars)",
         "truncate_threshold_description": "Tool outputs beyond this many characters are offloaded to a file and truncated; the model can read them back on demand. Assistants can override this"
@@ -6632,9 +6632,9 @@
         "balance_error": "Failed to fetch balance",
         "button": "Login with {{provider}}",
         "cherryIn": {
-          "description": "Login to CherryIN using OAuth 2.0",
+          "description": "Login to WindIN using OAuth 2.0",
           "logged_in": "Logged in via OAuth",
-          "login_button": "Authorize with CherryIN",
+          "login_button": "Authorize with WindIN",
           "logout_button": "Logout",
           "not_logged_in": "Not logged in",
           "register_account": "Create account",
@@ -6799,10 +6799,10 @@
         "title": "Text Recognition"
       },
       "permission": {
-        "denied_hint": "Screen recording permission was denied. Allow Cherry Studio under Privacy & Security > Screen & System Audio Recording in System Settings.",
+        "denied_hint": "Screen recording permission was denied. Allow Wind Studio under Privacy & Security > Screen & System Audio Recording in System Settings.",
         "grant": "Grant Permission",
         "open_settings": "Open System Settings",
-        "prompt_unavailable_hint": "The system permission dialog did not appear. Allow Cherry Studio manually under Privacy & Security > Screen & System Audio Recording in System Settings.",
+        "prompt_unavailable_hint": "The system permission dialog did not appear. Allow Wind Studio manually under Privacy & Security > Screen & System Audio Recording in System Settings.",
         "request_hint": "macOS requires screen recording permission before the screen can be captured.",
         "restart": "Restart Now",
         "restart_hint": "Screen recording permission was granted. Restart the app for it to take effect.",

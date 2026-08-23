@@ -10,7 +10,7 @@ is critical for review accuracy.
 |------|---------|
 | `code-checklist.md` | Code review checklist |
 | `doc-checklist.md` | Document review checklist |
-| `cherry-review-guidance.md` | Cherry Studio project-specific review boundaries and reference routing |
+| `cherry-review-guidance.md` | Wind Studio project-specific review boundaries and reference routing |
 | `judgment-matrix.md` | Worth-fixing criteria and special rules |
 | `checklist-evolution.md` | Checklist update flow and rules |
 

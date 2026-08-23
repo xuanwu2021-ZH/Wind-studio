@@ -54,14 +54,14 @@ describe('validate rejects broken translations', () => {
   })
 
   it('rejects a translated product name', () => {
-    expect(validate('Restart Cherry Studio', 'Перезапустите Вишнёвую Студию', ['Cherry Studio'])).toMatch(
-      /Cherry Studio/
+    expect(validate('Restart Wind Studio', 'Перезапустите Вишнёвую Студию', ['Wind Studio'])).toMatch(
+      /Wind Studio/
     )
   })
 
   it('rejects a protected term dropped from a source spelling variant', () => {
     expect(validate('Connect to Github', '连接到代码托管站', ['GitHub'])).toMatch(/GitHub/)
-    expect(validate('Use CherryStudio.exe', '使用樱桃工作室程序', ['Cherry Studio'])).toMatch(/Cherry Studio/)
+    expect(validate('Use CherryStudio.exe', '使用樱桃工作室程序', ['Wind Studio'])).toMatch(/Wind Studio/)
   })
 
   it('rejects an empty translation of a real sentence', () => {
@@ -82,7 +82,7 @@ describe('validateSource rejects broken source values', () => {
 describe('validate accepts translations the catalog already relies on', () => {
   it('accepts a faithful translation', () => {
     expect(validate('{{count}} channels', '{{count}} 個のチャンネル')).toBeNull()
-    expect(validate('Add Provider', 'Anbieter hinzufügen', ['Cherry Studio'])).toBeNull()
+    expect(validate('Add Provider', 'Anbieter hinzufügen', ['Wind Studio'])).toBeNull()
     expect(validate('Read the <0>docs</0> first', 'Lisez d’abord la <0>documentation</0>')).toBeNull()
     const english = 'Please go to the <provider>{{provider}}</provider> to recharge.'
     expect(validate(english, 'Rufen Sie <provider>{{provider}}</provider> auf, um aufzuladen.')).toBeNull()
@@ -97,7 +97,7 @@ describe('validate accepts translations the catalog already relies on', () => {
 
   it('accepts a protected term whose case or hyphenation shifted', () => {
     expect(validate('Exit GitHub', '退出 Github', ['GitHub'])).toBeNull()
-    expect(validate('Cherry Studio diagnostics', 'Cherry-Studio-Diagnose', ['Cherry Studio'])).toBeNull()
+    expect(validate('Wind Studio diagnostics', 'Cherry-Studio-Diagnose', ['Wind Studio'])).toBeNull()
   })
 
   it('accepts an empty translation of a punctuation-only source', () => {

@@ -5,7 +5,7 @@ description: Prepare a new release by collecting commits, generating bilingual r
 
 # Prepare Release
 
-Automate the Cherry Studio release workflow: collect changes → generate bilingual release notes → update files → create release branch + PR → trigger CI/CD.
+Automate the Wind Studio release workflow: collect changes → generate bilingual release notes → update files → create release branch + PR → trigger CI/CD.
 
 ## Arguments
 
@@ -58,7 +58,7 @@ Using the collected commit information, generate release notes in **both English
 
 ```
 <!--LANG:en-->
-Cherry Studio {version} - {Brief English Title}
+Wind Studio {version} - {Brief English Title}
 
 ✨ New Features
 - [Component] Description
@@ -73,7 +73,7 @@ Cherry Studio {version} - {Brief English Title}
 - [Component] Description
 
 <!--LANG:zh-CN-->
-Cherry Studio {version} - {简短中文标题}
+Wind Studio {version} - {简短中文标题}
 
 ✨ 新功能
 - [组件] 描述

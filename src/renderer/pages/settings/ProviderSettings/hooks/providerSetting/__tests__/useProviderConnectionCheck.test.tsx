@@ -102,7 +102,7 @@ describe('useProviderConnectionCheck', () => {
     )
 
     useProviderMock.mockReturnValue({
-      provider: { id: 'cherryin', name: 'CherryIN', isEnabled: false },
+      provider: { id: 'cherryin', name: 'WindIN', isEnabled: false },
       enableProvider: enableProviderMock
     })
     useModelsMock.mockReturnValue({ models: [model] })

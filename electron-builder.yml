@@ -1,5 +1,5 @@
 appId: com.kangfenmao.CherryStudio
-productName: Cherry Studio
+productName: Wind Studio
 electronLanguages:
   - zh-CN
   - zh-TW
@@ -14,7 +14,7 @@ directories:
   buildResources: build
 
 protocols:
-  - name: Cherry Studio
+  - name: Wind Studio
     schemes:
       - cherrystudio
 files:
@@ -92,7 +92,7 @@ extraResources:
   - from: "packages/provider-registry/data"
     to: "provider-registry"
 win:
-  executableName: Cherry Studio
+  executableName: Wind Studio
   artifactName: ${productName}-${version}-${arch}-setup.${ext}
   extraResources:
     - from: "node_modules/@aiany/sqlite-vec-windows-${arch}/vec0.dll"
@@ -141,7 +141,7 @@ linux:
   category: Utility
   desktop:
     entry:
-      Name: Cherry Studio
+      Name: Wind Studio
       StartupWMClass: CherryStudio
   mimeTypes:
     - x-scheme-handler/cherrystudio
@@ -151,7 +151,7 @@ rpm:
   fpm: ["--rpm-rpmbuild-define=_build_id_links none"]
 publish:
   provider: generic
-  url: https://releases.cherry-ai.com
+  url: https://releases.windbot.cn
 electronDownload:
   mirror: https://npmmirror.com/mirrors/electron/
 beforePack: scripts/before-pack.js
@@ -161,7 +161,7 @@ artifactBuildCompleted: scripts/artifact-build-completed.js
 releaseInfo:
   releaseNotes: |
     <!--LANG:en-->
-    Cherry Studio 2.0.8 - Features, Fixes, and Performance
+    Wind Studio 2.0.8 - Features, Fixes, and Performance
 
     ✨ New Features
     - [MCP] MCP prompts and resources are now usable from the composer: pick a prompt to insert its text with Tab-fillable argument fields, or pick a resource to attach its content. Assistants can also browse and read MCP resources through new mcp_resource_list / mcp_resource_read tools.
@@ -171,7 +171,7 @@ releaseInfo:
     - [Agent] Add durable, auditable requests and asynchronous completion results between Agent Sessions, with trusted attribution, queue state, search, and restart recovery.
     - [Agent] Agent task progress now appears in a floating capsule above the composer with live progress and hover details.
     - [Agent] Pi Agent Runtime now uses Code Mode to discover and orchestrate MCP tools with tool_search, tool_describe, tool_call, and approval-gated tool_exec.
-    - [Agent] Cherry Studio now shows completion notifications for Agent tasks and assistant responses, using in-app cards for other sessions and system notifications when the app is in the background.
+    - [Agent] Wind Studio now shows completion notifications for Agent tasks and assistant responses, using in-app cards for other sessions and system notifications when the app is in the background.
     - [Skills] Added global enable/disable switches for installed skills. Globally disabled skills remain installed and are removed from Agent skill selection in real time.
     - [Settings] Reorganized settings with a new General page for system and assistant context preferences.
     - [Settings] Provider settings now provide one Model Check action for checking a single model or all models. Both workflows use consistent masked API key selectors with progress and per-key results.
@@ -189,7 +189,7 @@ releaseInfo:
     - [Agent] Fix Claude Code Agent sessions using OpenAI Responses-compatible providers failing when upstream requires storage to be disabled.
     - [Agent] Fix agents failing with "tool parameter root must be an object type" when using xAI/Grok models with the built-in notify tool.
     - [Agent] Fix Fast (Pi) agents in "Approve for Me" mode asking for permission when reading enabled Cherry-managed skills.
-    - [Agent] Fix Pi Agent requests ignoring Cherry Studio's configured proxy environment.
+    - [Agent] Fix Pi Agent requests ignoring Wind Studio's configured proxy environment.
     - [Agent] Fix the right-pane file preview placing text, Markdown, and HTML against the panel edges and allowing long lines in text files to overflow horizontally.
     - [Ollama] Fix Ollama health check causing UI to freeze for ~30 seconds by using a lightweight probe instead of the full text generation pipeline.
     - [Ollama] Fix Ollama Qwen models not displaying inline `<think>` reasoning in the collapsible reasoning block.
@@ -204,9 +204,9 @@ releaseInfo:
     - [Markdown] Fix message rendering replacing model output with "[blocked]" / "[Image blocked: ...]" when a reply contains a link or image the renderer will not load.
     - [Markdown] Fix copied formulas losing their TeX source in packaged builds; the clipboard now keeps both TeX and rich HTML.
     - [Knowledge Base] Improve retrieval and citations when using an attached knowledge base.
-    - [CodeMate] Start unconfigured coding agents through the Cherry Studio unified gateway using the app's default model.
+    - [CodeMate] Start unconfigured coding agents through the Wind Studio unified gateway using the app's default model.
     - [CodeMate] Hide providers that are incompatible with DeepSeek Harness instead of letting them fail at launch.
-    - [CherryIN] Refresh the displayed balance after returning from a top-up in the system browser.
+    - [WindIN] Refresh the displayed balance after returning from a top-up in the system browser.
     - [Localization] Localize the new Code Mode tool names and descriptions in all supported renderer languages.
     - [UI] Fix drag-and-drop getting stuck when an external window takes focus mid-drag, which left the dragged item following the cursor.
     - [UI] Use consistent drag-preview backgrounds in assistant and Agent conversation lists.
@@ -232,7 +232,7 @@ releaseInfo:
     - [Migration] Allow v2 upgrades to continue when an external virtual-drive Agent workspace cannot resolve its real path.
     - [Export] Fix Obsidian export appending the same content twice when the export button is double-clicked.
     - [Export] Fix wide tables and webfont text being clipped when exporting a conversation or message as an image.
-    - [Window] Fix closing the main window with the system tray disabled leaving Cherry Studio processes running in the background.
+    - [Window] Fix closing the main window with the system tray disabled leaving Wind Studio processes running in the background.
     - [Window] Fix detached-window title bars sitting too close to the left edge in macOS fullscreen mode.
     - [UI] Fix assistant conversation and agent task lists keeping empty groups visible, expanding long groups incrementally, and scrolling smoothly.
     - [UI] Fix the Paintings model list reordering itself after selecting a model.
@@ -249,7 +249,7 @@ releaseInfo:
     - Improved scrolling smoothness for expanded conversation resource lists.
 
     <!--LANG:zh-CN-->
-    Cherry Studio 2.0.8 - 新功能、修复与性能优化
+    Wind Studio 2.0.8 - 新功能、修复与性能优化
 
     ✨ 新功能
     - [MCP] MCP 提示和资源现在可以在输入框中使用：选择提示可插入带 Tab 填充参数的文本，选择资源可附加其内容。助手也可以通过新的 mcp_resource_list / mcp_resource_read 工具浏览和读取 MCP 资源。
@@ -259,7 +259,7 @@ releaseInfo:
     - [Agent] 新增 Agent 会话间的持久化、可审计请求和异步完成结果，支持可信归属、队列状态、搜索和重启恢复。
     - [Agent] Agent 任务进度现在会在输入框上方以浮动胶囊显示，并提供实时进度和悬停详情。
     - [Agent] Pi Agent 运行时现在使用代码模式来发现和编排 MCP 工具，支持 tool_search、tool_describe、tool_call 和审批式 tool_exec。
-    - [Agent] Cherry Studio 现在会为 Agent 任务和助手回复显示完成通知，其他会话使用应用内卡片，应用在后台时使用系统通知。
+    - [Agent] Wind Studio 现在会为 Agent 任务和助手回复显示完成通知，其他会话使用应用内卡片，应用在后台时使用系统通知。
     - [技能] 新增已安装技能的全局启用/禁用开关。全局禁用的技能仍会保留，并会实时从 Agent 的技能选择中移除。
     - [设置] 设置页面重新组织，新增"通用"页面用于系统和助手上下文偏好设置。
     - [设置] 服务商设置现在提供统一的模型检查操作，可检查单个模型或所有模型。两种工作流都使用一致的掩码 API 密钥选择器，显示进度和每密钥结果。
@@ -277,7 +277,7 @@ releaseInfo:
     - [Agent] 修复使用 OpenAI Responses 兼容服务商的 Claude Code Agent 会话在上游要求禁用存储时失败。
     - [Agent] 修复使用 xAI/Grok 模型时内置通知工具报"tool parameter root must be an object type"失败。
     - [Agent] 修复"自动批准"模式下的快速（Pi）Agent 在读取已启用的 Cherry 托管技能时仍请求权限。
-    - [Agent] 修复 Pi Agent 请求未使用 Cherry Studio 中已配置代理环境的问题。
+    - [Agent] 修复 Pi Agent 请求未使用 Wind Studio 中已配置代理环境的问题。
     - [Agent] 修复右侧文件预览中文本、Markdown 和 HTML 文件贴边，以及文本文件长行水平溢出的问题。
     - [Ollama] 修复 Ollama 健康检查导致 UI 冻结约 30 秒，改用轻量级探测替代完整文本生成管道。
     - [Ollama] 修复 Ollama Qwen 模型的内联 `<think>` 推理未显示在可折叠推理块中。
@@ -292,9 +292,9 @@ releaseInfo:
     - [Markdown] 修复消息渲染将模型输出替换为"[blocked]"或"[Image blocked: ...]"，当回复包含渲染器不会加载的链接或图片时。
     - [Markdown] 修复打包版本中复制公式会丢失 TeX 源码的问题；剪贴板现在会同时保留 TeX 和富文本 HTML。
     - [知识库] 改进使用已附加知识库时的检索与引用。
-    - [CodeMate] 未配置的编程 Agent 现在会使用应用默认模型，通过 Cherry Studio 统一网关启动。
+    - [CodeMate] 未配置的编程 Agent 现在会使用应用默认模型，通过 Wind Studio 统一网关启动。
     - [CodeMate] 隐藏与 DeepSeek Harness 不兼容的服务商，避免选择后启动失败。
-    - [CherryIN] 从系统浏览器充值返回后，自动刷新显示的余额。
+    - [WindIN] 从系统浏览器充值返回后，自动刷新显示的余额。
     - [本地化] 为所有支持的渲染器语言补齐新 Code Mode 工具的名称和说明。
     - [界面] 修复拖拽在外部窗口获取焦点时卡住，导致拖拽项跟随光标。
     - [界面] 统一助手和 Agent 对话列表的拖拽预览背景。
@@ -320,7 +320,7 @@ releaseInfo:
     - [迁移] 修复外部虚拟驱动器 Agent 工作区无法解析真实路径时 v2 升级继续进行。
     - [导出] 修复双击导出按钮时 Obsidian 导出追加重复内容。
     - [导出] 修复将对话或消息导出为图片时，宽表格和 Web 字体文本被裁切的问题。
-    - [窗口] 修复禁用系统托盘时关闭主窗口后 Cherry Studio 进程仍在后台运行的问题。
+    - [窗口] 修复禁用系统托盘时关闭主窗口后 Wind Studio 进程仍在后台运行的问题。
     - [窗口] 修复 macOS 全屏模式下分离窗口标题栏过于贴近左边缘的问题。
     - [界面] 修复助手对话和 Agent 任务列表保持空分组可见、长分组增量展开、滚动流畅。
     - [界面] 修复绘画模型列表选择模型后重新排序。

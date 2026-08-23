@@ -56,7 +56,7 @@ Reuse the record only when all checks pass:
 1. The Electron PID is alive.
 2. Its cwd is the exact current workspace.
 3. The recorded CDP listener belongs to that PID.
-4. `/json/list` contains the recorded Cherry Studio target.
+4. `/json/list` contains the recorded Wind Studio target.
 5. When exact checked-out code matters, the launch Git HEAD matches current
    HEAD; otherwise restart instead of relying on HMR for main-process changes.
 
@@ -72,7 +72,7 @@ If the record is missing or stale, discover before launching:
 
 ```bash
 ps -axo pid=,ppid=,pgid=,command= | \
-  rg -i 'Cherry Studio|CherryStudio|electron-vite|remote-debugging-port'
+  rg -i 'Wind Studio|CherryStudio|electron-vite|remote-debugging-port'
 lsof -nP -iTCP -sTCP:LISTEN | rg 'Electron|Cherry|:9222|:5173'
 lsof -a -p <ELECTRON_PID> -d cwd -Fn
 ps -o pid=,ppid=,pgid=,command= -p <PID>,<PARENT_PID>
@@ -97,7 +97,7 @@ launching:
 
 Use the verified CDP endpoint exclusively. List targets and match URL and
 title; never assume target index `0`. The normal main target is titled
-`Cherry Studio` and uses:
+`Wind Studio` and uses:
 
 ```text
 http://localhost:5173/windows/main/index.html

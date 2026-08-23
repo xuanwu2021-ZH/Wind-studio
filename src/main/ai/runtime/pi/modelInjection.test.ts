@@ -81,10 +81,10 @@ describe('buildPiProviderInjection', () => {
     expect(injection.providerConfig.models?.[0]?.contextWindow).toBe(200_000)
   })
 
-  it('preserves empty thinking signatures for CherryIN Anthropic-compatible models', () => {
+  it('preserves empty thinking signatures for WindIN Anthropic-compatible models', () => {
     const provider = makeProvider({
       id: 'cherryin',
-      name: 'CherryIN',
+      name: 'WindIN',
       defaultChatEndpoint: 'openai-chat-completions',
       endpointConfigs: {
         'anthropic-messages': { adapterFamily: 'cherryin', baseUrl: 'https://open.cherryin.net' },
@@ -192,10 +192,10 @@ describe('buildPiProviderInjection', () => {
     ['openai-responses', 'openai-responses', 'https://open.cherryin.net/v1'],
     ['google-generate-content', 'google-generative-ai', 'https://open.cherryin.net/v1beta'],
     ['anthropic-messages', 'anthropic-messages', 'https://open.cherryin.net']
-  ] as const)('formats the CherryIN %s base URL for pi', (endpointType, expectedApi, expectedBaseUrl) => {
+  ] as const)('formats the WindIN %s base URL for pi', (endpointType, expectedApi, expectedBaseUrl) => {
     const provider = makeProvider({
       id: 'cherryin',
-      name: 'CherryIN',
+      name: 'WindIN',
       defaultChatEndpoint: endpointType,
       endpointConfigs: {
         [endpointType]: { adapterFamily: 'cherryin', baseUrl: 'https://open.cherryin.net' }

@@ -1,4 +1,4 @@
-# Cherry Studio Variable Catalog
+# Wind Studio Variable Catalog
 
 This is the operational companion to [design-token-system.md](./design-token-system.md). It tells humans and AI
 which public variable to choose, which CSS property it belongs to, and which historical names are tooling-only.
@@ -11,7 +11,7 @@ the contract checker fails.
 Choose a variable in this order:
 
 1. Use an official Shadcn role when it expresses the intent.
-2. Use a `stable` Cherry Studio product role only when Shadcn has no equivalent product concept.
+2. Use a `stable` Wind Studio product role only when Shadcn has no equivalent product concept.
 3. If neither fits, keep the value local until a repeated semantic role is proven and reviewed.
 
 For Tailwind components, prefer the semantic utility generated from the variable. For authored CSS, reference the
@@ -108,7 +108,7 @@ The standard Tailwind adapter derives `radius-sm` through `radius-4xl` from `--r
 multipliers. Cherry's smaller `4xs` through `xs` aliases and `round` alias are compatibility extensions, not
 inputs to the semantic contract.
 
-## 5. Stable Cherry Studio product variables
+## 5. Stable Wind Studio product variables
 
 Stable product variables are allowed in new code when no official Shadcn role expresses the product concept.
 

@@ -99,7 +99,7 @@ function resolveServer(idOrName: string): McpServer {
 
 /**
  * `/v1/mcps` — exposes the user's configured MCP servers over HTTP so external
- * clients can use Cherry Studio as a local MCP hub (issue #17992; the v1
+ * clients can use Wind Studio as a local MCP hub (issue #17992; the v1
  * endpoints this restores are documented in
  * `v2-refactor-temp/docs/breaking-changes/2026-06-05-api-gateway-mcp-http-removed.md`).
  *
@@ -143,7 +143,7 @@ export function createMcpRoutes(sessions: McpSessionStore) {
               id: server.id,
               name: server.name,
               // Always `streamableHttp`: this is the transport the client speaks to *us*,
-              // regardless of how Cherry Studio reaches the server upstream.
+              // regardless of how Wind Studio reaches the server upstream.
               type: 'streamableHttp' as const,
               description: server.description,
               url: `${origin}/v1/mcps/${server.id}/mcp`

@@ -14,9 +14,9 @@ async patterns, rendering performance, and advanced React patterns. The checklis
 items below (B1, B8, A5, A6) are high-level checks — the Vercel rules provide
 specific patterns and code examples for deeper analysis.
 
-## Cherry Studio Deep Reference
+## Wind Studio Deep Reference
 
-For Cherry Studio modules, also apply `cherry-review-guidance.md`. It contains
+For Wind Studio modules, also apply `cherry-review-guidance.md`. It contains
 project-specific rules for DataApi scope, handler/service boundaries, service
 ownership, cross-table access, renderer data hooks, React Hooks, UI conventions,
 and type contracts. Treat it as project rules loaded in context.

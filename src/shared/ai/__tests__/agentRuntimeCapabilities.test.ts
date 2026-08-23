@@ -51,18 +51,18 @@ describe('AGENT_RUNTIME_CAPABILITIES', () => {
     expect(AGENT_RUNTIME_CAPABILITIES.dsh.createDefaults.permissionMode).toBe('default')
   })
 
-  describe('isModelCompatible — managed CherryAI default model', () => {
+  describe('isModelCompatible — managed WindAI default model', () => {
     const piIsCompatible = AGENT_RUNTIME_CAPABILITIES.pi.isModelCompatible
     const claudeIsCompatible = AGENT_RUNTIME_CAPABILITIES['claude-code'].isModelCompatible
 
-    // A CherryAI provider whose endpoint pi can drive, hosting the managed free-quota default model.
+    // A WindAI provider whose endpoint pi can drive, hosting the managed free-quota default model.
     const cherryProvider = makeProvider({ id: CHERRYAI_PROVIDER_ID })
     const managedDefaultModel = makeModel({
       providerId: CHERRYAI_PROVIDER_ID,
       apiModelId: CHERRYAI_DEFAULT_MODEL_ID
     })
 
-    it('pi rejects the managed CherryAI default model even though the provider is drivable', () => {
+    it('pi rejects the managed WindAI default model even though the provider is drivable', () => {
       expect(piIsCompatible(cherryProvider, managedDefaultModel)).toBe(false)
     })
 
@@ -76,7 +76,7 @@ describe('AGENT_RUNTIME_CAPABILITIES', () => {
       expect(claudeIsCompatible(makeProvider({}), makeModel({}))).toBe(true)
     })
 
-    it('dsh rejects the managed CherryAI default model and accepts a normal compatible model', () => {
+    it('dsh rejects the managed WindAI default model and accepts a normal compatible model', () => {
       const dshIsCompatible = AGENT_RUNTIME_CAPABILITIES.dsh.isModelCompatible
       expect(dshIsCompatible(cherryProvider, managedDefaultModel)).toBe(false)
       expect(dshIsCompatible(makeProvider({}), makeModel({}))).toBe(true)

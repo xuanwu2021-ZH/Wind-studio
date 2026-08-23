@@ -1,8 +1,8 @@
 /**
- * Cherry Studio product semantics.
+ * Wind Studio product semantics.
  *
  * Product semantics share the unprefixed public namespace with the official
- * Shadcn contract. Internal Cherry Studio value providers remain under
+ * Shadcn contract. Internal Wind Studio value providers remain under
  * `--cs-*`, while feature-local and historical migration values stay outside
  * this public runtime contract.
  */

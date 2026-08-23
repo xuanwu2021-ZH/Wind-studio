@@ -2,7 +2,7 @@ import { createAnthropic } from '@ai-sdk/anthropic'
 import { describe, expect, it } from 'vitest'
 
 // Guards patches/@ai-sdk__anthropic.patch. The upstream non-streaming response schema
-// requires `signature` on a thinking block, but anthropic-messages gateways (CherryIN's
+// requires `signature` on a thinking block, but anthropic-messages gateways (WindIN's
 // `agent/*` models) return thinking blocks without one — a valid HTTP 200 that, unpatched,
 // fails schema validation (AI_TypeValidationError → "Invalid JSON response") and breaks
 // every non-streaming call, e.g. topic naming. The patch makes `signature` optional. If an

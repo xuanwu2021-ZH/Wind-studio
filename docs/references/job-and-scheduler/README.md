@@ -7,7 +7,7 @@ sources:
 
 # Job & Scheduler
 
-Cherry Studio unified background job + time-scheduling system.
+Wind Studio unified background job + time-scheduling system.
 
 | Doc | What it covers | Audience |
 |---|---|---|

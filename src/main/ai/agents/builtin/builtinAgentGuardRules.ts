@@ -59,11 +59,11 @@ export const BUILTIN_AGENT_TOOL_GUARD_RULES: readonly ToolGuardRule[] = [
     appliesTo: { roles: [BUILTIN_AGENT_ROLE.ASSISTANT] },
     match: { tool: 'Bash', when: feedbackSubmissionCommand },
     effect: 'ask',
-    reason: 'Submitting Cherry Studio feedback externally requires live per-call user approval.',
+    reason: 'Submitting Wind Studio feedback externally requires live per-call user approval.',
     headless: {
       predicate: 'either',
       reason:
-        'Headless channel or scheduled turns cannot submit Cherry Studio feedback. Keep only a sanitized local feedback draft for an interactive user to review and submit.'
+        'Headless channel or scheduled turns cannot submit Wind Studio feedback. Keep only a sanitized local feedback draft for an interactive user to review and submit.'
     }
   },
   {

@@ -1,12 +1,12 @@
 ---
 name: cherry-tool-guide
-description: Cherry Studio first-party tool and bundled-shell routing for general agents. For straightforward local work in shell-capable sessions, run JS/TS with `bun <file>` and one-off JS tools with `bun x`; run Python with `uv run [--with <pkg>] python` and one-off Python CLIs with `uvx`; search with `rg`. Load this guide before changing project dependencies, deciding whether a tool should be ephemeral or reusable, reading or converting local Office/PDF files, coordinating or delegating across Agent Sessions, or using Cherry-owned web/browser, knowledge, persistent memory, schedules/notifications, IM channels, image generation, artifact reporting, managed CLI, skill, or MCP-server-registration capabilities—even if the user names no tool. Consult it before shell/file workarounds; live tool schemas are authoritative.
+description: Wind Studio first-party tool and bundled-shell routing for general agents. For straightforward local work in shell-capable sessions, run JS/TS with `bun <file>` and one-off JS tools with `bun x`; run Python with `uv run [--with <pkg>] python` and one-off Python CLIs with `uvx`; search with `rg`. Load this guide before changing project dependencies, deciding whether a tool should be ephemeral or reusable, reading or converting local Office/PDF files, coordinating or delegating across Agent Sessions, or using Cherry-owned web/browser, knowledge, persistent memory, schedules/notifications, IM channels, image generation, artifact reporting, managed CLI, skill, or MCP-server-registration capabilities—even if the user names no tool. Consult it before shell/file workarounds; live tool schemas are authoritative.
 version: 1.4.0
 ---
 
 # Cherry Tool Guide
 
-Cherry Studio injects first-party tools into your session over four MCP servers
+Wind Studio injects first-party tools into your session over four MCP servers
 (`mcp__cherry-tools__*`, `mcp__agent-memory__*`, `mcp__skills__*`, `mcp__mcp-manager__*`)
 and gives shell-capable general agents bundled runtimes for local execution. The MCP
 tools act on the running app — the user's knowledge bases, IM channels, schedules,
@@ -93,5 +93,5 @@ Not covered here: SDK-native `Read`/`Edit`/`Bash` and orchestration tools; *call
 tools of a third-party (user-configured) MCP server — only registering one is in scope,
 see [mcp.md](references/mcp.md); the AI-SDK chat `read_file` attachment reader (a
 chat-path tool, not exposed on this MCP surface); and the role-specific
-`mcp__assistant__*` navigation/diagnosis tools, which belong to the Cherry Assistant and
+`mcp__assistant__*` navigation/diagnosis tools, which belong to the Windbot Assistant and
 its own guide.

@@ -261,10 +261,10 @@ describe('buildDshCompositionYaml', () => {
     expect(providerRoute(audioYml, 'deepseek').models[0].input).toEqual(['text'])
   })
 
-  it("honors Google as CherryIN's first declared route when the model supports multiple protocols", () => {
+  it("honors Google as WindIN's first declared route when the model supports multiple protocols", () => {
     const provider = {
       id: 'cherryin',
-      name: 'CherryIN',
+      name: 'WindIN',
       reportsActualCost: false,
       defaultChatEndpoint: ENDPOINT_TYPE.OPENAI_CHAT_COMPLETIONS,
       endpointConfigs: {

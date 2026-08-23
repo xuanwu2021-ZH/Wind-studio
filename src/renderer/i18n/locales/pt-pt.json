@@ -19,10 +19,10 @@
     },
     "builtin": {
       "cherry_assistant": {
-        "description": "Assistente integrado do Cherry Studio. Diagnostique problemas, guie operações, recolha FAQs, envie bugs/pedidos de recursos e pesquise/crie Competências"
+        "description": "Assistente integrado do Wind Studio. Diagnostique problemas, guie operações, recolha FAQs, envie bugs/pedidos de recursos e pesquise/crie Competências"
       },
       "cherry_support": {
-        "description": "Agente de suporte oficial do Cherry Studio para configuração, diagnóstico, perguntas frequentes e feedback"
+        "description": "Agente de suporte oficial do Wind Studio para configuração, diagnóstico, perguntas frequentes e feedback"
       }
     },
     "channels": {
@@ -629,7 +629,7 @@
           "description": "Obtém e lê uma página Web",
           "label": "Obter página Web"
         },
-        "CherryWebSearch": {
+        "WindWebSearch": {
           "description": "Pesquisa na web através do seu fornecedor configurado",
           "label": "Pesquisa na Web"
         },
@@ -797,7 +797,7 @@
     "authHeader": {
       "title": "Cabeçalho de autorização"
     },
-    "description": "Expõe as capacidades de IA do Cherry Studio através de APIs HTTP compatíveis com OpenAI",
+    "description": "Expõe as capacidades de IA do Wind Studio através de APIs HTTP compatíveis com OpenAI",
     "documentation": {
       "title": "Documentação API"
     },
@@ -829,7 +829,7 @@
     },
     "required": {
       "confirm": "Ativar",
-      "description": "O modelo deste agente deve ser ligado através da API Gateway local do Cherry Studio. Ativá-la também inicia a gateway automaticamente em inícios futuros; pode desativá-la novamente em Configurações.",
+      "description": "O modelo deste agente deve ser ligado através da API Gateway local do Wind Studio. Ativá-la também inicia a gateway automaticamente em inícios futuros; pode desativá-la novamente em Configurações.",
       "title": "Ativar a API Gateway?"
     },
     "status": {
@@ -1559,7 +1559,7 @@
     },
     "api_gateway": {
       "description": "Qualquer CLI, qualquer modelo",
-      "requires_running": "Mantenha o Cherry Studio em execução após ativar — a CLI externa conecta-se ao gateway que ele hospeda.",
+      "requires_running": "Mantenha o Wind Studio em execução após ativar — a CLI externa conecta-se ao gateway que ele hospeda.",
       "title": "Gateway Unificado"
     },
     "apply_failed": "Falha ao escrever a configuração da CLI no ficheiro do sistema",
@@ -1850,7 +1850,7 @@
     "openai-response": "Resposta OpenAI"
   },
   "error": {
-    "api_gateway_required": "Este modelo deve ser ligado através da API Gateway local do Cherry Studio, que atualmente está desativada. Ative-a para executar este agente.",
+    "api_gateway_required": "Este modelo deve ser ligado através da API Gateway local do Wind Studio, que atualmente está desativada. Ative-a para executar este agente.",
     "availableProviders": "Fornecedores disponíveis",
     "availableTools": "Ferramentas disponíveis",
     "backup": {
@@ -1926,7 +1926,7 @@
       "503": "Serviço indisponível, por favor tente novamente mais tarde",
       "504": "Tempo de espera do gateway excedido, por favor tente novamente mais tarde"
     },
-    "image_unreadable_for_non_vision_model": "O modelo selecionado não está configurado para receber imagens e o Cherry Studio não conseguiu extrair texto legível do anexo. Ative imagem para este modelo nas definições do fornecedor, escolha outro modelo com capacidade visual ou remova a imagem e tente novamente.",
+    "image_unreadable_for_non_vision_model": "O modelo selecionado não está configurado para receber imagens e o Wind Studio não conseguiu extrair texto legível do anexo. Ative imagem para este modelo nas definições do fornecedor, escolha outro modelo com capacidade visual ou remova a imagem e tente novamente.",
     "lastError": "Último erro",
     "maxEmbeddingsPerCall": "Máximo de embeddings por chamada",
     "message": "Mensagem de erro",
@@ -2409,7 +2409,7 @@
         "url": {
           "description": "Introduza um URL de página web:",
           "help": "O texto da página será buscado, dividido em partes e indexado automaticamente",
-          "placeholder": "https://docs.cherry-ai.com/"
+          "placeholder": "https://docs.windbot.cn/"
         }
       },
       "back_to_parent": "Voltar",
@@ -3799,15 +3799,15 @@
     "skip": "Pular",
     "toast": {
       "complete_failed": "Não foi possível concluir a configuração. Por favor, tente novamente.",
-      "connected": "Conectado com sucesso ao CherryIN"
+      "connected": "Conectado com sucesso ao WindIN"
     },
     "welcome": {
-      "login_cherryin": "Entrar com CherryIN",
+      "login_cherryin": "Entrar com WindIN",
       "or_continue_with": "OU CONTINUAR COM",
       "other_provider": "Escolher Outros Fornecedores",
       "setup_hint": "Por favor, configure pelo menos um fornecedor para a melhor experiência",
       "subtitle": "Ligue um fornecedor para ativar a sua estação de trabalho de IA tudo-em-um",
-      "title": "Bem-vindo ao Cherry Studio"
+      "title": "Bem-vindo ao Wind Studio"
     }
   },
   "openclaw": {
@@ -4128,8 +4128,8 @@
     "baidu-cloud": "Baidu Cloud",
     "burncloud": "BurnCloud",
     "cerebras": "Cerebras AI",
-    "cherryai": "CherryAI",
-    "cherryin": "CherryIN",
+    "cherryai": "WindAI",
+    "cherryin": "WindIN",
     "claude-code": "Claude Code",
     "copilot": "GitHub Copilot",
     "dashscope": "Alibaba Cloud",
@@ -4579,7 +4579,7 @@
           },
           "description": {
             "0": "O Assistente de Seleção de Texto precisa da permissão de «<strong>Funcionalidades de Acesso</strong>» para funcionar corretamente.",
-            "1": "Clique em «<strong>Ir para Configurações</strong>» e, na janela pop-up de pedido de permissão que aparecerá em seguida, clique no botão «<strong>Abrir Configurações do Sistema</strong>», depois localize «<strong>Cherry Studio</strong>» na lista de aplicações e ative o interruptor de permissão.",
+            "1": "Clique em «<strong>Ir para Configurações</strong>» e, na janela pop-up de pedido de permissão que aparecerá em seguida, clique no botão «<strong>Abrir Configurações do Sistema</strong>», depois localize «<strong>Wind Studio</strong>» na lista de aplicações e ative o interruptor de permissão.",
             "2": "Após concluir a configuração, ative novamente o Assistente de Seleção de Texto."
           },
           "title": "Permissão de Acessibilidade"
@@ -4602,7 +4602,7 @@
         "wayland_checklist_subtitle": "Certifique-se de que as seguintes condições sejam atendidas para otimizar a experiência com Wayland:",
         "wayland_description": "Está numa sessão Wayland. Devido a limitações do sistema, em alguns ambientes de trabalho a barra de ferramentas poderá aparecer apenas no centro do ecrã, em vez de acompanhar o texto selecionado. Recomenda-se mudar para uma sessão X11 para obter a experiência completa.",
         "wayland_title": "Aviso de Sessão Wayland",
-        "xwayland_fail": "Não ativado, por favor inicie o Cherry Studio com a flag `--ozone-platform=x11`",
+        "xwayland_fail": "Não ativado, por favor inicie o Wind Studio com a flag `--ozone-platform=x11`",
         "xwayland_label": "Modo XWayland:",
         "xwayland_pass": "Ativado"
       },
@@ -4793,12 +4793,12 @@
         "inspecting": "A preparar as informações disponíveis...",
         "limit": "Para manter o tamanho do ZIP controlado, os registos e os dados detalhados estão limitados a {{size}}. As informações mais recentes têm prioridade.",
         "mail": {
-          "body": "Agradeço a ajuda na investigação deste problema do Cherry Studio.\n\nID do pacote de diagnóstico: {{bundleId}}\nVersão: {{version}}\nPlataforma: {{platform}}\nPeríodo: {{range}}\nFicheiro: {{fileName}}\n\nAnexe o ficheiro ZIP a este e-mail. O pacote foi guardado localmente e não foi carregado automaticamente.",
-          "subject": "Diagnóstico do Cherry Studio {{bundleId}}"
+          "body": "Agradeço a ajuda na investigação deste problema do Wind Studio.\n\nID do pacote de diagnóstico: {{bundleId}}\nVersão: {{version}}\nPlataforma: {{platform}}\nPeríodo: {{range}}\nFicheiro: {{fileName}}\n\nAnexe o ficheiro ZIP a este e-mail. O pacote foi guardado localmente e não foi carregado automaticamente.",
+          "subject": "Diagnóstico do Wind Studio {{bundleId}}"
         },
         "privacy": {
           "consent": "Compreendo as informações acima e partilharei o ZIP apenas em privado com o suporte.",
-          "description": "Estes registos podem conter texto introduzido por si, localizações de ficheiros, conteúdo de pedidos e respostas e informações de ligação a serviços. O Cherry Studio não oculta nem carrega estes dados automaticamente. Partilhe o ZIP apenas com o suporte e nunca o publique no GitHub ou noutros sites públicos.",
+          "description": "Estes registos podem conter texto introduzido por si, localizações de ficheiros, conteúdo de pedidos e respostas e informações de ligação a serviços. O Wind Studio não oculta nem carrega estes dados automaticamente. Partilhe o ZIP apenas com o suporte e nunca o publique no GitHub ou noutros sites públicos.",
           "title": "Antes de partilhar"
         },
         "range_title": "Período",
@@ -4838,7 +4838,7 @@
             "uploading": "A carregar..."
           },
           "dialog": {
-            "description": "Crie um pacote de diagnóstico e envie-o anonimamente para a equipa do Cherry Studio.",
+            "description": "Crie um pacote de diagnóstico e envie-o anonimamente para a equipa do Wind Studio.",
             "title": "Carregar pacote de diagnóstico"
           },
           "errors": {
@@ -4881,7 +4881,7 @@
       },
       "feedback": {
         "agent": {
-          "description": "Converse com o Agent integrado Cherry Support para obter ajuda com o Cherry Studio ou partilhar feedback.",
+          "description": "Converse com o Agent integrado Cherry Support para obter ajuda com o Wind Studio ou partilhar feedback.",
           "title": "Pedir ajuda ao Cherry Support"
         },
         "agent_error": "Não foi possível abrir o Cherry Support. Tente novamente.",
@@ -4891,7 +4891,7 @@
           "title": "Carregar pacote de diagnóstico"
         },
         "dialog": {
-          "description": "Escolha como partilhar feedback e ajude-nos a melhorar o Cherry Studio.",
+          "description": "Escolha como partilhar feedback e ajude-nos a melhorar o Wind Studio.",
           "title": "Escolha um canal de feedback"
         },
         "github": {
@@ -4951,8 +4951,8 @@
         "path_change_failed": "Falha ao alterar a pasta de dados",
         "restart_notice": "A aplicação pode reiniciar várias vezes para aplicar as alterações",
         "select": "Modificar Pasta",
-        "select_error": "A pasta selecionada poderá estar a ser utilizada por outra instância do Cherry Studio. Feche as outras instâncias e tente novamente. Se não houver nenhuma em execução, elimine os ficheiros SingletonLock e SingletonSocket antigos dessa pasta.",
-        "select_error_protected_path": "O caminho selecionado está protegido pelo sistema operativo ou pelo Cherry Studio. Por favor, escolha outra pasta.",
+        "select_error": "A pasta selecionada poderá estar a ser utilizada por outra instância do Wind Studio. Feche as outras instâncias e tente novamente. Se não houver nenhuma em execução, elimine os ficheiros SingletonLock e SingletonSocket antigos dessa pasta.",
+        "select_error_protected_path": "O caminho selecionado está protegido pelo sistema operativo ou pelo Wind Studio. Por favor, escolha outra pasta.",
         "select_error_root_path": "O novo caminho não pode ser a pasta raiz",
         "select_error_same_path": "O novo caminho é igual ao caminho antigo. Escolha outro caminho",
         "select_error_write_permission": "O novo caminho não possui permissão de escrita",
@@ -5003,7 +5003,7 @@
         "title": "Limpar cache",
         "total_partial": "Tamanho contabilizado: {{size}}; alguns tamanhos são desconhecidos",
         "unavailable": "Não foi possível calcular",
-        "waiting_for_legacy_database": "A aguardar que a base de dados antiga seja libertada. Feche as outras janelas do Cherry Studio; a limpeza continuará quando as respetivas ligações forem fechadas."
+        "waiting_for_legacy_database": "A aguardar que a base de dados antiga seja libertada. Feche as outras janelas do Wind Studio; a limpeza continuará quando as respetivas ligações forem fechadas."
       },
       "data": {
         "title": "Pasta de dados"
@@ -5607,14 +5607,14 @@
       },
       "openBinariesDir": "Abrir a pasta dos binários",
       "remove": "Remover ferramenta",
-      "removeConfirmMessage": "Remover \"{{name}}\" do Cherry Studio? A respetiva definição portátil será eliminada. O Cherry também limpará qualquer cópia correspondente gerida pelo mise, caso exista. Os executáveis do sistema e os incluídos na aplicação nunca serão alterados.",
+      "removeConfirmMessage": "Remover \"{{name}}\" do Wind Studio? A respetiva definição portátil será eliminada. O Cherry também limpará qualquer cópia correspondente gerida pelo mise, caso exista. Os executáveis do sistema e os incluídos na aplicação nunca serão alterados.",
       "removeConfirmTitle": "Remover ferramenta",
       "removeDefinitionOnlyConfirmMessage": "O Cherry não conseguiu limpar \"{{name}}\" em segurança: {{details}} Remover apenas a respetiva definição irá ocultar o cartão, mas manterá instalados os ficheiros de backend. Pretende continuar?",
       "removeDefinitionOnlyConfirmTitle": "Remover Apenas a Definição?",
       "removeDefinitionOnlyDependents": "Ferramentas instaladas dependem dela: {{dependents}}.",
       "removeError": "Falha ao remover ferramenta",
       "removeErrorHint": "O comando de limpeza falhou. Copie o log abaixo para solucionar problemas ou partilhe-o para obter ajuda.",
-      "removeRuntimeConfirmMessage": "Remover \"{{name}}\" do Cherry Studio? O Cherry limpará apenas a cópia exata gerenciada pelo mise. Os runtimes do sistema e os incluídos no aplicativo nunca são alterados. Ferramentas npm ou pip instaladas podem bloquear a remoção se dependerem deste runtime.",
+      "removeRuntimeConfirmMessage": "Remover \"{{name}}\" do Wind Studio? O Cherry limpará apenas a cópia exata gerenciada pelo mise. Os runtimes do sistema e os incluídos no aplicativo nunca são alterados. Ferramentas npm ou pip instaladas podem bloquear a remoção se dependerem deste runtime.",
       "runtimeDependency": "Tempo de execução",
       "runtimeDependencyHint": "Tempo de execução para ferramentas npm/pip",
       "searchFailed": "A pesquisa falhou; consulte os registos",
@@ -5642,7 +5642,7 @@
         "uv": "Gestor de pacotes Python para serviços MCP e instalação de dependências."
       },
       "uninstall": "Desinstalar",
-      "uninstallConfirmMessage": "Tem a certeza de que pretende desinstalar \"{{name}}\"? A cópia de backend do Cherry Studio será eliminada.",
+      "uninstallConfirmMessage": "Tem a certeza de que pretende desinstalar \"{{name}}\"? A cópia de backend do Wind Studio será eliminada.",
       "uninstallConfirmTitle": "Ferramenta de Desinstalação",
       "uninstallFailed": "Falha ao desinstalar ferramenta",
       "uninstallSuccess": "Ferramenta desinstalada",
@@ -6185,7 +6185,7 @@
         "max_messages": "Mensagens recentes mantidas",
         "max_messages_description": "Envia apenas as mensagens mais recentes; as anteriores são excluídas do contexto. Deixe vazio para não limitar. Os assistentes podem substituir esta definição",
         "max_messages_unlimited": "Sem limite",
-        "scope_description": "Aplica-se apenas às conversas com assistentes no Cherry Studio. Cada assistente pode substituir estas definições individualmente.",
+        "scope_description": "Aplica-se apenas às conversas com assistentes no Wind Studio. Cada assistente pode substituir estas definições individualmente.",
         "title": "Gestão de contexto",
         "truncate_threshold": "Limite de truncagem da saída de ferramentas (caracteres)",
         "truncate_threshold_description": "Saídas de ferramentas acima deste número de caracteres são descarregadas para um ficheiro e truncadas; o modelo pode voltar a lê-las quando precisar. Os assistentes podem substituir esta definição"
@@ -6632,9 +6632,9 @@
         "balance_error": "Falha ao buscar saldo",
         "button": "Entrar com a conta {{provider}}",
         "cherryIn": {
-          "description": "Inicie sessão no CherryIN através de OAuth 2.0",
+          "description": "Inicie sessão no WindIN através de OAuth 2.0",
           "logged_in": "Conectado via OAuth",
-          "login_button": "Autorizar com CherryIN",
+          "login_button": "Autorizar com WindIN",
           "logout_button": "Sair",
           "not_logged_in": "Sessão não iniciada",
           "register_account": "Criar conta",
@@ -6799,10 +6799,10 @@
         "title": "Reconhecimento de texto"
       },
       "permission": {
-        "denied_hint": "A permissão de gravação do ecrã foi recusada. Permita o Cherry Studio em Definições do Sistema > Privacidade e Segurança > Gravação do Ecrã e Áudio do Sistema.",
+        "denied_hint": "A permissão de gravação do ecrã foi recusada. Permita o Wind Studio em Definições do Sistema > Privacidade e Segurança > Gravação do Ecrã e Áudio do Sistema.",
         "grant": "Conceder permissão",
         "open_settings": "Abrir Definições do Sistema",
-        "prompt_unavailable_hint": "A caixa de diálogo de permissão do sistema não foi apresentada. Permita manualmente o Cherry Studio em Definições do Sistema > Privacidade e Segurança > Gravação do Ecrã e Áudio do Sistema.",
+        "prompt_unavailable_hint": "A caixa de diálogo de permissão do sistema não foi apresentada. Permita manualmente o Wind Studio em Definições do Sistema > Privacidade e Segurança > Gravação do Ecrã e Áudio do Sistema.",
         "request_hint": "O macOS requer permissão de gravação do ecrã antes de o ecrã poder ser capturado.",
         "restart": "Reiniciar agora",
         "restart_hint": "A permissão de gravação do ecrã foi concedida. Reinicie a aplicação para que tenha efeito.",

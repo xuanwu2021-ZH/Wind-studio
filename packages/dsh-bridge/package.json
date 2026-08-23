@@ -1,7 +1,7 @@
 {
   "name": "@cherrystudio/dsh-bridge",
   "version": "0.0.1-alpha.1",
-  "description": "Cherry Studio control-plane plugin for the dsh (DeepSeek Harness) runtime",
+  "description": "Wind Studio control-plane plugin for the dsh (DeepSeek Harness) runtime",
   "private": true,
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -12,7 +12,7 @@
     "test": "vitest run",
     "test:watch": "vitest"
   },
-  "author": "Cherry Studio",
+  "author": "Wind Studio",
   "license": "MIT",
   "files": [
     "dist/**/*"

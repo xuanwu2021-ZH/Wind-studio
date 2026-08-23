@@ -1,6 +1,6 @@
 # Cherry Review Guidance
 
-Use this reference as the Cherry Studio project-specific lens for code and
+Use this reference as the Wind Studio project-specific lens for code and
 architecture reviews. It complements `code-checklist.md`; it does not replace
 evidence requirements. Only report issues that are grounded in current code.
 

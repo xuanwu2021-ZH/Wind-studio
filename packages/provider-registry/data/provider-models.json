@@ -3187,7 +3187,7 @@
       "inputModalities": ["text", "image", "video"],
       "modelId": "qwen3-5-122b-a10b",
       "providerId": "cherryin",
-      "reason": "CherryIN rejects native audio; base Qwen3.5 supports text/image/video input"
+      "reason": "WindIN rejects native audio; base Qwen3.5 supports text/image/video input"
     },
     {
       "apiModelId": "qwen/qwen3.5-27b",
@@ -3197,7 +3197,7 @@
       "inputModalities": ["text", "image", "video"],
       "modelId": "qwen3-5-27b",
       "providerId": "cherryin",
-      "reason": "CherryIN rejects native audio; base Qwen3.5 supports text/image/video input"
+      "reason": "WindIN rejects native audio; base Qwen3.5 supports text/image/video input"
     },
     {
       "apiModelId": "qwen/qwen3.5-35b-a3b",
@@ -3207,7 +3207,7 @@
       "inputModalities": ["text", "image", "video"],
       "modelId": "qwen3-5-35b-a3b",
       "providerId": "cherryin",
-      "reason": "CherryIN rejects native audio; base Qwen3.5 supports text/image/video input"
+      "reason": "WindIN rejects native audio; base Qwen3.5 supports text/image/video input"
     },
     {
       "apiModelId": "qwen/qwen3.5-35b-a3b(free)",
@@ -3219,7 +3219,7 @@
       "modelVariants": ["35b", "free"],
       "name": "Qwen3.5 35B A3B (Free)",
       "providerId": "cherryin",
-      "reason": "CherryIN free endpoint accepts text and image_url parts only"
+      "reason": "WindIN free endpoint accepts text and image_url parts only"
     },
     {
       "apiModelId": "qwen/qwen3.5-397b-a17b",
@@ -3229,7 +3229,7 @@
       "inputModalities": ["text", "image", "video"],
       "modelId": "qwen3-5-397b-a17b",
       "providerId": "cherryin",
-      "reason": "CherryIN rejects native audio; base Qwen3.5 supports text/image/video input"
+      "reason": "WindIN rejects native audio; base Qwen3.5 supports text/image/video input"
     },
     {
       "apiModelId": "qwen/qwen3.5-4b(free)",
@@ -3241,7 +3241,7 @@
       "modelVariants": ["4b", "free"],
       "name": "Qwen3.5 4B (Free)",
       "providerId": "cherryin",
-      "reason": "CherryIN free endpoint accepts text and image_url parts only"
+      "reason": "WindIN free endpoint accepts text and image_url parts only"
     },
     {
       "apiModelId": "qwen/qwen3.5-9b(free)",
@@ -3252,7 +3252,7 @@
       "modelId": "qwen3-5-9b",
       "modelVariants": ["9b", "free"],
       "providerId": "cherryin",
-      "reason": "CherryIN free endpoint accepts text and image_url parts only"
+      "reason": "WindIN free endpoint accepts text and image_url parts only"
     },
     {
       "modelId": "claude-fable-5",

@@ -24,7 +24,7 @@ import {
 } from '../BuiltinAgentProvisioner'
 
 const TEMPLATE_AGENT_JSON = JSON.stringify({
-  name: { 'en-US': 'Cherry Assistant', 'zh-CN': 'Cherry Assistant CN' },
+  name: { 'en-US': 'Windbot Assistant', 'zh-CN': 'Windbot Assistant CN' },
   instructions: { 'en-US': 'English instructions', 'zh-CN': 'Chinese instructions' },
   configuration: { permission_mode: 'default' },
   skills: ['cherry-assistant-guide']
@@ -82,7 +82,7 @@ describe('BuiltinAgentProvisioner', () => {
     vi.mocked(app.getLocale).mockReturnValue('zh-CN')
 
     expect(loadBuiltinAgentDefinition('assistant')).toMatchObject({
-      name: 'Cherry Assistant CN',
+      name: 'Windbot Assistant CN',
       instructions: 'Chinese instructions'
     })
   })
@@ -92,7 +92,7 @@ describe('BuiltinAgentProvisioner', () => {
     vi.mocked(app.getLocale).mockReturnValue('zh-CN')
 
     expect(loadBuiltinAgentDefinition('assistant')).toMatchObject({
-      name: 'Cherry Assistant',
+      name: 'Windbot Assistant',
       instructions: 'English instructions'
     })
   })
@@ -110,7 +110,7 @@ describe('BuiltinAgentProvisioner', () => {
     expect(manifest.name).toBe(BUILTIN_AGENT_PLUGIN_NAME)
   })
 
-  it('loads Cherry Support identity from its own package and plugins from Cherry Assistant', () => {
+  it('loads Cherry Support identity from its own package and plugins from Windbot Assistant', () => {
     expect(loadBuiltinAgentDefinition('support')).toMatchObject({
       name: 'Cherry Support',
       instructions: 'Support instructions',
@@ -121,7 +121,7 @@ describe('BuiltinAgentProvisioner', () => {
 
   it('builds creation defaults from the bundled Agent definition', () => {
     expect(loadBuiltinAgentDefaults('assistant')).toEqual({
-      name: 'Cherry Assistant',
+      name: 'Windbot Assistant',
       configuration: { permission_mode: 'default', builtin_role: 'assistant' }
     })
   })
@@ -129,7 +129,7 @@ describe('BuiltinAgentProvisioner', () => {
   it('rejects invalid bundled creation defaults', () => {
     writeFile(
       path.join(templateDir, 'agent.json'),
-      JSON.stringify({ name: 'Cherry Assistant', configuration: { permission_mode: 'invalid' } })
+      JSON.stringify({ name: 'Windbot Assistant', configuration: { permission_mode: 'invalid' } })
     )
 
     expect(() => loadBuiltinAgentDefaults('assistant')).toThrow(
@@ -145,7 +145,7 @@ describe('BuiltinAgentProvisioner', () => {
     expect(fs.readFileSync(path.join(agentDataPath, 'USER.md'), 'utf-8')).toBe('TEMPLATE_USER')
     expect(fs.readFileSync(path.join(agentDataPath, 'memory', 'FACT.md'), 'utf-8')).toBe('TEMPLATE_FACT')
     expect(result).toEqual({
-      name: 'Cherry Assistant',
+      name: 'Windbot Assistant',
       instructions: 'English instructions',
       configuration: { permission_mode: 'default' },
       skills: ['cherry-assistant-guide']

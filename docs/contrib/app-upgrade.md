@@ -11,7 +11,7 @@ sources:
 
 ## Overview
 
-Cherry Studio clients check for updates through the managed release service at `https://releases.cherry-ai.com`. The client selects an update channel and sends application, client, platform, and region metadata. The release service owns target-version selection, regional mirrors, rollout policy, and required upgrade gateways.
+Wind Studio clients check for updates through the managed release service at `https://releases.windbot.cn`. The client selects an update channel and sends application, client, platform, and region metadata. The release service owns target-version selection, regional mirrors, rollout policy, and required upgrade gateways.
 
 The in-app release history follows the same managed path. Stable release preparation updates `resources/cherry-studio/release-history.json`, the release workflow publishes that generated file as a release asset, and clients fetch `/release-history.json` through the managed release service. The service selects GitHub or GitCode according to the request region. Each build also bundles the file as an offline fallback.
 
@@ -42,7 +42,7 @@ Before each update check, the client preserves existing updater headers and sets
 | `App-Version` | Installed version with a `v` prefix |
 | `OS` | `process.platform` value |
 | `X-Region` | `cn` for China, otherwise `global` |
-| `User-Agent` | Generated Cherry Studio user agent |
+| `User-Agent` | Generated Wind Studio user agent |
 | `Cache-Control` | `no-cache` |
 
 The selected electron-updater channel determines whether the client requests the `latest`, `rc`, or `beta` manifest; no separate release-channel header is sent.

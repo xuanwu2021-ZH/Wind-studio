@@ -140,7 +140,7 @@ const PRODUCT_INFO_TOOL: Tool = {
   }
 }
 
-// Whitelist of settings Cherry Assistant can write directly. Each entry binds
+// Whitelist of settings Windbot Assistant can write directly. Each entry binds
 // a `setting` key to a value validator and an `apply` function that performs
 // the write. Settings not in this map are rejected — adding a new one
 // requires explicit code change so a destructive or sensitive setting can

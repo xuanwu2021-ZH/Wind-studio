@@ -41,21 +41,21 @@ const qwenAudioCompatibilityOverrides = [
     modelId: 'qwen3-5-122b-a10b',
     capabilities: { remove: ['audio-recognition'] },
     inputModalities: ['text', 'image', 'video'],
-    reason: 'CherryIN rejects native audio; base Qwen3.5 supports text/image/video input'
+    reason: 'WindIN rejects native audio; base Qwen3.5 supports text/image/video input'
   },
   {
     apiModelId: 'qwen/qwen3.5-27b',
     modelId: 'qwen3-5-27b',
     capabilities: { remove: ['audio-recognition'] },
     inputModalities: ['text', 'image', 'video'],
-    reason: 'CherryIN rejects native audio; base Qwen3.5 supports text/image/video input'
+    reason: 'WindIN rejects native audio; base Qwen3.5 supports text/image/video input'
   },
   {
     apiModelId: 'qwen/qwen3.5-35b-a3b',
     modelId: 'qwen3-5-35b-a3b',
     capabilities: { remove: ['audio-recognition'] },
     inputModalities: ['text', 'image', 'video'],
-    reason: 'CherryIN rejects native audio; base Qwen3.5 supports text/image/video input'
+    reason: 'WindIN rejects native audio; base Qwen3.5 supports text/image/video input'
   },
   {
     modelId: 'qwen3-5-35b-a3b-free',
@@ -64,14 +64,14 @@ const qwenAudioCompatibilityOverrides = [
     name: 'Qwen3.5 35B A3B (Free)',
     capabilities: { remove: ['audio-recognition', 'video-recognition'] },
     inputModalities: ['text', 'image'],
-    reason: 'CherryIN free endpoint accepts text and image_url parts only'
+    reason: 'WindIN free endpoint accepts text and image_url parts only'
   },
   {
     apiModelId: 'qwen/qwen3.5-397b-a17b',
     modelId: 'qwen3-5-397b-a17b',
     capabilities: { remove: ['audio-recognition'] },
     inputModalities: ['text', 'image', 'video'],
-    reason: 'CherryIN rejects native audio; base Qwen3.5 supports text/image/video input'
+    reason: 'WindIN rejects native audio; base Qwen3.5 supports text/image/video input'
   },
   {
     modelId: 'qwen3-5-4b',
@@ -80,7 +80,7 @@ const qwenAudioCompatibilityOverrides = [
     name: 'Qwen3.5 4B (Free)',
     capabilities: { remove: ['video-recognition'] },
     inputModalities: ['text', 'image'],
-    reason: 'CherryIN free endpoint accepts text and image_url parts only'
+    reason: 'WindIN free endpoint accepts text and image_url parts only'
   },
   {
     modelId: 'qwen3-5-9b',
@@ -88,7 +88,7 @@ const qwenAudioCompatibilityOverrides = [
     modelVariants: ['9b', 'free'],
     capabilities: { remove: ['audio-recognition', 'video-recognition'] },
     inputModalities: ['text', 'image'],
-    reason: 'CherryIN free endpoint accepts text and image_url parts only'
+    reason: 'WindIN free endpoint accepts text and image_url parts only'
   }
 ] satisfies Array<Partial<ProviderModelOverride>>
 

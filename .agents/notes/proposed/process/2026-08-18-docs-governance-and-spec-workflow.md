@@ -14,7 +14,7 @@ The repository's developer documentation has four connected defects, and no mech
 
 **Decisions evaporate.** Rationale and rejected alternatives live only in PR threads and chat. With multiple agents working in parallel, the same declined idea gets re-proposed and re-litigated because nothing records that it lost, or why.
 
-**Docs are a product with a missing half.** A large share of Cherry Studio's users and contributors read Chinese, yet the corpus is ~110 English markdown files with one Chinese pair (`.agents/skills/README.zh.md`).
+**Docs are a product with a missing half.** A large share of Wind Studio's users and contributors read Chinese, yet the corpus is ~110 English markdown files with one Chinese pair (`.agents/skills/README.zh.md`).
 
 ## Proposal
 
@@ -98,7 +98,7 @@ Decision records live in `.agents/notes/{lifecycle}/{class}/yyyy-mm-dd-topic.md`
 - **Class**: `feature`, `bug-fix`, `simplification`, `architecture`, `process`, `testing`. There is deliberately no `refactor` class — `simplification` covers it, discriminated by "does observable behavior change?".
 - **Format**: header block (`# Agent Note: <title>`, `Status: <lifecycle>`), then `## Problem`, `## Proposal` (proposed) or `## Decision` (implemented, present tense), bespoke sections, a **mandatory `## Alternatives considered`**, then `## Acceptance criteria` + `## Risks` (proposed) or `## Consequences` (implemented). A decision recorded without what it beat invites re-litigation.
 - A decision is never edited into a different decision: supersede with a new note and cross-link.
-- **Threshold** (deliberate deviation from dsh, which requires a note for every non-trivial PR): a note is required only for **decisions a maintainer may reasonably revisit** — architectural choices, cross-module contracts, data/on-disk/wire formats, process changes, and declined approaches. Cherry Studio's routine-fix volume makes a per-PR mandate a tax, not a record.
+- **Threshold** (deliberate deviation from dsh, which requires a note for every non-trivial PR): a note is required only for **decisions a maintainer may reasonably revisit** — architectural choices, cross-module contracts, data/on-disk/wire formats, process changes, and declined approaches. Wind Studio's routine-fix volume makes a per-PR mandate a tax, not a record.
 - Spec-first features: substantial feature work starts as a `proposed/` note, reviewed before implementation, verified against its own acceptance criteria, then rewritten into `implemented/` when it ships. This note is the first instance of that loop.
 
 The format gate (a port of dsh's `verify-agent-note-format`) lands in Phase 1 alongside the full `.agents/notes/README.md` ruleset.
@@ -134,7 +134,7 @@ Quality precedes translation throughout: a doc is audited current before it is p
 - **Keeping the `guides/` vs `references/` split.** Rejected: the classification is already fiction; use-based classification (tutorial = ordered steps to an observable outcome) shows almost everything here is reference or process material.
 - **Porting dsh's full translation machinery now** (merge driver, `gen-translation-brief`, doc budgets). Deferred: dsh itself marks the heavy paths as explicit-invocation-only; routine one-pass counterpart updates suffice until sync conflicts become a real cost.
 - **dsh's per-PR note mandate.** Amended to the decision threshold in P4; the fix volume here would turn the mandate into ritual.
-- **Building the website projection now.** Deferred: docs.cherry-ai.com lives in a separate repository; projection is a separate decision after the corpus is governed.
+- **Building the website projection now.** Deferred: docs.windbot.cn lives in a separate repository; projection is a separate decision after the corpus is governed.
 
 ## Acceptance criteria
 

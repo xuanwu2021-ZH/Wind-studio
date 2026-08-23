@@ -6,7 +6,7 @@ body:
     attributes:
       value: |
         Thank you for taking the time to ask a question!
-        Before submitting this issue, please make sure you've reviewed the [FAQ](https://docs.cherry-ai.com/question-contact/questions) and [Knowledge Base](https://docs.cherry-ai.com/question-contact/knowledge)
+        Before submitting this issue, please make sure you've reviewed the [FAQ](https://docs.windbot.cn/question-contact/questions) and [Knowledge Base](https://docs.windbot.cn/question-contact/knowledge)
 
   - type: checkboxes
     id: checklist
@@ -40,7 +40,7 @@ body:
     id: version
     attributes:
       label: Version
-      description: What version of Cherry Studio are you running?
+      description: What version of Wind Studio are you running?
       placeholder: e.g., v1.0.0
     validations:
       required: true

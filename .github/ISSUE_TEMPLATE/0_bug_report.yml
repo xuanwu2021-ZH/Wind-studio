@@ -8,7 +8,7 @@ body:
     attributes:
       value: |
         Thank you for taking the time to fill out this bug report!
-        Before submitting this issue, please make sure that you have understood the [FAQ](https://docs.cherry-ai.com/question-contact/questions) and [Knowledge Science](https://docs.cherry-ai.com/question-contact/knowledge)
+        Before submitting this issue, please make sure that you have understood the [FAQ](https://docs.windbot.cn/question-contact/questions) and [Knowledge Science](https://docs.windbot.cn/question-contact/knowledge)
 
   - type: checkboxes
     id: checklist
@@ -25,7 +25,7 @@ body:
           required: true
         - label: I've filled in short, clear headings so that developers can quickly identify a rough idea of what to expect when flipping through the list of issues. And not "a suggestion", "stuck", etc.
           required: true
-        - label: I've confirmed that I am using the latest version of Cherry Studio.
+        - label: I've confirmed that I am using the latest version of Wind Studio.
           required: true
 
   - type: dropdown
@@ -44,7 +44,7 @@ body:
     id: version
     attributes:
       label: Version
-      description: What version of Cherry Studio are you running?
+      description: What version of Wind Studio are you running?
       placeholder: e.g. v1.0.0
     validations:
       required: true

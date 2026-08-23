@@ -1,10 +1,10 @@
 ---
 name: gh-pr-review
-description: Automated Cherry Studio review for local branches, PRs, commits, files, architecture docs, and repository skills. Use for code or documentation reviews that need project-specific naming, main/renderer/shared placement and dependency rules, IpcApi and DataApi boundaries, lifecycle/service ownership, renderer hooks, React/UI conventions, and tests. Supports single-agent review with interactive fix selection or multi-agent reviewer-verifier review with risk-based auto-fix. To diagnose gaps in the skill after a review session, run `/gh-pr-review diag`.
+description: Automated Wind Studio review for local branches, PRs, commits, files, architecture docs, and repository skills. Use for code or documentation reviews that need project-specific naming, main/renderer/shared placement and dependency rules, IpcApi and DataApi boundaries, lifecycle/service ownership, renderer hooks, React/UI conventions, and tests. Supports single-agent review with interactive fix selection or multi-agent reviewer-verifier review with risk-based auto-fix. To diagnose gaps in the skill after a review session, run `/gh-pr-review diag`.
 ---
 
 <!-- Based on https://github.com/Tencent/tgfx/tree/main/.codebuddy/skills/cr -->
-<!-- Adapted for agent runtimes and the Cherry Studio tech stack -->
+<!-- Adapted for agent runtimes and the Wind Studio tech stack -->
 
 # /gh-pr-review — Code Review
 
@@ -13,7 +13,7 @@ review mode from arguments and routes to the appropriate review flow — either
 quick single-agent review with interactive fix selection, or multi-agent
 deep review with risk-based auto-fix.
 
-Cherry Studio-specific review rules live in
+Wind Studio-specific review rules live in
 `references/cherry-review-guidance.md`. Target review flows must load that file
 for code, mixed, architecture-doc, and project-skill reviews so reviewers can
 apply DataApi, service-boundary, renderer hook, React, UI, and type-contract

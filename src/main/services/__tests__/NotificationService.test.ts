@@ -70,7 +70,7 @@ const { NotificationService } = await import('../NotificationService')
 const mainWindowInfo = (overrides: Partial<WindowInfo> = {}): WindowInfo => ({
   id: 'main-1',
   type: WindowType.Main,
-  title: 'Cherry Studio',
+  title: 'Wind Studio',
   isVisible: false,
   isFocused: false,
   createdAt: 1,

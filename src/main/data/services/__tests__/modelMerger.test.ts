@@ -137,7 +137,7 @@ describe('mergePresetModel', () => {
   })
 })
 
-describe('CherryIN Qwen media capability overrides', () => {
+describe('WindIN Qwen media capability overrides', () => {
   const unsupportedAudioModels = [
     ['qwen/qwen3.5-122b-a10b', 'qwen3-5-122b-a10b', ['text', 'image', 'video']],
     ['qwen/qwen3.5-27b', 'qwen3-5-27b', ['text', 'image', 'video']],

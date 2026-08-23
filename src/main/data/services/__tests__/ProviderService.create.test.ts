@@ -9,7 +9,7 @@ import { setupTestDatabase } from '@test-helpers/db'
 import { eq } from 'drizzle-orm'
 import { describe, expect, it, vi } from 'vitest'
 
-// Stub the registry loader so the preset lookup returns a minimal CherryIN row
+// Stub the registry loader so the preset lookup returns a minimal WindIN row
 // (its gemini / OpenAI endpoints tagged `cherryin`) without reading the
 // shipped providers.json, whose path is mocked away in the test harness.
 vi.mock('@cherrystudio/provider-registry/node', () => {
@@ -59,8 +59,8 @@ describe('ProviderService.create — endpoint config overrides', () => {
     ).toThrowError(expect.objectContaining({ code: ErrorCode.INVALID_OPERATION }))
   })
 
-  it('resolves adapterFamily from the preset for a preset-derived instance (custom CherryIN host)', async () => {
-    // Mirrors the "add CherryIN instance" flow: user-entered baseUrls only, no
+  it('resolves adapterFamily from the preset for a preset-derived instance (custom WindIN host)', async () => {
+    // Mirrors the "add WindIN instance" flow: user-entered baseUrls only, no
     // adapterFamily. Without read-time resolution the gemini endpoint resolves
     // to openai-compatible and image generation POSTs to /v1/images/generations.
     const created = providerService.create({

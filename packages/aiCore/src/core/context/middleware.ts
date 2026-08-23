@@ -4,7 +4,7 @@
  * `LanguageModelMiddleware` wired into the plugin chain.
  *
  * Vendored from @context-chef/ai-sdk-middleware 1.6.0 (MIT, same author),
- * trimmed to the options Cherry Studio uses: `contextWindow`, `compact`,
+ * trimmed to the options Wind Studio uses: `contextWindow`, `compact`,
  * `truncate`, `onBeforeCompress`, `logger`. In-flight LLM compression
  * (`compress`/`onCompress`), skills, dynamic state, placeholder clearing and
  * custom tokenizers were dropped — LLM summarization is owned by the durable

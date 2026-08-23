@@ -222,7 +222,7 @@ describe('CherryInOauth', () => {
     useProviderMock.mockReturnValue({
       provider: {
         id: 'cherryin',
-        name: 'CherryIN',
+        name: 'WindIN',
         apiKeys: [{ id: 'oauth-1', label: 'OAuth', isEnabled: true }],
         isEnabled: true
       },

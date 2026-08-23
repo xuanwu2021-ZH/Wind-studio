@@ -8,7 +8,7 @@ sources:
 
 # API Gateway Reference
 
-The **API Gateway** exposes Cherry Studio's AI capabilities over a local HTTP
+The **API Gateway** exposes Wind Studio's AI capabilities over a local HTTP
 server that speaks the **OpenAI**, **Anthropic**, and **Gemini** wire protocols,
 plus Cherry REST and Streamable HTTP MCP endpoints. Compatible clients can point at
 `http://127.0.0.1:23333` and drive whatever provider/model the desktop app has

@@ -1,9 +1,9 @@
 ---
 name: cherry-electron-dev
-description: Develop, fix, and profile Cherry Studio in a tracked Electron instance. Use for everyday implementation, UI and interaction work, bug fixing, runtime debugging, DevTools inspection, lag or jank investigation, CPU and memory monitoring, leak checks, and startup-performance analysis; reuse a verified workspace instance across instructions and launch or replace one only when required.
+description: Develop, fix, and profile Wind Studio in a tracked Electron instance. Use for everyday implementation, UI and interaction work, bug fixing, runtime debugging, DevTools inspection, lag or jank investigation, CPU and memory monitoring, leak checks, and startup-performance analysis; reuse a verified workspace instance across instructions and launch or replace one only when required.
 ---
 
-# Cherry Studio Development
+# Wind Studio Development
 
 Use this skill for ongoing work in the current checkout. Do not use it to check
 out or report on PRs; use `cherry-pr-test` for that workflow.

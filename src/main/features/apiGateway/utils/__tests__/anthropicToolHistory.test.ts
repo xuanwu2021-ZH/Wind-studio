@@ -34,7 +34,7 @@ describe('normalizeAnthropicToolHistory', () => {
       type: 'server_tool_use',
       id: 'server-1',
       name: 'web_search',
-      input: { query: 'Cherry Studio' }
+      input: { query: 'Wind Studio' }
     }
     const messages: MessageParam[] = [
       { role: 'user', content: 'Run the server tool' },

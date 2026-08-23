@@ -331,7 +331,7 @@ function buildPiModelConfig(
     ...(api === 'openai-completions' || api === 'openai-responses'
       ? { compat: { supportsDeveloperRole: resolveEndpointDialect(provider, endpointType).developerRole } }
       : {}),
-    // CherryIN requires replaying its thinking block even when the compatible endpoint omits a signature delta.
+    // WindIN requires replaying its thinking block even when the compatible endpoint omits a signature delta.
     ...(provider.id === 'cherryin' && api === 'anthropic-messages' ? { compat: { allowEmptySignature: true } } : {})
     // thinkingLevelMap intentionally omitted: Cherry does not wire pi
     // thinking-level control in v1 (see capability matrix).

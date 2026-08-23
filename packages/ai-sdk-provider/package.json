@@ -1,9 +1,9 @@
 {
   "name": "@cherrystudio/ai-sdk-provider",
   "version": "0.1.6",
-  "description": "Cherry Studio AI SDK provider bundle with WindIN routing.",
+  "description": "Wind Studio AI SDK provider bundle with WindIN routing.",
   "keywords": ["ai-sdk", "provider", "cherryin", "vercel-ai-sdk", "cherry-studio"],
-  "author": "Cherry Studio",
+  "author": "Wind Studio",
   "license": "MIT",
   "homepage": "https://windbot.cn",
   "repository": {

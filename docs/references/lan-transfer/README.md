@@ -5,11 +5,11 @@ sources:
   - src/shared/types/lanTransfer.ts
 ---
 
-# Cherry Studio LAN Transfer Protocol Specification
+# Wind Studio LAN Transfer Protocol Specification
 
 > Protocol version: 1
 
-This document defines the LAN file transfer protocol between the Cherry Studio desktop client (Electron) and mobile client (Expo).
+This document defines the LAN file transfer protocol between the Wind Studio desktop client (Electron) and mobile client (Expo).
 
 ---
 
@@ -79,7 +79,7 @@ Mobile must publish the service via mDNS/Bonjour:
 
 ```typescript
 {
-  name: "Cherry Studio Mobile",
+  name: "Wind Studio Mobile",
   type: "cherrystudio",
   protocol: "tcp",
   port: 53317,

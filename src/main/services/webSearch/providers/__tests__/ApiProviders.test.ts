@@ -1836,8 +1836,8 @@ describe('main web search API providers', () => {
             "headers": {
               "authorization": "Bearer firecrawl-key",
               "content-type": "application/json",
-              "http-referer": "https://cherry-ai.com",
-              "x-title": "Cherry Studio",
+              "http-referer": "https://windbot.cn",
+              "x-title": "Wind Studio",
             },
             "method": "POST",
             "url": "https://api.firecrawl.example/v2/scrape",

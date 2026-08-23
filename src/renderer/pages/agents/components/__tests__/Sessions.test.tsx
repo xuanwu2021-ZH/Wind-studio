@@ -3645,7 +3645,7 @@ describe('Sessions', () => {
   })
 
   it.each([
-    { builtinRole: 'assistant' as const, name: 'Cherry Assistant' },
+    { builtinRole: 'assistant' as const, name: 'Windbot Assistant' },
     { builtinRole: 'support' as const, name: 'Cherry Support' }
   ])('deletes only tasks from the protected built-in $name group', async ({ builtinRole, name }) => {
     const onActiveAgentDeleted = vi.fn()

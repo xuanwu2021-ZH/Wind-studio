@@ -15,7 +15,7 @@ export function normalizeCherryInThinkingReplay(context: PiContext): PiContext {
     if (!hasToolCall || hasThinking) return message
 
     changed = true
-    // CherryIN uses `msg_<uuid>` when it omits the thinking delta; signed
+    // WindIN uses `msg_<uuid>` when it omits the thinking delta; signed
     // thinking responses expose the same identifier as the bare UUID.
     const signature = message.responseId?.trim().replace(/^msg_/, '') ?? ''
     return {

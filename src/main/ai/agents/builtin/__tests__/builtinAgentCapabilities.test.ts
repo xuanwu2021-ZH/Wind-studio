@@ -37,7 +37,7 @@ describe('resolveAgentCapabilities', () => {
 })
 
 describe('hostToolsEnabled', () => {
-  it.each(AGENT_TYPES)('keeps host tools off channel-linked Cherry Assistant sessions on %s', (type) => {
+  it.each(AGENT_TYPES)('keeps host tools off channel-linked Windbot Assistant sessions on %s', (type) => {
     expect(hostToolsEnabled(agentOf(type, BUILTIN_AGENT_ROLE.ASSISTANT), { channelLinked: false })).toBe(true)
     expect(hostToolsEnabled(agentOf(type, BUILTIN_AGENT_ROLE.ASSISTANT), { channelLinked: true })).toBe(false)
   })

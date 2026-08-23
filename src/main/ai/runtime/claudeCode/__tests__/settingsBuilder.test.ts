@@ -2492,7 +2492,7 @@ describe('buildClaudeCodeSessionSettings', () => {
     )
   })
 
-  it('does not inject a Cherry Assistant-only contract on every submitted prompt', async () => {
+  it('does not inject a Windbot Assistant-only contract on every submitted prompt', async () => {
     mocks.getAgent.mockReturnValue({
       id: 'agent-1',
       type: 'claude-code',

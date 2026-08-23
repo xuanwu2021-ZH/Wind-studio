@@ -313,7 +313,7 @@ describe('OnboardingPage', () => {
     expect(dataApiMocks.patch).toHaveBeenCalledTimes(2)
   })
 
-  it('does not allow CherryAI to satisfy the provider setup requirements', async () => {
+  it('does not allow WindAI to satisfy the provider setup requirements', async () => {
     enabledProvidersMock.splice(0, enabledProvidersMock.length, { id: 'cherryai', isEnabled: true })
     enabledModelsMock.splice(0, enabledModelsMock.length, {
       id: 'cherryai::qwen',
@@ -353,7 +353,7 @@ describe('OnboardingPage', () => {
     expect(screen.getByRole('button', { name: /onboarding\.select_model\.start/ })).toBeDisabled()
   })
 
-  it('excludes CherryAI models, hides painting, and rejects built-in selections', async () => {
+  it('excludes WindAI models, hides painting, and rejects built-in selections', async () => {
     selectedModelsMock.defaultModel = { id: 'cherryai::qwen', providerId: CHERRYAI_PROVIDER_ID }
     selectedModelsMock.quickModel = { id: 'cherryai::qwen', providerId: CHERRYAI_PROVIDER_ID }
     selectedModelsMock.translateModel = { id: 'cherryai::qwen', providerId: CHERRYAI_PROVIDER_ID }
@@ -372,7 +372,7 @@ describe('OnboardingPage', () => {
 
   it.each([
     ['an unconfigured seeded agent', null],
-    ['a legacy CherryAI-seeded agent', CHERRYAI_DEFAULT_UNIQUE_MODEL_ID]
+    ['a legacy WindAI-seeded agent', CHERRYAI_DEFAULT_UNIQUE_MODEL_ID]
   ])('configures %s after the user selects a default model', async (_description, seededAgentModel) => {
     dataApiMocks.get.mockImplementation(async (path: string) => {
       if (path === '/assistants') {
@@ -561,7 +561,7 @@ describe('OnboardingPage', () => {
     expect(MockUsePreferenceUtils.getPreferenceValue('app.privacy.data_collection.enabled')).toBe(false)
   })
 
-  it('starts CherryIN login without privacy acceptance and disables data collection', async () => {
+  it('starts WindIN login without privacy acceptance and disables data collection', async () => {
     MockUsePreferenceUtils.setPreferenceValue('app.privacy.policy_version', '')
     oauthWithCherryInMock.mockImplementation(async (setKey: (keys: string) => Promise<void>) => {
       await setKey('sk-one')
@@ -724,7 +724,7 @@ describe('OnboardingPage', () => {
   it('uses an elevated welcome layout with clear text hierarchy and intentional spacing', () => {
     render(<OnboardingPage />)
 
-    const logo = screen.getByRole('img', { name: 'Cherry Studio' })
+    const logo = screen.getByRole('img', { name: 'Wind Studio' })
     const welcomeContent = logo.parentElement
     const primaryAction = screen.getByRole('button', { name: 'onboarding.welcome.login_cherryin' })
     const secondaryAction = screen.getByRole('button', { name: 'onboarding.welcome.other_provider' })
@@ -759,7 +759,7 @@ describe('OnboardingPage', () => {
     expect(loginButton.querySelector('.lucide-log-in')).toBeInTheDocument()
   })
 
-  it('syncs CherryIN models before moving a fresh install to model selection', async () => {
+  it('syncs WindIN models before moving a fresh install to model selection', async () => {
     enabledProvidersMock.splice(0, enabledProvidersMock.length, { id: 'cherryai', isEnabled: true })
     enabledModelsMock.splice(0, enabledModelsMock.length, {
       id: 'cherryai::qwen',
@@ -786,7 +786,7 @@ describe('OnboardingPage', () => {
     expect(toastSuccessMock).toHaveBeenCalledWith('onboarding.toast.connected')
   })
 
-  it('returns to provider setup when CherryIN sync finds no enabled model', async () => {
+  it('returns to provider setup when WindIN sync finds no enabled model', async () => {
     syncProviderModelsMock.mockResolvedValue([])
     oauthWithCherryInMock.mockImplementation(async (setKey: (keys: string) => Promise<void>) => {
       await setKey('sk-one')

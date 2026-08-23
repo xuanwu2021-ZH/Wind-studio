@@ -1,6 +1,6 @@
 # Changesets
 
-This folder contains configuration and changeset files for managing package versioning and publishing in the Cherry Studio monorepo.
+This folder contains configuration and changeset files for managing package versioning and publishing in the Wind Studio monorepo.
 
 ## What is Changesets?
 
@@ -48,7 +48,7 @@ See `config.json` for the changeset configuration:
 | Package | Description |
 | --- | --- |
 | `@cherrystudio/ai-core` | Unified AI Provider Interface |
-| `@cherrystudio/ai-sdk-provider` | AI SDK provider bundle with CherryIN routing |
+| `@cherrystudio/ai-sdk-provider` | AI SDK provider bundle with WindIN routing |
 | `@cherrystudio/extension-table-plus` | Table extension for Tiptap |
 
 ### Dependency relationships

@@ -574,7 +574,7 @@ describe('useMiniAppPopup', () => {
 
       expect(mocks.request).toHaveBeenCalledWith(
         'system.shell.open_path',
-        '/Applications/Cherry Studio/resources/releases.html'
+        '/Applications/Wind Studio/resources/releases.html'
       )
       expect(mocks.request).not.toHaveBeenCalledWith('system.shell.open_website', expect.anything())
       expect(mockTabs.openTab).not.toHaveBeenCalled()

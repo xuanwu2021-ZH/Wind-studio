@@ -9,7 +9,7 @@ issues, and lets the user interactively choose which ones to fix.
 |------|---------|
 | `code-checklist.md` | Code review checklist |
 | `doc-checklist.md` | Document review checklist |
-| `cherry-review-guidance.md` | Cherry Studio project-specific review boundaries |
+| `cherry-review-guidance.md` | Wind Studio project-specific review boundaries |
 | `judgment-matrix.md` | Risk levels, worth-fixing criteria, special rules |
 | `checklist-evolution.md` | Checklist update flow and rules |
 

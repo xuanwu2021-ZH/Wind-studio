@@ -34,7 +34,7 @@ export const PRESET_MCP_SERVERS = freezePresets([
     reference: 'https://flomoapp.com',
     type: 'streamableHttp',
     baseUrl: 'https://flomoapp.com/mcp',
-    headers: { APP: 'Cherry Studio' },
+    headers: { APP: 'Wind Studio' },
     isActive: false,
     provider: 'flomo',
     installSource: 'builtin',
@@ -45,7 +45,7 @@ export const PRESET_MCP_SERVERS = freezePresets([
     reference: 'https://qveris.ai/docs/mcp-server',
     type: 'streamableHttp',
     baseUrl: 'https://mcp.qveris.ai/mcp',
-    headers: { APP: 'Cherry Studio' },
+    headers: { APP: 'Wind Studio' },
     isActive: false,
     env: {
       QVERIS_API_KEY: ''
@@ -164,7 +164,7 @@ export const PRESET_MCP_SERVERS = freezePresets([
     reference: 'https://mem.nowledge.co/',
     type: 'streamableHttp',
     baseUrl: 'http://127.0.0.1:14242/mcp',
-    headers: { APP: 'Cherry Studio' },
+    headers: { APP: 'Wind Studio' },
     isActive: false,
     provider: 'Nowledge',
     installSource: 'builtin',

@@ -26,7 +26,7 @@ describe('BuiltinMcpServerSeeder', () => {
     const row = await rowFor(BuiltinMcpServerNames.flomo)
     expect(row.type).toBe('streamableHttp')
     expect(row.baseUrl).toBe('https://flomoapp.com/mcp')
-    expect(row.headers).toEqual({ APP: 'Cherry Studio' })
+    expect(row.headers).toEqual({ APP: 'Wind Studio' })
   })
 
   it('turns an installed in-memory mcp-auto-install row into the npx process it really is', async () => {
@@ -52,10 +52,10 @@ describe('BuiltinMcpServerSeeder', () => {
     await insert({
       name: BuiltinMcpServerNames.mcpAutoInstall,
       type: 'inMemory',
-      reference: 'https://docs.cherry-ai.com/advanced-basic/mcp/auto-install',
+      reference: 'https://docs.windbot.cn/advanced-basic/mcp/auto-install',
       command: 'npx',
       args: ['-y', '@mcpmarket/mcp-auto-install', 'connect', '--json'],
-      provider: 'CherryAI'
+      provider: 'WindAI'
     })
 
     new BuiltinMcpServerSeeder().run(dbh.db)

@@ -217,7 +217,7 @@ describe('wire-body regression through real construction paths', () => {
     expect(body.max_tokens).toBeUndefined()
   })
 
-  it('CherryAI path (own providerSettings builder) rewrites max_tokens on the wire', async () => {
+  it('WindAI path (own providerSettings builder) rewrites max_tokens on the wire', async () => {
     const provider = makeProvider({
       id: CHERRYAI_PROVIDER_ID,
       defaultChatEndpoint: ENDPOINT_TYPE.OPENAI_CHAT_COMPLETIONS,

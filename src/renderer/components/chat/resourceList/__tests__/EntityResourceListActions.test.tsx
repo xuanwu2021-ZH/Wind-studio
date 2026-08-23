@@ -879,11 +879,11 @@ describe('classic layout entity resource list actions', () => {
     expect(onShowMissingAgentSelection).not.toHaveBeenCalled()
   })
 
-  it('deletes only tasks for the built-in Cherry Assistant in the classic layout', async () => {
+  it('deletes only tasks for the built-in Windbot Assistant in the classic layout', async () => {
     agentDataMocks.agents = [
       {
         id: 'agent-1',
-        name: 'Cherry Assistant',
+        name: 'Windbot Assistant',
         orderKey: 'a',
         configuration: { builtin_role: 'assistant' },
         model: 'anthropic::claude-sonnet-4',

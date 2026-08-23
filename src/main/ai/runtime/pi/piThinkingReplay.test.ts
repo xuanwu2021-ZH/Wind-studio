@@ -11,7 +11,7 @@ const usage = {
   cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, total: 0 }
 }
 
-describe('CherryIN thinking replay', () => {
+describe('WindIN thinking replay', () => {
   it('adds the response id as a thinking signature to tool-only assistant messages', () => {
     const message = {
       role: 'assistant' as const,
@@ -67,7 +67,7 @@ describe('CherryIN thinking replay', () => {
     const stream = {} as ReturnType<NonNullable<Parameters<typeof withCherryInThinkingReplay>[1]>>
     const delegate = vi.fn(() => stream)
     const config = withCherryInThinkingReplay(
-      { name: 'CherryIN', baseUrl: '', api: 'anthropic-messages', models: [] },
+      { name: 'WindIN', baseUrl: '', api: 'anthropic-messages', models: [] },
       delegate
     )
     const context = {

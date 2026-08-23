@@ -131,7 +131,7 @@ export const AGENT_RUNTIME_CAPABILITIES = {
     slashCommands: PI_BUILTIN_COMMANDS,
     createDefaults: { permissionMode: 'auto' },
     // Orphan models are rejected (pre-descriptor behavior): pi needs the provider's endpoint
-    // config to resolve a wire protocol, so no provider ⇒ not drivable. The managed CherryAI
+    // config to resolve a wire protocol, so no provider ⇒ not drivable. The managed WindAI
     // free-quota default is barred too — like claude, pi must not drive it directly.
     isModelCompatible: (provider, model) =>
       !!provider &&
@@ -163,7 +163,7 @@ export const AGENT_RUNTIME_CAPABILITIES = {
     slashCommands: DSH_BUILTIN_COMMANDS,
     createDefaults: { permissionMode: 'default' },
     // Orphan models are rejected: dsh needs the provider's endpoint config to resolve a wire
-    // protocol, so no provider ⇒ not drivable. The managed CherryAI default is barred like pi's.
+    // protocol, so no provider ⇒ not drivable. The managed WindAI default is barred like pi's.
     isModelCompatible: (provider, model) =>
       !!provider &&
       isDshCompatibleModel(provider, model) &&

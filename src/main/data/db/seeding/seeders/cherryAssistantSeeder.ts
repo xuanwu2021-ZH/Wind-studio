@@ -26,7 +26,7 @@ const CHERRY_ASSISTANT_SEED = {
 
 export class CherryAssistantSeeder implements ISeeder {
   readonly name = 'cherryAssistant'
-  readonly description = 'Insert the builtin Cherry Assistant in every agent library'
+  readonly description = 'Insert the builtin Windbot Assistant in every agent library'
   readonly executionPolicy = 'run-on-change' as const
   // Version 1 journaled the old "empty library only" eligibility decision. Version 2
   // rolls the assistant out to existing libraries; the persisted builtin identity still
@@ -52,7 +52,7 @@ export class CherryAssistantSeeder implements ISeeder {
       })
 
       if (!row) {
-        throw new Error('insert succeeded but select returned no builtin Cherry Assistant row')
+        throw new Error('insert succeeded but select returned no builtin Windbot Assistant row')
       }
 
       // One seeded session makes the agent visible in the Agents sidebar. This does

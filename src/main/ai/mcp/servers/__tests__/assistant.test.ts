@@ -373,7 +373,7 @@ describe('create_agent', () => {
     expect(result.content[0].text).toContain('agent-created')
   })
 
-  it("defaults to Cherry Assistant's current model when model is omitted", async () => {
+  it("defaults to Windbot Assistant's current model when model is omitted", async () => {
     const server = new AssistantServer('openai::gpt-5')
 
     await (

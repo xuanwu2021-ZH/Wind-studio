@@ -1,6 +1,6 @@
 # Performance Debugging
 
-Use this reference for Cherry Studio lag, jank, CPU, memory, leak, startup, and
+Use this reference for Wind Studio lag, jank, CPU, memory, leak, startup, and
 DevTools investigations.
 
 ## Contents
@@ -28,8 +28,8 @@ var page = browser
   .contexts()
   .flatMap((context) => context.pages())
   .find((candidate) => candidate.url() === "<MAIN_TARGET_URL>")
-if (!page || (await page.title()) !== "Cherry Studio") {
-  throw new Error("Bound Cherry Studio main target not found")
+if (!page || (await page.title()) !== "Wind Studio") {
+  throw new Error("Bound Wind Studio main target not found")
 }
 var cdp = await page.context().newCDPSession(page)
 ```

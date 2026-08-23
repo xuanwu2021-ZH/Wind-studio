@@ -109,7 +109,7 @@ The builder table (`config.ts`, first match wins):
 | Match | Builder | Notes |
 |---|---|---|
 | `id === copilot` | `buildCopilotConfig` | async — fetches a Copilot token |
-| `id === 'cherryai'` | `buildCherryAIConfig` | |
+| `id === 'cherryai'` | `buildWindAIConfig` | |
 | `isOllamaProvider` | `buildOllamaConfig` | |
 | `isAzureOpenAIProvider` | `buildAzureConfig` | returns `azure` / `azure-responses` / `azure-anthropic` (Claude on Azure) |
 | `id === 'bedrock'` | `buildBedrockConfig` | |
@@ -120,7 +120,7 @@ The builder table (`config.ts`, first match wins):
 | `id === 'dmxapi'` | `buildDmxapiConfig` | passes the Chat, Anthropic, and Gemini URLs independently |
 | _(no match)_ | `buildGenericProviderConfig` / `buildOpenAICompatibleConfig` | generic fallback |
 
-Several builders are `async` (Copilot token, CherryIN relay URLs), which is
+Several builders are `async` (Copilot token, WindIN relay URLs), which is
 why `providerToAiSdkConfig` returns a promise.
 
 ## Custom providers

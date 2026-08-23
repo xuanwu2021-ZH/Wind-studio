@@ -35,7 +35,7 @@ const SUPPORTING_PROMPT_PATHS = [
   'resources/builtin-agents/cherry-assistant/memory/FACT.md'
 ]
 
-describe('Cherry Assistant guide', () => {
+describe('Windbot Assistant guide', () => {
   const guide = fs.readFileSync(TEMPLATE_PATH, 'utf-8')
 
   it('uses current-package lookups instead of versioned product prose', () => {
@@ -104,11 +104,11 @@ describe('Cherry Assistant guide', () => {
     }
     const soul = fs.readFileSync(SOUL_PATH, 'utf-8')
 
-    expect(agent.instructions['en-US']).toContain('introduce yourself as Cherry Assistant')
-    expect(agent.instructions['zh-CN']).toContain('自我介绍为 Cherry Assistant')
-    expect(agent.instructions['en-US']).toContain('serve as Cherry Assistant')
+    expect(agent.instructions['en-US']).toContain('introduce yourself as Windbot Assistant')
+    expect(agent.instructions['zh-CN']).toContain('自我介绍为 Windbot Assistant')
+    expect(agent.instructions['en-US']).toContain('serve as Windbot Assistant')
     expect(agent.instructions['en-US']).not.toContain("You are Wind Studio's built-in onboarding Agent")
-    expect(soul).not.toContain('Cherry Assistant')
+    expect(soul).not.toContain('Windbot Assistant')
     expect(soul).not.toContain('general-purpose Agent')
     expect(soul).not.toContain('same tools and capabilities')
     expect(soul).not.toContain('Claude Code')
@@ -187,7 +187,7 @@ describe('Cherry Assistant guide', () => {
     expect(issueReporter).toContain('不得运行 `gh auth status`')
   })
 
-  it('declares only skills that are bundled with Cherry Assistant', () => {
+  it('declares only skills that are bundled with Windbot Assistant', () => {
     const agent = JSON.parse(fs.readFileSync(AGENT_TEMPLATE_PATH, 'utf-8')) as { skills: string[] }
     const skillsDir = path.join(ROOT_DIR, 'resources/builtin-agents/cherry-assistant/.claude/skills')
 
@@ -248,7 +248,7 @@ describe('Cherry Assistant guide', () => {
     )
     expect(generated.instructions['en-US']).toContain('Your scope has four parts')
     expect(generated.instructions['en-US']).toContain('Never introduce yourself as a general-purpose AI')
-    expect(generated.instructions['en-US']).toContain('direct the user to Cherry Assistant')
+    expect(generated.instructions['en-US']).toContain('direct the user to Windbot Assistant')
     expect(generated.instructions['zh-CN']).toContain('答疑解惑')
     expect(generated.instructions['zh-CN']).toContain('使用帮助')
     expect(generated.instructions['zh-CN']).toContain('问题排查')

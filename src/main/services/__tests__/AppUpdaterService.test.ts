@@ -228,7 +228,7 @@ describe('AppUpdaterService', () => {
       await expect(appUpdater.getReleaseHistory()).resolves.toEqual(history)
 
       expect(net.fetch).toHaveBeenCalledWith(
-        'https://releases.cherry-ai.com/release-history.json',
+        'https://releases.windbot.cn/release-history.json',
         expect.objectContaining({
           headers: expect.objectContaining({
             'App-Version': 'v1.0.0',
