@@ -17,7 +17,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
  * against an empty default directory, and the user's data appeared lost.
  *
  * Reported real config (single entry):
- *   executablePath: D:\Cherry Studio\Cherry Studio.exe   (v1 custom install dir)
+ *   executablePath: D:\Windbot Studio\Windbot Studio.exe   (v1 custom install dir)
  *   dataPath:       E:\Dropbox\Cherry Data\CherryStudio   (custom data dir, still on disk)
  *
  * Coverage is split in two:
@@ -70,8 +70,7 @@ vi.mock('@main/core/paths/constants', () => ({
   CHERRY_HOME: '/mock/home/.cherrystudio',
   CHERRY_HOME_DIRNAME: '.cherrystudio',
   BOOT_CONFIG_PATH: '/mock/home/.cherrystudio/boot-config.json',
-  LOGS_DIR: '/mock/logs',
-  resolveDevUserDataPath: () => '/mock/userDataDev'
+  LOGS_DIR: '/mock/logs'
 }))
 
 vi.mock('@logger', () => ({
@@ -303,7 +302,7 @@ describe('selectLegacyUserData', () => {
 
 const REAL_USER_CONFIG = JSON.stringify({
   appDataPath: [
-    { executablePath: 'D:\\Cherry Studio\\Cherry Studio.exe', dataPath: 'E:\\Dropbox\\Cherry Data\\CherryStudio' }
+    { executablePath: 'D:\\Windbot Studio\\Windbot Studio.exe', dataPath: 'E:\\Dropbox\\Cherry Data\\CherryStudio' }
   ]
 })
 
@@ -378,7 +377,7 @@ describe('resolveMigrationPaths — legacy custom userData recovery', () => {
   })
 
   it('redirects to the matching entry when the current exe matches exactly (regression guard)', () => {
-    h.normalizedExe.mockReturnValue('D:\\Cherry Studio\\Cherry Studio.exe')
+    h.normalizedExe.mockReturnValue('D:\\Windbot Studio\\Windbot Studio.exe')
     applyFs({
       dirs: ['E:\\Dropbox\\Cherry Data\\CherryStudio'],
       contents: {
@@ -396,7 +395,7 @@ describe('resolveMigrationPaths — legacy custom userData recovery', () => {
   })
 
   it('recovers the sole recorded dataPath when v2 was reinstalled to a new location (exe no longer matches)', () => {
-    h.normalizedExe.mockReturnValue('C:\\Users\\me\\AppData\\Local\\Programs\\cherrystudio\\Cherry Studio.exe')
+    h.normalizedExe.mockReturnValue('C:\\Users\\me\\AppData\\Local\\Programs\\cherrystudio\\Windbot Studio.exe')
     applyFs({
       dirs: ['E:\\Dropbox\\Cherry Data\\CherryStudio'],
       contents: {

@@ -68,7 +68,7 @@ export const oauthWithAihubmix = async (setKey) => {
 }
 
 export const oauthWithPPIO = async (setKey) => {
-  const redirectUri = 'cherrystudio://'
+  const redirectUri = 'windbot://'
   const authUrl = `https://ppio.com/oauth/authorize?invited_by=JYT9GD&client_id=${PPIO_CLIENT_ID}&scope=api%20openid&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}`
 
   window.open(
@@ -143,7 +143,7 @@ export const oauthWithPPIO = async (setKey) => {
 }
 
 export const oauthWith302AI = async (setKey) => {
-  const authUrl = 'https://dash.302.ai/sso/login?app=cherry-ai.com&name=Cherry%20Studio'
+  const authUrl = 'https://dash.302.ai/sso/login?app=windbot.cn&name=Windbot%20Studio'
 
   const popup = window.open(
     authUrl,
@@ -268,16 +268,6 @@ export const oauthWithCherryIn = async (
   })
 }
 
-export const oauthWithTokenDance = async (setKey) => {
-  try {
-    const apiKey = await ipcApi.request('oauth.tokendance.authorize_api_key')
-    setKey(apiKey)
-  } catch (error) {
-    logger.error('[oauthWithTokenDance] error', error as Error)
-    toast.error(i18n.t('settings.provider.oauth.error'))
-  }
-}
-
 export const providerCharge = async (provider: string) => {
   const lang = await getLanguageCode()
   const chargeUrlMap = {
@@ -303,11 +293,6 @@ export const providerCharge = async (provider: string) => {
     },
     aionly: {
       url: `https://maas.aiionly.com/recharge`,
-      width: 900,
-      height: 700
-    },
-    tokendance: {
-      url: 'https://tokendance.space/credits',
       width: 900,
       height: 700
     }
@@ -347,11 +332,6 @@ export const providerBills = async (provider: string) => {
     },
     aionly: {
       url: `https://maas.aiionly.com/billManagement`,
-      width: 900,
-      height: 700
-    },
-    tokendance: {
-      url: 'https://tokendance.space/activity/requests',
       width: 900,
       height: 700
     }

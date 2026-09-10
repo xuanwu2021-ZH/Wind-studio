@@ -3,7 +3,7 @@ import { skillService } from '@main/ai/skills/SkillService'
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import type { Tool } from '@modelcontextprotocol/sdk/types.js'
 import { CallToolRequestSchema, ErrorCode, ListToolsRequestSchema, McpError } from '@modelcontextprotocol/sdk/types.js'
-import { buildGithubSkillResult, searchSkillMarketplaces } from '@shared/utils/skillMarketplace'
+import { searchSkillMarketplaces } from '@shared/utils/skillMarketplace'
 import { net } from 'electron'
 
 const logger = loggerService.withContext('McpServer:Skills')
@@ -13,14 +13,13 @@ const REQUEST_TIMEOUT_MS = 15_000
 const SEARCH_TOOL: Tool = {
   name: 'search_skills',
   description:
-    'Search supported skill marketplaces for installable skills by keyword, or resolve a GitHub SKILL.md URL the user gave you. Returns quality/source metadata, a review URL, and an opaque `install_source` string you pass verbatim to install_skill. Use this when the user wants a capability that might already exist as a skill, or points you at a skill on GitHub.',
+    'Search supported skill marketplaces for installable skills by keyword. Returns quality/source metadata, a review URL, and an opaque `install_source` string you pass verbatim to install_skill. Use this when the user wants a capability that might already exist as a skill.',
   inputSchema: {
     type: 'object',
     properties: {
       query: {
         type: 'string',
-        description:
-          'Keywords describing the capability, e.g. "react performance" or "pr review". A GitHub link to a skill\'s SKILL.md file resolves that one skill instead of searching — use it when the registries do not list what the user asked for.'
+        description: 'Keywords describing the capability, e.g. "react performance" or "pr review".'
       }
     },
     required: ['query']
@@ -30,7 +29,7 @@ const SEARCH_TOOL: Tool = {
 const INSTALL_TOOL: Tool = {
   name: 'install_skill',
   description:
-    "Install ONE marketplace skill into Cherry Studio's managed library and enable it for the current agent. Pass the exact `install_source` string from a search_skills result — do NOT construct it yourself, and do NOT run `npx skills add`, `git clone`, or any shell command. Cherry clones the repo, installs just that single skill, and registers it. Call this only when the user intends to install the skill; the active Claude permission mode controls whether execution prompts or runs directly.",
+    "Install ONE marketplace skill into Windbot Studio's managed library and enable it for the current agent. Pass the exact `install_source` string from a search_skills result — do NOT construct it yourself, and do NOT run `npx skills add`, `git clone`, or any shell command. Cherry clones the repo, installs just that single skill, and registers it. Call this only when the user intends to install the skill; the active Claude permission mode controls whether execution prompts or runs directly.",
   inputSchema: {
     type: 'object',
     properties: {
@@ -109,22 +108,17 @@ class SkillsServer {
     const query = args.query
     if (!query) throw new McpError(ErrorCode.InvalidParams, "'query' is required for search_skills")
 
-    // A GitHub SKILL.md URL already identifies exactly one skill, so the registries have nothing to
-    // add — and a skill they never indexed is only reachable this way.
-    const githubResult = buildGithubSkillResult(query)
-    const results = githubResult
-      ? [githubResult]
-      : await searchSkillMarketplaces(
-          query.replace(/[-_]+/g, ' ').trim(),
-          (url) => this.fetchMarketplaceJson(url),
-          (source, error) => {
-            logger.warn('Skill marketplace search source failed', {
-              agentId: this.agentId,
-              source,
-              error: error instanceof Error ? error.message : String(error)
-            })
-          }
-        )
+    const results = await searchSkillMarketplaces(
+      query.replace(/[-_]+/g, ' ').trim(),
+      (url) => this.fetchMarketplaceJson(url),
+      (source, error) => {
+        logger.warn('Skill marketplace search source failed', {
+          agentId: this.agentId,
+          source,
+          error: error instanceof Error ? error.message : String(error)
+        })
+      }
+    )
 
     if (results.length === 0) {
       return { content: [{ type: 'text' as const, text: `No installable skills found for "${query}".` }] }

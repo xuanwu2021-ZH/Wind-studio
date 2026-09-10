@@ -1,12 +1,11 @@
 /**
- * Sampling settings + Model/Provider capabilities → final `temperature` / `topP`
- * / `maxOutputTokens`. The settings come from an assistant, or from a feature
- * that keeps its own (translate).
+ * Assistant + Model/Provider capabilities → final `temperature` / `topP`
+ * / `maxOutputTokens`.
  */
 
 import { loggerService } from '@logger'
 import { DEFAULT_TIMEOUT } from '@main/ai/constants'
-import type { SamplingSettings } from '@main/ai/types'
+import { type Assistant, DEFAULT_ASSISTANT_SETTINGS } from '@shared/data/types/assistant'
 import { ENDPOINT_TYPE, type EndpointType, type Model } from '@shared/data/types/model'
 import type { AiSdkParam } from '@shared/types/aiSdk'
 import {
@@ -24,12 +23,9 @@ import type { ResolvedReasoningInvocation } from './reasoningSerializers'
 
 const logger = loggerService.withContext('modelParameters')
 
-/** The two sampling fields these gates read; `maxTokens` has no gate of its own. */
-export type GatedSampling = Pick<SamplingSettings, 'temperature' | 'enableTemperature' | 'topP' | 'enableTopP'>
-
 /** `undefined` falls back to the provider default. */
 export function getTemperature(
-  settings: GatedSampling,
+  assistant: Assistant,
   model: Model,
   reasoning: Pick<ResolvedReasoningInvocation, 'kind'>
 ): number | undefined {
@@ -38,7 +34,8 @@ export function getTemperature(
     return undefined
   }
 
-  if (!settings.enableTemperature) return undefined
+  const enableTemperature = assistant.settings?.enableTemperature ?? DEFAULT_ASSISTANT_SETTINGS.enableTemperature
+  if (!enableTemperature) return undefined
 
   if (isClaude47SeriesModel(model)) {
     logger.info(`Model ${model.id} rejects sampling parameters, disabling temperature`)
@@ -55,14 +52,14 @@ export function getTemperature(
     return undefined
   }
 
-  let temperature = settings.temperature
+  let temperature = assistant.settings?.temperature ?? DEFAULT_ASSISTANT_SETTINGS.temperature
 
   if (isMaxTemperatureOneModel(model) && temperature > 1) {
     logger.info(`Model ${model.id} has max temperature of 1, clamping temperature from ${temperature} to 1`)
     temperature = 1
   }
 
-  if (isTemperatureTopPMutuallyExclusiveModel(model) && settings.enableTopP) {
+  if (isTemperatureTopPMutuallyExclusiveModel(model) && assistant.settings?.enableTopP) {
     logger.info(`Model ${model.id} only accepts one of temperature and topP, both enabled; keeping temperature`)
   }
 
@@ -71,7 +68,7 @@ export function getTemperature(
 
 /** Temperature wins when both are enabled on mutually-exclusive models. */
 export function getTopP(
-  settings: GatedSampling,
+  assistant: Assistant,
   model: Model,
   reasoning: Pick<ResolvedReasoningInvocation, 'kind'>
 ): number | undefined {
@@ -80,7 +77,8 @@ export function getTopP(
     return undefined
   }
 
-  if (!settings.enableTopP) return undefined
+  const enableTopP = assistant.settings?.enableTopP ?? DEFAULT_ASSISTANT_SETTINGS.enableTopP
+  if (!enableTopP) return undefined
 
   if (isClaude47SeriesModel(model)) {
     logger.info(`Model ${model.id} rejects sampling parameters, disabling topP`)
@@ -92,12 +90,12 @@ export function getTopP(
     return undefined
   }
 
-  if (isTemperatureTopPMutuallyExclusiveModel(model) && settings.enableTemperature) {
+  if (isTemperatureTopPMutuallyExclusiveModel(model) && assistant.settings?.enableTemperature) {
     logger.info(`Model ${model.id} only accepts one of temperature and topP, disabling topP.`)
     return undefined
   }
 
-  let topP = settings.topP
+  let topP = assistant.settings?.topP ?? DEFAULT_ASSISTANT_SETTINGS.topP
 
   if (isClaudeReasoningModel(model) && reasoning.kind !== 'omit' && reasoning.kind !== 'off') {
     const clampedTopP = Math.max(0.95, Math.min(topP, 1))
@@ -137,7 +135,7 @@ export function getTimeout(model: Model): number {
 
 /**
  * Anthropic Messages providers add the explicit thinking budget on top of
- * `maxOutputTokens`. Cherry Studio's limit is the total generated-token cap,
+ * `maxOutputTokens`. Windbot Studio's limit is the total generated-token cap,
  * so pass the non-thinking remainder to the SDK. Adaptive thinking has no
  * explicit budget and therefore needs no adjustment.
  */

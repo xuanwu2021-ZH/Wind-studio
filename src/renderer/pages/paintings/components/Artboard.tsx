@@ -230,7 +230,7 @@ const Artboard: FC<ArtboardProps> = ({ painting, isLoading, imageCover }) => {
   const displayedImageIndex = painting.files.length > 0 ? Math.min(currentImageIndex, painting.files.length - 1) : 0
   const currentFile = painting.files[displayedImageIndex]
   const { sizeLabel } = usePaintingSizeInfo(painting)
-  // TODO(#15353): swap for `cherrystudio://file/internal/${id}.${ext}` once the
+  // TODO(#15353): swap for `windbot://file/internal/${id}.${ext}` once the
   // custom-protocol handler is registered and paintings consume `FileEntry` directly.
   const currentImageUrl = currentFile ? getPaintingFileUrl(currentFile) : undefined
 
@@ -531,7 +531,6 @@ const Artboard: FC<ArtboardProps> = ({ painting, isLoading, imageCover }) => {
                 onPointerDown={onImagePointerDown}
                 onPointerMove={onImagePointerMove}
                 onPointerUp={stopImageDrag}
-                contextMenuTransform={{ rotation: imageRotation }}
                 preview={false}
                 src={currentImageUrl}
                 style={{

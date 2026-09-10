@@ -4,10 +4,9 @@ import { modelService } from '@data/services/ModelService'
 import { providerService } from '@data/services/ProviderService'
 import { topicService } from '@data/services/TopicService'
 import { loggerService } from '@logger'
-import type { AiGenerateRequest, AsInProcessChat } from '@main/ai/AiService'
+import type { AiGenerateRequest } from '@main/ai/AiService'
 import { WindowType } from '@main/core/window/types'
 import { messageService } from '@main/data/services/MessageService'
-import { getAppLanguage } from '@main/i18n'
 import { CHERRYAI_DEFAULT_UNIQUE_MODEL_ID } from '@shared/data/presets/cherryai'
 import type { Message, MessageData, UIMessage } from '@shared/data/types/message'
 import { parseUniqueModelId, type UniqueModelId, UniqueModelIdSchema } from '@shared/data/types/model'
@@ -18,7 +17,6 @@ import {
   sanitizeConversationTitle,
   truncateFirstUserMessageTitleSource
 } from '@shared/utils/conversationTitle'
-import { languageEnglishNameMap } from '@shared/utils/languages'
 import { isExternalCliProvider } from '@shared/utils/provider'
 
 const logger = loggerService.withContext('TopicNamingService')
@@ -67,8 +65,7 @@ const DEFAULT_AGENT_SESSION_NAMES = new Set([
   'unbenannt',
   'sans nom',
   'sin nombre',
-  'fără nume',
-  'adsız'
+  'fără nume'
 ])
 
 type StructuredMessage = {
@@ -146,6 +143,9 @@ function buildStructuredConversation(messages: StructuredMessage[]): string {
 export class TopicNamingService {
   maybeRenameFromFirstUserMessage(topicId: string, userMessageId: string): void {
     try {
+      const enabled = application.get('PreferenceService').get('topic.naming.enabled')
+      if (!enabled) return
+
       const topic = this.getTopic(topicId)
       if (!topic || topic.isNameManuallyEdited) return
       if (!canAutoRenameTopicName(topic.name)) return
@@ -209,8 +209,8 @@ export class TopicNamingService {
 
       const uniqueModelId = this.resolveNamingModelId()
       const title = await this.generateSummaryTitle(
+        assistantId,
         uniqueModelId,
-        topicId,
         buildStructuredConversation(structuredConversation)
       )
       if (!title) return
@@ -233,11 +233,14 @@ export class TopicNamingService {
    * first persisted user message. Fire-and-forget callers rely on this method
    * to isolate errors and re-read before writing so manual renames win races.
    *
-   * @param sessionId Cherry Studio agent session id.
+   * @param sessionId Windbot Studio agent session id.
    * @param userMessage Persisted message data, or already-extracted user text.
    */
   maybeRenameAgentSessionFromFirstUserMessage(sessionId: string, userMessage: MessageData | string | undefined): void {
     try {
+      const enabled = application.get('PreferenceService').get('topic.naming.enabled')
+      if (!enabled) return
+
       const session = this.getAgentSession(sessionId, 'initial')
       if (session?.isNameManuallyEdited) return
       if (!session || !canAutoRenameAgentSessionName(session.name)) return
@@ -266,13 +269,11 @@ export class TopicNamingService {
    *
    * Mirrors {@link maybeRenameFromConversationSummary} but targets the agents
    * DB (`session.name`) rather than `topics.name`. Uses the shared topic
-   * quick-assistant model preference for summarization, matching normal chat
-   * topic naming behavior. The agent id is deliberately
-   * NOT passed to the generation request — that would attach the agent's tool
-   * configuration (MCP tools, web search, knowledge bases) to the title.
+   * naming model preference (`topic.naming.model_id`) for summarization,
+   * matching normal chat topic naming behavior.
    *
-   * @param agentId    Agent id, used for failure logging context only.
-   * @param sessionId  Cherry Studio session id.
+   * @param agentId    Agent id used as AI generation context.
+   * @param sessionId  Windbot Studio session id.
    * @param userText   Plain text of the persisted user turn, extracted by
    *                   AgentSessionRuntimeService from the saved user message.
    * @param finalMessage Accumulated assistant UIMessage for this turn.
@@ -312,8 +313,8 @@ export class TopicNamingService {
       ]
 
       const title = await this.generateSummaryTitle(
+        agentId,
         uniqueModelId,
-        sessionId,
         buildStructuredConversation(structuredConversation)
       )
       if (!title) return
@@ -364,18 +365,14 @@ export class TopicNamingService {
   }
 
   private async generateSummaryTitle(
+    assistantId: string | undefined,
     uniqueModelId: UniqueModelId,
-    chatId: string,
     prompt: string
   ): Promise<string | null> {
     const systemPrompt = this.resolveNamingPrompt()
-    // A title is a throwaway 10-word summary: never carry the source assistant /
-    // agent id, or buildAgentParams resolves its tool configuration (MCP tools,
-    // web search, knowledge bases) onto this request — the manual rename path in
-    // the renderer omits assistantId for the same reason.
-    const request: AsInProcessChat<AiGenerateRequest> = {
+    const request: AiGenerateRequest = {
+      assistantId,
       uniqueModelId,
-      conversation: { id: chatId, topicId: chatId },
       system: systemPrompt,
       prompt,
       // A title is 10 words: never reason. Set this explicitly so the request builder does not
@@ -404,22 +401,27 @@ export class TopicNamingService {
   private resolveNamingPrompt(): string {
     const preferenceService = application.get('PreferenceService')
     const configuredPrompt = preferenceService.get('topic.naming_prompt')
-    const language = languageEnglishNameMap[getAppLanguage()]
+    const language = preferenceService.get('app.language') || 'en-us'
     return (configuredPrompt || FALLBACK_PROMPT).replaceAll('{{language}}', language)
   }
 
   private resolveNamingModelId(): UniqueModelId {
     const preferenceService = application.get('PreferenceService')
 
-    const configured =
-      preferenceService.get('feature.quick_assistant.model_id') ?? preferenceService.get('chat.default_model_id')
-    const quickModelId = this.toUsableNamingModelId(configured)
-    if (quickModelId) return quickModelId
+    const configured = preferenceService.get('topic.naming.model_id')
+    const namingModelId = this.toUsableNamingModelId(configured)
+    if (namingModelId) return namingModelId
     if (configured != null) {
-      logger.warn('Quick assistant model is not usable for topic naming; falling back to managed CherryAI default', {
-        configured
-      })
+      logger.warn(
+        'topic.naming.model_id is not usable (invalid, missing, or agent-only provider); falling back to quick assistant model',
+        { configured }
+      )
     }
+
+    // A title is a lightweight summary, so prefer the user's own quick-assistant model over the
+    // managed CherryAI default whenever the dedicated naming model is unset or unusable.
+    const quickModelId = this.toUsableNamingModelId(preferenceService.get('feature.quick_assistant.model_id'))
+    if (quickModelId) return quickModelId
 
     return CHERRYAI_DEFAULT_UNIQUE_MODEL_ID
   }

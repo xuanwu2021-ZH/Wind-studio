@@ -38,9 +38,6 @@ vi.mock('react-i18next', () => ({
           `File ${values?.fileName}`
         ].join('\n')
       }
-      if (key === 'settings.about.diagnostics.sources.message_summary') {
-        return `${values?.count} messages, about ${values?.size}`
-      }
       return key
     }
   })
@@ -52,7 +49,6 @@ const inspectResult: OutputFor<'diagnostics.bundle.inspect'> = {
   hasWarnings: false,
   sourceLimitBytes: 50 * 1024 * 1024,
   sources: {
-    chatRecords: { available: true, estimatedBytes: 4_096, messageCount: 4 },
     crashDumps: { fileCount: 1 },
     logs: { available: true, estimatedBytes: 1_024, fileCount: 2 },
     traces: { available: true, estimatedBytes: 2_048, fileCount: 3 }
@@ -69,10 +65,6 @@ const savedResult: Extract<OutputFor<'diagnostics.bundle.export'>, { status: 'sa
   omittedFileCount: 0,
   status: 'saved'
 }
-
-const chatRecordsSwitchName = /^settings\.about\.diagnostics\.sources\.chat_records\.title /
-const logsSwitchName = /^settings\.about\.diagnostics\.sources\.logs\.title /
-const tracesSwitchName = /^settings\.about\.diagnostics\.sources\.traces\.title /
 
 function renderDialog() {
   render(<DiagnosticBundleDialog appVersion="2.0.0" open onOpenChange={vi.fn()} />)
@@ -105,10 +97,8 @@ describe('DiagnosticBundleDialog', () => {
     renderDialog()
 
     await waitFor(() => expect(mocks.request).toHaveBeenCalledWith('diagnostics.bundle.inspect', { range: '24h' }))
-    expect(screen.getByRole('switch', { name: logsSwitchName })).toBeChecked()
-    expect(screen.getByRole('switch', { name: tracesSwitchName })).toBeChecked()
-    expect(screen.getByRole('switch', { name: chatRecordsSwitchName })).not.toBeChecked()
-    expect(screen.getByText('4 messages, about 4.0 KB')).toBeInTheDocument()
+    expect(screen.getByRole('switch', { name: 'settings.about.diagnostics.sources.logs.title' })).toBeChecked()
+    expect(screen.getByRole('switch', { name: 'settings.about.diagnostics.sources.traces.title' })).toBeChecked()
     expect(screen.queryByText('settings.about.diagnostics.privacy.title')).not.toBeInTheDocument()
     expect(screen.queryByRole('checkbox')).not.toBeInTheDocument()
 
@@ -133,39 +123,12 @@ describe('DiagnosticBundleDialog', () => {
     await user.click(confirmButton)
     await waitFor(() =>
       expect(mocks.request).toHaveBeenCalledWith('diagnostics.bundle.export', {
-        includeChatRecords: false,
         includeLogs: true,
         includeTraces: true,
         range: '24h'
       })
     )
     expect(await screen.findByText('settings.about.diagnostics.success.title')).toBeInTheDocument()
-  })
-
-  it('requires consent and exports chat history when it is the only selected sensitive source', async () => {
-    const user = userEvent.setup()
-    renderDialog()
-
-    await screen.findByText('settings.about.diagnostics.sources.chat_records.title')
-    await user.click(screen.getByRole('switch', { name: logsSwitchName }))
-    await user.click(screen.getByRole('switch', { name: tracesSwitchName }))
-    await user.click(screen.getByRole('switch', { name: chatRecordsSwitchName }))
-
-    await user.click(screen.getByRole('button', { name: 'settings.about.diagnostics.actions.export' }))
-    const confirmation = screen.getAllByRole('dialog').at(-1)!
-    const consent = within(confirmation).getByRole('checkbox')
-    expect(consent).not.toBeChecked()
-    await user.click(consent)
-    await user.click(within(confirmation).getByRole('button', { name: 'settings.about.diagnostics.actions.export' }))
-
-    await waitFor(() =>
-      expect(mocks.request).toHaveBeenCalledWith('diagnostics.bundle.export', {
-        includeChatRecords: true,
-        includeLogs: false,
-        includeTraces: false,
-        range: '24h'
-      })
-    )
   })
 
   it('reveals the saved file without embedding its local path in the support email', async () => {
@@ -199,7 +162,7 @@ describe('DiagnosticBundleDialog', () => {
     })
   })
 
-  it('allows a system-only export without consent when no optional sources are available', async () => {
+  it('allows a system-only export without consent when no logs or traces are available', async () => {
     const user = userEvent.setup()
     mocks.request.mockImplementation(async (route: string) => {
       if (route === 'diagnostics.bundle.inspect') {
@@ -207,7 +170,6 @@ describe('DiagnosticBundleDialog', () => {
           ...inspectResult,
           sources: {
             ...inspectResult.sources,
-            chatRecords: { available: false, estimatedBytes: 0, messageCount: 0 },
             logs: { available: false, estimatedBytes: 0, fileCount: 0 },
             traces: { available: false, estimatedBytes: 0, fileCount: 0 }
           }
@@ -218,7 +180,9 @@ describe('DiagnosticBundleDialog', () => {
     })
     renderDialog()
 
-    await waitFor(() => expect(screen.getByRole('switch', { name: logsSwitchName })).toBeDisabled())
+    await waitFor(() =>
+      expect(screen.getByRole('switch', { name: 'settings.about.diagnostics.sources.logs.title' })).toBeDisabled()
+    )
     expect(screen.queryByRole('checkbox')).not.toBeInTheDocument()
     const exportButton = screen.getByRole('button', { name: 'settings.about.diagnostics.actions.export' })
     expect(exportButton).toBeEnabled()
@@ -226,7 +190,6 @@ describe('DiagnosticBundleDialog', () => {
 
     await waitFor(() =>
       expect(mocks.request).toHaveBeenCalledWith('diagnostics.bundle.export', {
-        includeChatRecords: false,
         includeLogs: false,
         includeTraces: false,
         range: '24h'
@@ -310,7 +273,7 @@ describe('DiagnosticBundleDialog', () => {
     expect(mocks.toastError).toHaveBeenCalledWith('settings.about.diagnostics.errors.email_client_failed')
 
     await user.click(copyButton)
-    await waitFor(() => expect(clipboardWrite).toHaveBeenCalledWith('support@cherry-ai.com'))
+    await waitFor(() => expect(clipboardWrite).toHaveBeenCalledWith('support@windbot.cn'))
     expect(mocks.toastSuccess).toHaveBeenCalledWith('settings.about.diagnostics.success.email_copied')
   })
 })

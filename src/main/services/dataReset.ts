@@ -30,7 +30,6 @@ export const USER_DATA_WIPE = [
   'cherrystudio.sqlite-shm',
   'Data',
   'Data.restore',
-  'Credentials',
   'IndexedDB.restore',
   'Local Storage.restore',
   'cache.json',
@@ -68,9 +67,6 @@ export const USER_DATA_KEPT = ['logs', 'Crashpad', 'Runtime', 'Toolchain', 'tess
 // Absorb transient Windows file locks before consuming a reset attempt.
 const RM_OPTIONS = { recursive: true, force: true, maxRetries: 3, retryDelay: 100 } as const
 
-const dataResetOperationSchema = z.enum(['full_reset', 'v1_remigration'])
-type DataResetOperation = z.infer<typeof dataResetOperationSchema>
-
 /**
  * Strict on-disk marker schema. `pending` binds authorization to a canonical
  * path; `completed` prevents a resurrected marker from rearming the wipe.
@@ -81,14 +77,12 @@ const dataResetMarkerSchema = z.discriminatedUnion('status', [
     status: z.literal('pending'),
     requestedAt: z.string(),
     attempts: z.number().int().nonnegative().optional(),
-    canonicalPath: z.string(),
-    operation: dataResetOperationSchema.optional()
+    canonicalPath: z.string()
   }),
   z.strictObject({
     version: z.literal(1),
     status: z.literal('completed'),
-    completedAt: z.string(),
-    operation: dataResetOperationSchema.optional()
+    completedAt: z.string()
   })
 ])
 type DataResetMarker = z.infer<typeof dataResetMarkerSchema>
@@ -213,15 +207,6 @@ export async function requestDataReset(): Promise<void> {
   })
   if (response !== 1) return
 
-  await stageDataReset('full_reset', true)
-}
-
-/** Stages a targeted v2 cleanup so the existing v1 migration can run again. */
-export async function requestV1Remigration(): Promise<void> {
-  await stageDataReset('v1_remigration', false)
-}
-
-async function stageDataReset(operation: DataResetOperation, shouldClearChromiumState: boolean): Promise<void> {
   const userDataPath = application.getPath('app.userdata')
   // Bind authorization to the physical directory the user confirmed.
   try {
@@ -229,8 +214,7 @@ async function stageDataReset(operation: DataResetOperation, shouldClearChromium
       version: 1,
       status: 'pending',
       requestedAt: new Date().toISOString(),
-      canonicalPath: canonicalize(userDataPath),
-      operation
+      canonicalPath: canonicalize(userDataPath)
     })
   } catch (error) {
     if (!(error instanceof MarkerCommitError)) throw error
@@ -240,10 +224,8 @@ async function stageDataReset(operation: DataResetOperation, shouldClearChromium
     })
   }
 
-  if (shouldClearChromiumState) {
-    // Full reset removes Chromium storage. Remigration must retain it as a v1 source.
-    await clearChromiumState()
-  }
+  // Clear live session state before the filesystem pass.
+  await clearChromiumState()
 
   // Give services time to release files before the next boot wipes them.
   const timer = setTimeout(() => {
@@ -301,8 +283,7 @@ export function runDataReset(): void {
     }
 
     const attempts = marker.attempts ?? 0
-    const operation = marker.operation ?? 'full_reset'
-    if (operation === 'full_reset' && attempts >= MAX_WIPE_ATTEMPTS) {
+    if (attempts >= MAX_WIPE_ATTEMPTS) {
       logger.error('Data reset abandoned: attempt cap reached with critical failures — clearing the marker', {
         attempts
       })
@@ -313,7 +294,6 @@ export function runDataReset(): void {
     logger.info('Data reset pending — wiping user data', {
       userData,
       requestedAt: marker.requestedAt,
-      operation,
       attempt: attempts + 1
     })
 
@@ -326,39 +306,24 @@ export function runDataReset(): void {
       })
       showDataResetError(
         'Data Reset Failed',
-        'Cherry Studio could not record the data reset state ' +
+        'Windbot Studio could not record the data reset state ' +
           `in ${markerPath()}.\n\n` +
           'Starting now could erase data you create later, so the app will quit instead.\n\n' +
-          'Please check disk space and file permissions, then start Cherry Studio again.'
+          'Please check disk space and file permissions, then start Windbot Studio again.'
       )
       return
     }
 
     const failures: string[] = []
-    if (operation === 'v1_remigration') {
-      wipeV1RemigrationData(failures)
-    } else {
-      wipeDirectoryEntries(userData, shouldWipe, failures)
-      wipeNestedUserDataTargets(failures)
-      // Temporary cache removal is best-effort.
-      try {
-        fs.rmSync(application.getPath('app.temp'), RM_OPTIONS)
-      } catch (error) {
-        logger.warn('Failed to remove the app temp dir during data reset', { error: String(error) })
-      }
+    wipeDirectoryEntries(userData, shouldWipe, failures)
+    // Temporary cache removal is best-effort.
+    try {
+      fs.rmSync(application.getPath('app.temp'), RM_OPTIONS)
+    } catch (error) {
+      logger.warn('Failed to remove the app temp dir during data reset', { error: String(error) })
     }
 
     if (failures.length > 0) {
-      if (operation === 'v1_remigration') {
-        logger.error('v1 remigration cleanup failed — keeping the marker and refusing to boot', { failures })
-        showDataResetError(
-          'Migration Reset Failed',
-          'Cherry Studio could not safely remove the current v2 data required to rerun migration. ' +
-            'The app will quit and keep the pending request so the cleanup can retry on the next launch.\n\n' +
-            'Please check disk space, file permissions, and antivirus locks, then start Cherry Studio again.'
-        )
-        return
-      }
       if (attempts + 1 < MAX_WIPE_ATTEMPTS) {
         logger.error('Data reset pass had critical failures — relaunching to retry in preboot', { failures })
         application.relaunch()
@@ -374,7 +339,7 @@ export function runDataReset(): void {
 
     // Commit terminal state before removing the marker.
     try {
-      writeMarker({ version: 1, status: 'completed', completedAt: new Date().toISOString(), operation })
+      writeMarker({ version: 1, status: 'completed', completedAt: new Date().toISOString() })
     } catch (error) {
       logger.error(
         'Data reset wiped successfully but the completion record could not be committed — refusing to boot',
@@ -384,10 +349,10 @@ export function runDataReset(): void {
       )
       showDataResetError(
         'Data Reset Incomplete',
-        'Cherry Studio erased its data but could not record the reset as finished ' +
+        'Windbot Studio erased its data but could not record the reset as finished ' +
           `in ${markerPath()}.\n\n` +
           'Starting now could erase anything you create on the next launch, so the app will quit instead.\n\n' +
-          'Please check disk space and file permissions, then start Cherry Studio again.'
+          'Please check disk space and file permissions, then start Windbot Studio again.'
       )
       return
     }
@@ -406,44 +371,10 @@ export function runDataReset(): void {
     logger.error('Data reset failed — refusing to boot', error as Error)
     showDataResetError(
       'Data Reset Failed',
-      'Cherry Studio could not safely complete a pending data reset. ' +
+      'Windbot Studio could not safely complete a pending data reset. ' +
         'The app will quit instead of starting with a reset marker still present.\n\n' +
-        'Please check disk space and file permissions, then start Cherry Studio again.'
+        'Please check disk space and file permissions, then start Windbot Studio again.'
     )
-  }
-}
-
-/** Removes only current v2 state while preserving every source consumed by v1 migration. */
-function wipeV1RemigrationData(failures: string[]): void {
-  const databaseFile = application.getPath('app.database.file')
-  const targets = [
-    `${databaseFile}-wal`,
-    `${databaseFile}-shm`,
-    application.getPath('feature.agents.claude.root'),
-    databaseFile
-  ]
-
-  for (const target of targets) {
-    try {
-      fs.rmSync(target, RM_OPTIONS)
-    } catch (error) {
-      logger.warn('Failed to remove v2 data during v1 remigration cleanup', { target, error: String(error) })
-      failures.push(target)
-      return
-    }
-  }
-}
-
-/** Wipe feature data nested below a retained top-level runtime directory. */
-function wipeNestedUserDataTargets(failures: string[]): void {
-  const targets = [application.getPath('feature.provider_registry.override')]
-  for (const target of targets) {
-    try {
-      fs.rmSync(target, RM_OPTIONS)
-    } catch (error) {
-      logger.warn('Failed to remove nested user data during reset', { target, error: String(error) })
-      failures.push(target)
-    }
   }
 }
 
@@ -465,13 +396,6 @@ function showDataResetError(title: string, message: string): void {
 function shouldWipe(entry: string): boolean {
   return USER_DATA_WIPE.includes(entry)
 }
-
-/**
- * Budget for clearing Chromium session state. Unrelated to the lifecycle
- * shutdown deadline — it happens before `shutdown()` is even called — it merely
- * borrowed the same number back when both were `SHUTDOWN_TIMEOUT_MS`.
- */
-const CHROMIUM_CLEAR_TIMEOUT_MS = 5000
 
 /** Clears known sessions with a timeout so shutdown cannot hang. */
 async function clearChromiumState(): Promise<void> {
@@ -501,7 +425,7 @@ async function clearChromiumState(): Promise<void> {
         timeout = setTimeout(() => {
           logger.warn('Chromium state clear timed out during data reset request — continuing with shutdown')
           resolve()
-        }, CHROMIUM_CLEAR_TIMEOUT_MS)
+        }, SHUTDOWN_TIMEOUT_MS)
       })
     ])
   } finally {
@@ -517,7 +441,7 @@ function canonicalize(p: string): string {
 function showPathMismatchWarning(): void {
   dialog.showErrorBox(
     'Data Reset Cancelled',
-    'Cherry Studio did not run Data Reset because the data location changed after confirmation.\n\n' +
+    'Windbot Studio did not run Data Reset because the data location changed after confirmation.\n\n' +
       'No data was removed, and the pending request has been cleared. ' +
       'Run Data Reset again from Settings if you still want to erase this profile.'
   )
@@ -526,7 +450,7 @@ function showPathMismatchWarning(): void {
 function showIncompleteResetWarning(): void {
   dialog.showErrorBox(
     'Data Reset Incomplete',
-    'Cherry Studio could not remove some of its data during the data reset.\n\n' +
+    'Windbot Studio could not remove some of its data during the data reset.\n\n' +
       'The app will start with whatever remains. ' +
       'Please check file permissions (or antivirus locks) and run Data Reset again from Settings.'
   )

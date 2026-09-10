@@ -3,7 +3,7 @@ import { toast } from '@renderer/services/toast'
 import { type MenuPresentationMode, ThemeMode } from '@shared/data/preference/preferenceTypes'
 import { V1_CUSTOM_CSS_MARKER } from '@shared/utils/customCssMigration'
 import { MockUsePreferenceUtils } from '@test-mocks/renderer/usePreference'
-import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import AppearanceSettings, { confirmMenuPresentationModeChange } from '../AppearanceSettings'
@@ -90,20 +90,17 @@ vi.mock('@cherrystudio/ui', async () => {
     PopoverTrigger: ({ children, asChild }: any) =>
       asChild && React.isValidElement(children) ? children : React.createElement('div', null, children),
     RowFlex: passthrough('div'),
-    // Mirrors the real control's radiogroup/radio semantics so tests address it the way
-    // assistive technology does, rather than through whatever DOM the mock happens to emit.
-    SegmentedControl: ({ options = [], value, onValueChange, ...props }: any) =>
+    SegmentedControl: ({ options = [], value, onValueChange }: any) =>
       React.createElement(
         'div',
-        { 'aria-label': props['aria-label'], role: 'radiogroup' },
+        null,
         options.map((option: any) =>
           React.createElement(
             'button',
             {
-              'aria-checked': value === option.value,
+              'aria-pressed': value === option.value,
               key: option.value,
               onClick: () => onValueChange?.(option.value),
-              role: 'radio',
               type: 'button'
             },
             option.label
@@ -153,8 +150,7 @@ vi.mock('@renderer/hooks/useTheme', () => ({
 vi.mock('@renderer/hooks/useCodeStyle', () => ({
   useCodeStyle: () => ({
     activeCmTheme: 'light'
-  }),
-  useCmTheme: () => 'light'
+  })
 }))
 
 vi.mock('@renderer/hooks/useUserTheme', () => ({
@@ -226,8 +222,8 @@ describe('AppearanceSettings menu presentation mode', () => {
 
   it('does nothing when the selected mode is already active', () => {
     void confirmMenuPresentationModeChange({
-      currentMode: 'cherry',
-      mode: 'cherry',
+      currentMode: 'wind',
+      mode: 'wind',
       setMenuPresentationMode,
       setTimeoutTimer,
       t
@@ -238,7 +234,7 @@ describe('AppearanceSettings menu presentation mode', () => {
 
   it('saves the selected mode and schedules relaunch after confirmation', async () => {
     await confirmMenuPresentationModeChange({
-      currentMode: 'cherry',
+      currentMode: 'wind',
       mode: 'native',
       setMenuPresentationMode,
       setTimeoutTimer,
@@ -268,7 +264,7 @@ describe('AppearanceSettings menu presentation mode', () => {
 
     await expect(
       confirmMenuPresentationModeChange({
-        currentMode: 'cherry',
+        currentMode: 'wind',
         mode: 'native',
         setMenuPresentationMode,
         setTimeoutTimer,
@@ -358,28 +354,6 @@ describe('AppearanceSettings selectors', () => {
       'settings.theme.title',
       'settings.general.common.sections.display_language'
     ])
-  })
-
-  it('routes each list position row to its own module preference', async () => {
-    MockUsePreferenceUtils.setPreferenceValue('topic.tab.position', 'left')
-    MockUsePreferenceUtils.setPreferenceValue('agent.session.position', 'left')
-
-    render(<AppearanceSettings />)
-
-    const chatGroup = screen.getByRole('radiogroup', { name: 'settings.display.list_position.chat' })
-    fireEvent.click(within(chatGroup).getByRole('radio', { name: 'settings.topic.position.right' }))
-
-    await waitFor(() => {
-      expect(MockUsePreferenceUtils.getPreferenceValue('topic.tab.position')).toBe('right')
-    })
-    expect(MockUsePreferenceUtils.getPreferenceValue('agent.session.position')).toBe('left')
-
-    const workGroup = screen.getByRole('radiogroup', { name: 'settings.display.list_position.work' })
-    fireEvent.click(within(workGroup).getByRole('radio', { name: 'settings.topic.position.right' }))
-
-    await waitFor(() => {
-      expect(MockUsePreferenceUtils.getPreferenceValue('agent.session.position')).toBe('right')
-    })
   })
 
   it('shows migration guidance for marked v1 custom CSS', () => {

@@ -653,11 +653,7 @@ const MigrationApp: React.FC = () => {
 
       case 'completed': {
         const summary = progress.summary
-        const warnings = [
-          ...(progress.warningMessages ?? []).map((warning) => t(warning.key, warning.params)),
-          ...(progress.warnings ?? [])
-        ]
-        const hasWarnings = warnings.length > 0
+        const warnings = progress.warnings ?? []
         return (
           <div className="space-y-5">
             <TopContent>
@@ -669,7 +665,7 @@ const MigrationApp: React.FC = () => {
                 {t('migration.completed.title')}
               </h2>
               <p className="mt-2.5 text-muted-foreground text-sm leading-relaxed">
-                {t(hasWarnings ? 'migration.completed.description_with_warnings' : 'migration.completed.description')}
+                {t('migration.completed.description')}
               </p>
             </TopContent>
 
@@ -694,7 +690,12 @@ const MigrationApp: React.FC = () => {
               </div>
             )}
 
-            {hasWarnings && (
+            <Button variant="default" size="lg" className="w-full gap-2" onClick={() => actions.restart()}>
+              <RotateCcw size={14} />
+              {t('migration.buttons.restart')}
+            </Button>
+
+            {warnings.length > 0 && (
               <Dialog open={warningsDialogOpen} onOpenChange={setWarningsDialogOpen}>
                 <div className="flex justify-center" data-migration-warning-trigger="">
                   <DialogTrigger asChild>
@@ -734,11 +735,6 @@ const MigrationApp: React.FC = () => {
                 </DialogContent>
               </Dialog>
             )}
-
-            <Button variant="default" size="lg" className="w-full gap-2" onClick={() => actions.restart()}>
-              <RotateCcw size={14} />
-              {t('migration.buttons.restart')}
-            </Button>
           </div>
         )
       }
@@ -861,8 +857,8 @@ const MigrationApp: React.FC = () => {
             </Tooltip>
           </div>
           <div className="flex items-center gap-2">
-            <img src={AppLogo} alt="Cherry Studio" className="h-4.5 w-4.5 rounded-full object-cover" />
-            <span className="font-medium text-foreground text-sm">Cherry Studio</span>
+            <img src={AppLogo} alt="Windbot Studio" className="h-4.5 w-4.5 rounded-full object-cover" />
+            <span className="font-medium text-foreground text-sm">Windbot Studio</span>
             <span className="text-foreground-tertiary">·</span>
             <span className="text-foreground-tertiary text-xs">{t('migration.title')}</span>
           </div>

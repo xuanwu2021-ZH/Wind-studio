@@ -29,6 +29,14 @@ const ResourceEditDialogHost = lazy(() =>
 )
 
 /**
+ * Windbot Studio ships without the "Create new assistant" entry point.
+ * The flag below is read both in `onCreateNew` (no-op) and the create dialog
+ * (closed on mount) so the menu item, the wizard trigger, and any leftover
+ * create dialog are all rendered inert.
+ */
+const WINDBOT_HIDE_ASSISTANT_CREATE = true
+
+/**
  * Row shape the selector operates on — derived from the Assistant DTO. `selectionType: 'item'`
  * returns values of this shape (not the raw Assistant) so the selector never leaks DB columns the
  * caller didn't ask about. Group IDs drive filtering while group names are display-only.
@@ -112,11 +120,8 @@ export function AssistantSelector(props: AssistantSelectorProps) {
 
   // `limit: 500` matches ListAssistantsQuerySchema's max; realistic libraries sit well under it.
   // If a user ever exceeds this we should move to usePaginatedQuery + scroll-load inside the popover.
-  const { data, isLoading, refetch } = useQuery('/assistants', {
-    enabled: selectorOpen,
-    query: { limit: 500 }
-  })
-  const { groups, isLoading: isGroupsLoading } = useGroups('assistant', { enabled: selectorOpen })
+  const { data, isLoading, refetch } = useQuery('/assistants', { query: { limit: 500 } })
+  const { groups, isLoading: isGroupsLoading } = useGroups('assistant')
   const { trigger: createAssistant, isLoading: isCreatingAssistant } = useMutation('POST', '/assistants', {
     refresh: ['/assistants']
   })
@@ -127,7 +132,7 @@ export function AssistantSelector(props: AssistantSelectorProps) {
     pinnedIds,
     refetch: refetchPins,
     togglePin
-  } = usePins('assistant', { enabled: selectorOpen })
+  } = usePins('assistant')
   const isPinActionDisabled = isPinnedLoading || isPinsRefreshing || isPinsMutating
 
   const groupById = useMemo(() => new Map(groups.map((group) => [group.id, group] as const)), [groups])
@@ -233,7 +238,7 @@ export function AssistantSelector(props: AssistantSelectorProps) {
     [autoSelectOnCreate, createAssistant, handleSelectorOpenChange, onDialogCloseAutoFocus, props, refetch, t]
   )
 
-  const createDialog = (
+  const createDialog = WINDBOT_HIDE_ASSISTANT_CREATE ? null : (
     <ResourceCreateWizard
       kind="assistant"
       open={createDialogOpen}
@@ -267,7 +272,7 @@ export function AssistantSelector(props: AssistantSelectorProps) {
     onTogglePin: handleTogglePin,
     isPinActionDisabled,
     onEditItem: handleEditItem,
-    onCreateNew: () => setCreateDialogOpen(true),
+    onCreateNew: WINDBOT_HIDE_ASSISTANT_CREATE ? undefined : () => setCreateDialogOpen(true),
     labels: {
       searchPlaceholder: t('selector.assistant.search_placeholder'),
       pin: t('selector.common.pin'),

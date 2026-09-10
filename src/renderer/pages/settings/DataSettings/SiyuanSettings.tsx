@@ -42,7 +42,7 @@ const SiyuanSettings: FC = () => {
   }
 
   const handleSiyuanHelpClick = () => {
-    void ipcApi.request('system.shell.open_website', 'https://docs.cherry-ai.com/advanced-basic/siyuan')
+    void ipcApi.request('system.shell.open_website', 'https://docs.windbot.cn/advanced-basic/siyuan')
   }
 
   const handleCheckConnection = async () => {
@@ -82,7 +82,7 @@ const SiyuanSettings: FC = () => {
     <SettingGroup theme={theme}>
       <SettingTitle>{t('settings.data.siyuan.title')}</SettingTitle>
       <SettingDivider />
-      <SettingRow id="setting-data-siyuan-api-url" className="scroll-mt-6">
+      <SettingRow>
         <SettingRowTitle>{t('settings.data.siyuan.api_url')}</SettingRowTitle>
         <RowFlex className="w-78.75 min-w-0 max-w-full items-center gap-1.25">
           <Input
@@ -94,7 +94,7 @@ const SiyuanSettings: FC = () => {
         </RowFlex>
       </SettingRow>
       <SettingDivider />
-      <SettingRow id="setting-data-siyuan-token" className="scroll-mt-6">
+      <SettingRow>
         <SettingRowTitle style={{ display: 'flex', alignItems: 'center' }}>
           <span>{t('settings.data.siyuan.token.label')}</span>
           <InfoTooltip

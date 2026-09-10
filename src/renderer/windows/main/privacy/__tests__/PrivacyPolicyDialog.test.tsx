@@ -42,7 +42,7 @@ describe('privacy policy resource selection', () => {
   })
 
   it('builds a Windows-safe dark theme file URL', () => {
-    expect(buildPrivacyPolicyUrl('C:\\Program Files\\Cherry Studio\\resources', 'zh-TW', ThemeMode.dark)).toBe(
+    expect(buildPrivacyPolicyUrl('C:\\Program Files\\Windbot Studio\\resources', 'zh-TW', ThemeMode.dark)).toBe(
       'file:///C:/Program%20Files/Cherry%20Studio/resources/cherry-studio/privacy-zh.html?theme=dark'
     )
   })
@@ -53,7 +53,7 @@ describe('PrivacyPolicyDialog', () => {
     vi.clearAllMocks()
     mocks.language = 'en-US'
     mocks.theme = ThemeMode.light
-    mocks.ipcRequest.mockResolvedValue({ resourcesPath: '/Applications/Cherry Studio.app/Contents/Resources' })
+    mocks.ipcRequest.mockResolvedValue({ resourcesPath: '/Applications/Windbot Studio.app/Contents/Resources' })
   })
 
   it('loads the local policy with the active language and theme', async () => {

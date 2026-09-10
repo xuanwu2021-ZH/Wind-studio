@@ -1,5 +1,5 @@
 /**
- * In-process MCP server exposing Cherry Studio's builtin tools to Claude Code.
+ * In-process MCP server exposing Windbot Studio's builtin tools to Claude Code.
  *
  * Wraps the same `webLookup` / painting cores the AI-SDK builtin tools use, so
  * Claude Code's web search/fetch and image generation run identical logic against
@@ -18,9 +18,8 @@
  *   `…__kb_manage`) — owns knowledge-base exposure and per-call scope authorization.
  * - {@link CherryCliTools} (`…__cli_list`, `…__cli_search`, `…__cli_install`) —
  *   delegates live discovery and approved installation to BinaryManager.
- * - {@link CherryDocumentTools} (`…__to_markdown`) — converts workspace, agent-data, and
- *   session-attachment documents with Cherry's bundled converter and writes agent-private
- *   temporary Markdown.
+ * - {@link CherryDocumentTools} (`…__to_markdown`) — converts workspace documents
+ *   with Cherry's bundled converter and writes agent-private temporary Markdown.
  *
  * Context-bound providers act on the session via the {@link CherryAgentContext}
  * passed at construction.

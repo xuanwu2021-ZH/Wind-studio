@@ -24,7 +24,7 @@ const translations: Record<string, string> = {
   'migration.diagnostics.open_folder': 'Open file location',
   'migration.diagnostics.open_folder_failed': 'Could not open file location',
   'migration.diagnostics.privacy':
-    'Application logs may contain file paths, error stacks, user content, or credentials. Do not share them publicly or with anyone outside the Cherry Studio support team.',
+    'Application logs may contain file paths, error stacks, user content, or credentials. Do not share them publicly or with anyone outside the Windbot Studio support team.',
   'migration.diagnostics.save': 'Save diagnostic bundle',
   'migration.diagnostics.save_failed': 'Could not save diagnostic bundle',
   'migration.diagnostics.saved_local':
@@ -103,7 +103,7 @@ describe('MigrationDiagnosticPanel', () => {
 
     expect(
       screen.getByText(
-        'Application logs may contain file paths, error stacks, user content, or credentials. Do not share them publicly or with anyone outside the Cherry Studio support team.'
+        'Application logs may contain file paths, error stacks, user content, or credentials. Do not share them publicly or with anyone outside the Windbot Studio support team.'
       )
     ).toBeInTheDocument()
     const section = container.querySelector('section')
@@ -251,8 +251,8 @@ describe('MigrationDiagnosticPanel', () => {
   it('states that a metadata-only bundle is local, not uploaded, and contains only system information', async () => {
     await saveBundle('not_included')
 
-    expect(zhCN['migration.diagnostics.saved_local']).toContain('未自动上传')
-    expect(enUS['migration.diagnostics.saved_local']).toContain('was not uploaded automatically')
+    expect(zhCN.migration.diagnostics.saved_local).toContain('未自动上传')
+    expect(enUS.migration.diagnostics.saved_local).toContain('was not uploaded automatically')
     expect(
       screen.getByText(
         'Application logs could not be included. This diagnostic bundle contains only system information.'
@@ -299,7 +299,7 @@ describe('MigrationDiagnosticPanel', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Copy feedback email' }))
 
-    await waitFor(() => expect(navigator.clipboard.writeText).toHaveBeenCalledWith('support@cherry-ai.com'))
+    await waitFor(() => expect(navigator.clipboard.writeText).toHaveBeenCalledWith('support@windbot.cn'))
     expect(mocks.toast.success).toHaveBeenCalledWith('Feedback email copied')
   })
 

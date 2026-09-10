@@ -2,7 +2,6 @@ import {
   Alert,
   Button,
   Checkbox,
-  DescriptionSwitch,
   Dialog,
   DialogContent,
   DialogDescription,
@@ -10,27 +9,23 @@ import {
   DialogHeader,
   DialogTitle,
   Scrollbar,
-  SegmentedControl
+  SegmentedControl,
+  Switch
 } from '@cherrystudio/ui'
 import { DIALOG_CLOSE_DURATION_MS } from '@cherrystudio/ui/utils'
 import { ipcApi } from '@renderer/ipc'
 import { loggerService } from '@renderer/services/LoggerService'
 import { toast } from '@renderer/services/toast'
-import {
-  describeDiagnosticChatSource,
-  describeDiagnosticFileSource,
-  formatDiagnosticBytes
-} from '@renderer/utils/diagnosticSourceSummary'
 import { diagnosticsErrorCodes } from '@shared/ipc/errors/diagnostics'
 import { IpcError } from '@shared/ipc/errors/IpcError'
 import type { DiagnosticRange } from '@shared/ipc/schemas/diagnostics'
 import type { OutputFor } from '@shared/ipc/types'
 import { createFilePathHandle } from '@shared/utils/file'
-import { CircleCheck } from 'lucide-react'
+import { CircleCheck, LoaderCircle } from 'lucide-react'
 import { type FC, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-const SUPPORT_EMAIL = 'support@cherry-ai.com'
+const SUPPORT_EMAIL = 'support@windbot.cn'
 const logger = loggerService.withContext('DiagnosticBundleDialog')
 const RANGE_OPTIONS = [
   { translationKey: 'settings.about.diagnostics.ranges.24h', value: '24h' },
@@ -54,6 +49,14 @@ interface DiagnosticBundleDialogProps {
   readonly open: boolean
 }
 
+function formatBytes(bytes: number): string {
+  if (bytes === 0) return '0 B'
+  const units = ['B', 'KB', 'MB', 'GB']
+  const unitIndex = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1)
+  const value = bytes / 1024 ** unitIndex
+  return `${value >= 10 || unitIndex === 0 ? value.toFixed(0) : value.toFixed(1)} ${units[unitIndex]}`
+}
+
 function isDestinationConflictError(error: unknown): boolean {
   return (
     error instanceof IpcError &&
@@ -67,7 +70,6 @@ const DiagnosticBundleDialog: FC<DiagnosticBundleDialogProps> = ({ appVersion, o
   const [range, setRange] = useState<DiagnosticRange>('24h')
   const [includeLogs, setIncludeLogs] = useState(true)
   const [includeTraces, setIncludeTraces] = useState(true)
-  const [includeChatRecords, setIncludeChatRecords] = useState(false)
   const [consent, setConsent] = useState(false)
   const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
   const [inspectResult, setInspectResult] = useState<InspectResult | null>(null)
@@ -98,7 +100,6 @@ const DiagnosticBundleDialog: FC<DiagnosticBundleDialogProps> = ({ appVersion, o
       setRange('24h')
       setIncludeLogs(true)
       setIncludeTraces(true)
-      setIncludeChatRecords(false)
       setConsent(false)
       setIsConfirmationOpen(false)
       setInspectResult(null)
@@ -154,11 +155,9 @@ const DiagnosticBundleDialog: FC<DiagnosticBundleDialogProps> = ({ appVersion, o
 
   const logsAvailable = inspectResult?.sources.logs.available ?? false
   const tracesAvailable = inspectResult?.sources.traces.available ?? false
-  const chatRecordsAvailable = inspectResult?.sources.chatRecords.available ?? false
   const effectiveIncludeLogs = includeLogs && logsAvailable
   const effectiveIncludeTraces = includeTraces && tracesAvailable
-  const effectiveIncludeChatRecords = includeChatRecords && chatRecordsAvailable
-  const includesSensitiveData = effectiveIncludeLogs || effectiveIncludeTraces || effectiveIncludeChatRecords
+  const includesSensitiveData = effectiveIncludeLogs || effectiveIncludeTraces
   const isInspectionPending = open && !inspectError && (isInspecting || inspectResult === null)
   const canExport = inspectResult !== null && !isInspectionPending && !inspectError && status !== 'saving'
   const hasInspectWarnings = inspectResult?.hasWarnings ?? false
@@ -180,11 +179,6 @@ const DiagnosticBundleDialog: FC<DiagnosticBundleDialogProps> = ({ appVersion, o
     setConsent(false)
   }
 
-  const changeChatRecords = (checked: boolean) => {
-    setIncludeChatRecords(checked)
-    setConsent(false)
-  }
-
   const handleOpenChange = (nextOpen: boolean) => {
     if (!nextOpen && status === 'saving') return
     if (!nextOpen) {
@@ -200,7 +194,6 @@ const DiagnosticBundleDialog: FC<DiagnosticBundleDialogProps> = ({ appVersion, o
     setExportState({ status: 'saving' })
     try {
       const result = await ipcApi.request('diagnostics.bundle.export', {
-        includeChatRecords: effectiveIncludeChatRecords,
         includeLogs: effectiveIncludeLogs,
         includeTraces: effectiveIncludeTraces,
         range
@@ -315,9 +308,6 @@ const DiagnosticBundleDialog: FC<DiagnosticBundleDialogProps> = ({ appVersion, o
           </DialogHeader>
 
           <Scrollbar className="min-h-0 px-6 py-2">
-            <span className="sr-only" role="status">
-              {isInspectionPending ? t('settings.about.diagnostics.inspecting') : ''}
-            </span>
             {status === 'saved' && savedResult ? (
               <div className="space-y-4">
                 <div className="flex gap-3 rounded-xl border border-success-border bg-success-subtle p-4">
@@ -331,7 +321,7 @@ const DiagnosticBundleDialog: FC<DiagnosticBundleDialogProps> = ({ appVersion, o
                       {t('settings.about.diagnostics.success.summary', {
                         included: savedResult.includedFileCount,
                         omitted: savedResult.omittedFileCount,
-                        size: formatDiagnosticBytes(savedResult.archiveBytes)
+                        size: formatBytes(savedResult.archiveBytes)
                       })}
                     </p>
                   </div>
@@ -355,49 +345,36 @@ const DiagnosticBundleDialog: FC<DiagnosticBundleDialogProps> = ({ appVersion, o
                 </section>
 
                 <section className="divide-y divide-border rounded-xl border border-border">
-                  <div className="p-1">
-                    <DescriptionSwitch
-                      label={t('settings.about.diagnostics.sources.system.title')}
-                      description={t('settings.about.diagnostics.sources.system.description', {
-                        crashCount: inspectResult?.sources.crashDumps.fileCount ?? 0
-                      })}
-                      checked
-                      disabled
-                    />
-                  </div>
-                  <div className="p-1">
-                    <DescriptionSwitch
-                      label={t('settings.about.diagnostics.sources.logs.title')}
-                      description={describeDiagnosticFileSource(t, inspectResult?.sources.logs, isInspectionPending)}
-                      checked={effectiveIncludeLogs}
-                      disabled={status === 'saving' || isInspectionPending || !logsAvailable}
-                      onCheckedChange={changeLogs}
-                    />
-                  </div>
-                  <div className="p-1">
-                    <DescriptionSwitch
-                      label={t('settings.about.diagnostics.sources.traces.title')}
-                      description={describeDiagnosticFileSource(t, inspectResult?.sources.traces, isInspectionPending)}
-                      checked={effectiveIncludeTraces}
-                      disabled={status === 'saving' || isInspectionPending || !tracesAvailable}
-                      onCheckedChange={changeTraces}
-                    />
-                  </div>
-                  <div className="p-1">
-                    <DescriptionSwitch
-                      label={t('settings.about.diagnostics.sources.chat_records.title')}
-                      description={describeDiagnosticChatSource(
-                        t,
-                        inspectResult?.sources.chatRecords,
-                        isInspectionPending
-                      )}
-                      checked={effectiveIncludeChatRecords}
-                      disabled={status === 'saving' || isInspectionPending || !chatRecordsAvailable}
-                      onCheckedChange={changeChatRecords}
-                    />
-                  </div>
+                  <SourceRow
+                    title={t('settings.about.diagnostics.sources.system.title')}
+                    description={t('settings.about.diagnostics.sources.system.description', {
+                      crashCount: inspectResult?.sources.crashDumps.fileCount ?? 0
+                    })}
+                    checked
+                    disabled
+                  />
+                  <SourceRow
+                    title={t('settings.about.diagnostics.sources.logs.title')}
+                    description={sourceDescription(t, inspectResult?.sources.logs, isInspectionPending)}
+                    checked={effectiveIncludeLogs}
+                    disabled={status === 'saving' || isInspectionPending || !logsAvailable}
+                    onCheckedChange={changeLogs}
+                  />
+                  <SourceRow
+                    title={t('settings.about.diagnostics.sources.traces.title')}
+                    description={sourceDescription(t, inspectResult?.sources.traces, isInspectionPending)}
+                    checked={effectiveIncludeTraces}
+                    disabled={status === 'saving' || isInspectionPending || !tracesAvailable}
+                    onCheckedChange={changeTraces}
+                  />
                 </section>
 
+                {isInspectionPending && (
+                  <div className="flex items-center gap-2 text-muted-foreground text-sm" role="status">
+                    <LoaderCircle className="size-4 animate-spin" />
+                    {t('settings.about.diagnostics.inspecting')}
+                  </div>
+                )}
                 {inspectError && (
                   <p className="text-error text-sm" role="alert">
                     {t('settings.about.diagnostics.errors.inspect_failed')}
@@ -458,7 +435,7 @@ const DiagnosticBundleDialog: FC<DiagnosticBundleDialogProps> = ({ appVersion, o
 
           <p className="text-muted-foreground text-sm leading-6">
             {t('settings.about.diagnostics.limit', {
-              size: formatDiagnosticBytes(inspectResult?.sourceLimitBytes ?? 50 * 1024 * 1024)
+              size: formatBytes(inspectResult?.sourceLimitBytes ?? 50 * 1024 * 1024)
             })}
           </p>
 
@@ -478,6 +455,43 @@ const DiagnosticBundleDialog: FC<DiagnosticBundleDialogProps> = ({ appVersion, o
         </DialogContent>
       </Dialog>
     </>
+  )
+}
+
+function sourceDescription(
+  t: ReturnType<typeof useTranslation>['t'],
+  source: InspectResult['sources']['logs'] | undefined,
+  isInspectionPending: boolean
+): string {
+  if (isInspectionPending) return t('settings.about.diagnostics.sources.inspecting')
+  if (!source?.available) return t('settings.about.diagnostics.sources.unavailable')
+  return t('settings.about.diagnostics.sources.summary', {
+    count: source.fileCount,
+    size: formatBytes(source.estimatedBytes)
+  })
+}
+
+function SourceRow({
+  checked,
+  description,
+  disabled,
+  onCheckedChange,
+  title
+}: {
+  readonly checked: boolean
+  readonly description: string
+  readonly disabled: boolean
+  readonly onCheckedChange?: (checked: boolean) => void
+  readonly title: string
+}) {
+  return (
+    <div className="flex items-center justify-between gap-4 p-3">
+      <div className="min-w-0 space-y-0.5">
+        <p className="font-medium text-sm">{title}</p>
+        <p className="text-muted-foreground text-xs">{description}</p>
+      </div>
+      <Switch aria-label={title} checked={checked} disabled={disabled} onCheckedChange={onCheckedChange} />
+    </div>
   )
 }
 

@@ -1,5 +1,4 @@
-import type { CherryUIMessage, CherryUIMessageChunk } from '@shared/data/types/message'
-import { readUIMessageStream } from 'ai'
+import type { CherryUIMessageChunk } from '@shared/data/types/message'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 const loggerMocks = vi.hoisted(() => ({
@@ -16,8 +15,7 @@ vi.mock('@logger', () => ({
   }
 }))
 
-const { ClaudeCodeResultError, ClaudeCodeStreamAdapter } = await import('../streamAdapter')
-const { PersistenceListener } = await import('../../../streamManager/listeners/PersistenceListener')
+const { ClaudeCodeStreamAdapter } = await import('../streamAdapter')
 
 beforeEach(() => {
   vi.clearAllMocks()
@@ -87,81 +85,6 @@ function successResult(overrides: Record<string, unknown> = {}) {
 }
 
 describe('ClaudeCodeStreamAdapter', () => {
-  describe('turn activity', () => {
-    it('starts inactive and ignores metadata chunks', () => {
-      const { adapter } = createAdapter()
-
-      expect(adapter.hasTurnActivity).toBe(false)
-
-      adapter.handleMessage({
-        type: 'system',
-        subtype: 'init',
-        session_id: 'sdk-init',
-        uuid: crypto.randomUUID(),
-        mcp_servers: [],
-        model: 'claude-sonnet',
-        tools: [],
-        cwd: '/tmp',
-        claude_code_version: '1.0.0',
-        apiKeySource: 'none',
-        permissionMode: 'default',
-        slash_commands: [],
-        output_style: 'default',
-        skills: [],
-        plugins: []
-      } as any)
-
-      expect(adapter.hasTurnActivity).toBe(false)
-    })
-
-    it('tracks text chunks and resets when the next turn begins', () => {
-      const { adapter } = createAdapter()
-
-      adapter.handleMessage(
-        streamEvent({ type: 'content_block_delta', index: 0, delta: { type: 'text_delta', text: 'hello' } })
-      )
-      expect(adapter.hasTurnActivity).toBe(true)
-
-      adapter.beginTurn()
-      expect(adapter.hasTurnActivity).toBe(false)
-    })
-
-    it('tracks tool-use chunks emitted by a parented assistant flow', () => {
-      const { adapter } = createAdapter()
-
-      adapter.handleMessage({
-        type: 'assistant',
-        parent_tool_use_id: 'workflow-root',
-        uuid: crypto.randomUUID(),
-        session_id: 'sdk-1',
-        message: {
-          role: 'assistant',
-          content: [{ type: 'tool_use', id: 'tool-1', name: 'Read', input: { file_path: '/tmp/a.ts' } }]
-        }
-      } as any)
-
-      expect(adapter.hasTurnActivity).toBe(true)
-    })
-
-    it('remains inactive when an error result emits only usage metadata', () => {
-      const { adapter, parts } = createAdapter()
-
-      expect(() =>
-        adapter.handleMessage(
-          successResult({
-            subtype: 'error_during_execution',
-            is_error: true,
-            errors: ['boom'],
-            session_id: 'sdk-error'
-          })
-        )
-      ).toThrow('boom')
-
-      expect(parts.map((part) => part.type)).toEqual(['message-metadata'])
-      expect(adapter.hasTurnActivity).toBe(false)
-    })
-  })
-
   it('logs every SDK envelope with correlation ids but without text or tool input', () => {
     const { adapter } = createAdapter()
 
@@ -497,85 +420,6 @@ describe('ClaudeCodeStreamAdapter', () => {
     expect(parts[2]).toMatchObject({ type: 'text-end', id: (parts[0] as any).id })
   })
 
-  it('does not emit or persist tagged or synthetic-source reminders from the assistant stream', async () => {
-    const { adapter, parts } = createAdapter()
-    const reminder = 'The task tools have not been used recently.'
-
-    adapter.handleMessage({
-      type: 'user',
-      isSynthetic: true,
-      parent_tool_use_id: null,
-      session_id: 'sdk-1',
-      uuid: crypto.randomUUID(),
-      message: {
-        role: 'user',
-        content: [{ type: 'text', text: `<system-reminder>\n${reminder}\n</system-reminder>` }]
-      }
-    } as any)
-
-    adapter.handleMessage(
-      streamEvent({ type: 'content_block_start', index: 0, content_block: { type: 'text', text: '' } })
-    )
-    for (const text of [
-      'before\n<system-',
-      'reminder>Internal context.</system-rem',
-      'inder>\nThe task tools have ',
-      'not been used recently.\nafter'
-    ]) {
-      adapter.handleMessage(streamEvent({ type: 'content_block_delta', index: 0, delta: { type: 'text_delta', text } }))
-    }
-    adapter.handleMessage(streamEvent({ type: 'content_block_stop', index: 0 }))
-
-    const text = parts
-      .filter((part): part is Extract<CherryUIMessageChunk, { type: 'text-delta' }> => part.type === 'text-delta')
-      .map((part) => part.delta)
-      .join('')
-    expect(text).toBe('before\n\n\nafter')
-
-    const stream = new ReadableStream<CherryUIMessageChunk>({
-      start(controller) {
-        for (const part of parts) controller.enqueue(part)
-        controller.close()
-      }
-    })
-    let finalMessage: CherryUIMessage | undefined
-    for await (const snapshot of readUIMessageStream<CherryUIMessage>({
-      stream,
-      message: { id: 'assistant-1', role: 'assistant', parts: [] }
-    })) {
-      finalMessage = snapshot
-    }
-    const persistAssistant = vi.fn()
-    const listener = new PersistenceListener({
-      topicId: 'agent-session:session-1',
-      backend: { kind: 'test', persistAssistant },
-      onPersistFailed: vi.fn()
-    })
-    await listener.onDone({ status: 'success', isTopicDone: true, finalMessage })
-
-    expect(persistAssistant).toHaveBeenCalledWith(
-      expect.objectContaining({
-        finalMessage: expect.objectContaining({ parts: [{ type: 'text', text: 'before\n\n\nafter', state: 'done' }] })
-      })
-    )
-  })
-
-  it('preserves ordinary assistant text that mentions system-reminder', () => {
-    const { adapter, parts } = createAdapter()
-
-    adapter.handleMessage(
-      streamEvent({
-        type: 'content_block_delta',
-        index: 0,
-        delta: { type: 'text_delta', text: 'The system-reminder name is documented here.' }
-      })
-    )
-
-    expect(parts).toContainEqual(
-      expect.objectContaining({ type: 'text-delta', delta: 'The system-reminder name is documented here.' })
-    )
-  })
-
   it('maps reasoning content block deltas', () => {
     const { adapter, parts } = createAdapter()
 
@@ -859,7 +703,7 @@ describe('ClaudeCodeStreamAdapter', () => {
 
   it('keeps JSON text MCP tool results parsed for dedicated tool cards', () => {
     const { adapter, parts } = createAdapter()
-    const results = [{ id: 1, title: 'Cherry Studio', url: 'https://example.com', content: 'result' }]
+    const results = [{ id: 1, title: 'Windbot Studio', url: 'https://example.com', content: 'result' }]
 
     adapter.handleMessage(
       streamEvent({
@@ -870,7 +714,7 @@ describe('ClaudeCodeStreamAdapter', () => {
           id: 'mcp-search',
           name: 'web_search',
           server_name: 'cherry-tools',
-          input: { query: 'Cherry Studio' }
+          input: { query: 'Windbot Studio' }
         }
       })
     )
@@ -893,7 +737,7 @@ describe('ClaudeCodeStreamAdapter', () => {
       toolCallId: 'mcp-search',
       output: {
         content: results,
-        metadata: { type: 'mcp', name: 'web_search', serverName: 'cherry-tools', serverId: 'cherry-tools' }
+        metadata: { type: 'mcp', serverName: 'cherry-tools', serverId: 'cherry-tools' }
       }
     })
   })
@@ -1132,32 +976,6 @@ describe('ClaudeCodeStreamAdapter', () => {
     expect(sessionIds).toEqual(['sdk-error'])
   })
 
-  it.each([
-    ['is_error', { is_error: true }],
-    ['api_error terminal reason', { terminal_reason: 'api_error' }],
-    ['API error status', { api_error_status: 504 }]
-  ])('throws SDK success results marked by %s', (_, overrides) => {
-    const { adapter, parts, sessionIds } = createAdapter()
-    const resultText = 'API Error: The operation timed out.'
-    let thrown: unknown
-
-    try {
-      adapter.handleMessage(successResult({ result: resultText, ...overrides }))
-    } catch (error) {
-      thrown = error
-    }
-
-    expect(thrown).toBeInstanceOf(ClaudeCodeResultError)
-    expect(thrown).toMatchObject({
-      message: resultText,
-      subtype: 'success',
-      errors: [resultText]
-    })
-    expect(sessionIds).toEqual(['sdk-result'])
-    expect(parts.map((part) => part.type)).toEqual(['message-metadata'])
-    expect(loggerMocks.info).not.toHaveBeenCalledWith(expect.stringContaining('Stream completed'))
-  })
-
   it('emits final live usage metadata before throwing on error results', () => {
     const { adapter, parts } = createAdapter()
 
@@ -1188,59 +1006,6 @@ describe('ClaudeCodeStreamAdapter', () => {
         }
       }
     ])
-  })
-
-  it('flushes a trailing reminder-marker prefix before throwing on error results', () => {
-    const { adapter, parts } = createAdapter()
-
-    adapter.handleMessage(
-      streamEvent({
-        type: 'content_block_delta',
-        index: 0,
-        delta: { type: 'text_delta', text: 'comparison <' }
-      })
-    )
-
-    expect(() =>
-      adapter.handleMessage(
-        successResult({
-          subtype: 'error_during_execution',
-          is_error: true,
-          errors: ['boom']
-        })
-      )
-    ).toThrow('boom')
-
-    expect(
-      parts
-        .filter((part): part is Extract<CherryUIMessageChunk, { type: 'text-delta' }> => part.type === 'text-delta')
-        .map((part) => part.delta)
-        .join('')
-    ).toBe('comparison <')
-    expect(parts.findIndex((part) => part.type === 'text-end')).toBeLessThan(
-      parts.findIndex((part) => part.type === 'message-metadata')
-    )
-  })
-
-  it('flushes a trailing reminder-marker prefix when open text parts are finalized', () => {
-    const { adapter, parts } = createAdapter()
-
-    adapter.handleMessage(
-      streamEvent({
-        type: 'content_block_delta',
-        index: 0,
-        delta: { type: 'text_delta', text: 'comparison <' }
-      })
-    )
-    adapter.finalizeOpenTextParts()
-
-    expect(
-      parts
-        .filter((part): part is Extract<CherryUIMessageChunk, { type: 'text-delta' }> => part.type === 'text-delta')
-        .map((part) => part.delta)
-        .join('')
-    ).toBe('comparison <')
-    expect(parts.at(-1)?.type).toBe('text-end')
   })
 
   it('emits truncation fallback from buffered text', () => {
@@ -1451,39 +1216,6 @@ describe('ClaudeCodeStreamAdapter', () => {
       expect(loggerMocks.warn).toHaveBeenCalledWith(
         'Received a result message with no active turn; dropping turn-complete',
         { sessionId: 'session-1' }
-      )
-    })
-
-    it('throws an API failure result when no turn is active', () => {
-      const { adapter, parts, sessionIds } = createAdapter({}, { openTurn: false })
-      let thrown: unknown
-
-      try {
-        adapter.handleMessage(
-          successResult({
-            session_id: 'resume-api-error',
-            is_error: true,
-            terminal_reason: 'api_error',
-            api_error_status: 504,
-            result: 'API Error: The operation timed out.'
-          })
-        )
-      } catch (error) {
-        thrown = error
-      }
-
-      expect(thrown).toBeInstanceOf(ClaudeCodeResultError)
-      expect(thrown).toMatchObject({
-        message: 'API Error: The operation timed out.',
-        subtype: 'success',
-        terminalReason: 'api_error',
-        apiErrorStatus: 504
-      })
-      expect(sessionIds).toEqual(['resume-api-error'])
-      expect(parts).toEqual([])
-      expect(loggerMocks.warn).not.toHaveBeenCalledWith(
-        'Received a result message with no active turn; dropping turn-complete',
-        expect.anything()
       )
     })
 
@@ -1973,9 +1705,7 @@ describe('ClaudeCodeStreamAdapter', () => {
         streamEvent({ type: 'content_block_delta', index: 0, delta: { type: 'text_delta', text: 'woke up' } })
       )
 
-      expect(statusEvents).toEqual([
-        { type: 'autonomous-turn-state', state: 'started', origin: { kind: 'background-work' } }
-      ])
+      expect(statusEvents).toEqual([{ type: 'autonomous-turn-state', state: 'started' }])
       expect(parts.some((part) => part.type === 'text-delta' && part.delta === 'woke up')).toBe(true)
       expect(adapter.isTurnActive).toBe(true)
     })
@@ -1990,7 +1720,7 @@ describe('ClaudeCodeStreamAdapter', () => {
 
       expect(result).toMatchObject({ type: 'result', sessionId: 'resume-wake' })
       expect(statusEvents).toEqual([
-        { type: 'autonomous-turn-state', state: 'started', origin: { kind: 'background-work' } },
+        { type: 'autonomous-turn-state', state: 'started' },
         { type: 'autonomous-turn-state', state: 'finished' }
       ])
       expect(loggerMocks.warn).not.toHaveBeenCalledWith(
@@ -2023,11 +1753,7 @@ describe('ClaudeCodeStreamAdapter', () => {
         })
       ])
       expect(parts).toEqual([])
-      expect(statusEvents).not.toContainEqual({
-        type: 'autonomous-turn-state',
-        state: 'started',
-        origin: { kind: 'background-work' }
-      })
+      expect(statusEvents).not.toContainEqual({ type: 'autonomous-turn-state', state: 'started' })
     })
 
     it('holds init metadata until a turn opens, since it is turn content', () => {

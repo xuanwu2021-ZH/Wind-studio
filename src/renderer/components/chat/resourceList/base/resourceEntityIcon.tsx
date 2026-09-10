@@ -1,7 +1,8 @@
 import ModelAvatar from '@renderer/components/Avatar/ModelAvatar'
+import AgentAvatar from '@renderer/components/AgentAvatar'
 import type { ActionDescriptor, ResolvedAction } from '@renderer/components/chat/actions/actionTypes'
 import EmojiIcon from '@renderer/components/EmojiIcon'
-import { getAgentAvatarFromConfiguration } from '@renderer/utils/agent'
+import { getAgentAvatarFromConfiguration, resolveAgentAvatarImage } from '@renderer/utils/agent'
 import type { AgentConfiguration } from '@shared/data/api/schemas/agents'
 import type { AssistantIconType } from '@shared/data/preference/preferenceTypes'
 import { DEFAULT_ASSISTANT_EMOJI } from '@shared/data/presets/defaultAssistant'
@@ -31,58 +32,49 @@ function buildModelAvatarModel(uniqueModelId: unknown, modelName: string | null 
   }
 }
 
-const RESOURCE_ICON_SIZE = 24
-
-function renderFallbackAssistantIcon(emoji: string | null | undefined, size: number) {
+function renderFallbackAssistantIcon(emoji?: string | null) {
   return emoji ? (
-    <EmojiIcon emoji={emoji} size={size} fontSize={Math.round(size * 0.58)} className="mr-0" />
+    <EmojiIcon emoji={emoji} size={24} fontSize={14} className="mr-0" />
   ) : (
-    <span
-      className="flex items-center justify-center rounded-full bg-background-subtle"
-      style={{ width: size, height: size }}>
-      <Bot size={Math.round(size * 0.58)} />
+    <span className="flex size-6 items-center justify-center rounded-full bg-sidebar-accent">
+      <Bot size={14} />
     </span>
   )
 }
 
-/**
- * @param size - Rendered icon size; the sidebar renders smaller rows than the rails.
- */
 export function renderAssistantEntityIcon(
   iconType: AssistantIconType,
   assistant: { emoji?: string | null; modelId?: string | null; modelName?: string | null },
-  fallbackModelId?: string | null,
-  size: number = RESOURCE_ICON_SIZE
+  fallbackModelId?: string | null
 ) {
   if (iconType === 'none') return undefined
 
   const modelAvatarModel = buildModelAvatarModel(assistant.modelId ?? fallbackModelId, assistant.modelName)
   if (iconType === 'model' && modelAvatarModel) {
-    return <ModelAvatar model={modelAvatarModel} size={size} className="border border-border-subtle" />
+    return <ModelAvatar model={modelAvatarModel} size={24} className="border border-border-subtle" />
   }
 
-  return renderFallbackAssistantIcon(assistant.emoji, size)
+  return renderFallbackAssistantIcon(assistant.emoji)
 }
 
-/**
- * @param size - Rendered icon size; the sidebar renders smaller rows than the rails.
- */
 export function renderAgentEntityIcon(
   iconType: AssistantIconType,
   agent: { configuration?: AgentConfiguration; model?: string | null; modelName?: string | null } | undefined,
-  fallbackModelId?: string | null,
-  size: number = RESOURCE_ICON_SIZE
+  fallbackModelId?: string | null
 ) {
   if (iconType === 'none') return undefined
 
   const modelAvatarModel = buildModelAvatarModel(agent?.model ?? fallbackModelId, agent?.modelName)
-  if (iconType === 'model' && modelAvatarModel) return <ModelAvatar model={modelAvatarModel} size={size} />
+  if (iconType === 'model' && modelAvatarModel) return <ModelAvatar model={modelAvatarModel} size={24} />
 
+  const emoji = getAgentAvatarFromConfiguration(agent?.configuration) || DEFAULT_ASSISTANT_EMOJI
+  const imageSrc = resolveAgentAvatarImage(agent?.configuration)
   return (
-    <EmojiIcon
-      emoji={getAgentAvatarFromConfiguration(agent?.configuration) || DEFAULT_ASSISTANT_EMOJI}
-      size={size}
-      fontSize={Math.round(size * 0.58)}
+    <AgentAvatar
+      imageSrc={imageSrc}
+      emoji={emoji}
+      size={24}
+      fontSize={14}
       className="mr-0"
     />
   )

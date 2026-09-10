@@ -111,7 +111,7 @@ describe('userDataRelocation validation', () => {
     const usersRoot = path.join(root, 'Users')
     const systemHome = path.join(usersRoot, 'alice')
     const appData = path.join(systemHome, 'AppData', 'Roaming')
-    const target = path.join(appData, 'Cherry Studio')
+    const target = path.join(appData, 'Windbot Studio')
     fs.mkdirSync(source)
     fs.mkdirSync(target, { recursive: true })
     fs.mkdirSync(appData, { recursive: true })
@@ -141,7 +141,7 @@ describe('userDataRelocation validation', () => {
     const source = path.join(root, 'source')
     const systemHome = path.join(root, 'Users', 'alice')
     const appData = path.join(systemHome, 'Library', 'Application Support')
-    const target = path.join(appData, 'Cherry Studio')
+    const target = path.join(appData, 'Windbot Studio')
     fs.mkdirSync(source)
     fs.mkdirSync(target, { recursive: true })
     relocationState['sys.home'] = systemHome
@@ -162,11 +162,12 @@ describe('userDataRelocation validation', () => {
   })
 
   it('allows an app-specific directory below the Linux config root while protecting the root', async () => {
-    const root = makeRoot()
+    const root = fs.mkdtempSync(path.join('/tmp', 'cherry-relocation-linux-'))
+    roots.push(root)
     const source = path.join(root, 'source')
     const systemHome = path.join(root, 'home', 'alice')
     const appData = path.join(systemHome, '.config')
-    const target = path.join(appData, 'Cherry Studio')
+    const target = path.join(appData, 'Windbot Studio')
     fs.mkdirSync(source)
     fs.mkdirSync(target, { recursive: true })
     relocationState['sys.home'] = systemHome
@@ -190,7 +191,7 @@ describe('userDataRelocation validation', () => {
     const root = makeRoot()
     const source = path.join(root, 'source')
     const systemTemp = path.join(root, 'temp')
-    const target = path.join(systemTemp, 'Cherry Studio')
+    const target = path.join(systemTemp, 'Windbot Studio')
     fs.mkdirSync(source)
     fs.mkdirSync(target, { recursive: true })
     relocationState['sys.temp'] = systemTemp
@@ -270,53 +271,49 @@ describe('userDataRelocation validation', () => {
     })
   })
 
-  // The mocked fs is keyed by POSIX literals, which win32 `path` never reproduces.
-  it.skipIf(process.platform === 'win32')(
-    'allows writable descendants of protected Linux top-level directories but not the directories themselves',
-    async () => {
-      vi.resetModules()
-      const entries: string[] = []
-      const existing = new Set(['/home/alice/cherry', '/var', '/var/cherry', '/', String(relocationState.installPath)])
-      const realpathSync = vi.fn((value: string) => value)
-      ;(realpathSync as typeof realpathSync & { native?: typeof realpathSync }).native = realpathSync
-      vi.doMock('node:fs', () => {
-        const mock = {
-          constants: { R_OK: 4, W_OK: 2, X_OK: 1 },
-          accessSync: vi.fn(),
-          lstatSync: vi.fn((value: string) => {
-            if (existing.has(value)) return { isDirectory: () => true }
-            throw Object.assign(new Error('missing'), { code: 'ENOENT' })
-          }),
-          statSync: vi.fn((value: string) => {
-            if (existing.has(value)) return { isDirectory: () => true, isFile: () => false, size: 0 }
-            throw Object.assign(new Error('missing'), { code: 'ENOENT' })
-          }),
-          readdirSync: vi.fn((value: string) => (value === '/var/cherry' ? entries : [])),
-          readFileSync: vi.fn(() => {
-            throw Object.assign(new Error('missing'), { code: 'ENOENT' })
-          }),
-          realpathSync
-        }
-        return { ...mock, default: mock }
-      })
-      platformState.isLinux = true
-      relocationState['app.userdata'] = '/home/alice/cherry'
+  it('allows writable descendants of protected Linux top-level directories but not the directories themselves', async () => {
+    vi.resetModules()
+    const entries: string[] = []
+    const existing = new Set(['/home/alice/cherry', '/var', '/var/cherry', '/', String(relocationState.installPath)])
+    const realpathSync = vi.fn((value: string) => value)
+    ;(realpathSync as typeof realpathSync & { native?: typeof realpathSync }).native = realpathSync
+    vi.doMock('node:fs', () => {
+      const mock = {
+        constants: { R_OK: 4, W_OK: 2, X_OK: 1 },
+        accessSync: vi.fn(),
+        lstatSync: vi.fn((value: string) => {
+          if (existing.has(value)) return { isDirectory: () => true }
+          throw Object.assign(new Error('missing'), { code: 'ENOENT' })
+        }),
+        statSync: vi.fn((value: string) => {
+          if (existing.has(value)) return { isDirectory: () => true, isFile: () => false, size: 0 }
+          throw Object.assign(new Error('missing'), { code: 'ENOENT' })
+        }),
+        readdirSync: vi.fn((value: string) => (value === '/var/cherry' ? entries : [])),
+        readFileSync: vi.fn(() => {
+          throw Object.assign(new Error('missing'), { code: 'ENOENT' })
+        }),
+        realpathSync
+      }
+      return { ...mock, default: mock }
+    })
+    platformState.isLinux = true
+    relocationState['app.userdata'] = '/home/alice/cherry'
 
-      const { inspectUserDataRelocationTarget } = await loadDomain()
+    const { inspectUserDataRelocationTarget } = await loadDomain()
 
-      expect(inspectUserDataRelocationTarget('/var/cherry')).toEqual({
-        valid: true,
-        targetEmpty: true
-      })
-      expect(inspectUserDataRelocationTarget('/var')).toEqual({
-        valid: false,
-        reason: 'target_protected'
-      })
-      entries.push('unrelated.txt')
-      expect(inspectUserDataRelocationTarget('/var/cherry')).toEqual({
-        valid: true,
-        targetEmpty: false
-      })
-    }
-  )
+    expect(inspectUserDataRelocationTarget('/var/cherry')).toEqual({
+      valid: true,
+      targetEmpty: true
+    })
+    expect(inspectUserDataRelocationTarget('/var')).toEqual({
+      valid: false,
+      reason: 'target_protected'
+    })
+    entries.push('unrelated.txt')
+    expect(inspectUserDataRelocationTarget('/var/cherry')).toEqual({
+      valid: true,
+      targetEmpty: false
+    })
+  })
 })

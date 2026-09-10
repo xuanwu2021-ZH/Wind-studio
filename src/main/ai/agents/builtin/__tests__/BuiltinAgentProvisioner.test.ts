@@ -16,7 +16,7 @@ vi.mock('@main/utils/asar', () => ({
   toAsarUnpackedPath: mocks.toAsarUnpackedPath
 }))
 
-import { BUILTIN_AGENT_PLUGIN_NAME, loadBuiltinAgentDefaults } from '../builtinAgentDefinition'
+import { loadBuiltinAssistantDefaults } from '../builtinAgentDefinition'
 import {
   getBuiltinAgentPluginDirectory,
   loadBuiltinAgentDefinition,
@@ -28,12 +28,6 @@ const TEMPLATE_AGENT_JSON = JSON.stringify({
   instructions: { 'en-US': 'English instructions', 'zh-CN': 'Chinese instructions' },
   configuration: { permission_mode: 'default' },
   skills: ['cherry-assistant-guide']
-})
-const SUPPORT_AGENT_JSON = JSON.stringify({
-  name: { 'en-US': 'Cherry Support', 'zh-CN': 'Cherry Support CN' },
-  instructions: { 'en-US': 'Support instructions', 'zh-CN': 'Chinese support instructions' },
-  configuration: { permission_mode: 'acceptEdits' },
-  skills: ['cherry-assistant-guide', 'faq-collector', 'cherry-studio-feedback', 'issue-reporter']
 })
 const RC5_STOCK_SOUL_PATH = fileURLToPath(new URL('./fixtures/cherry-assistant-rc5-soul.md', import.meta.url))
 const PR17870_INTERIM_STOCK_SOUL_PATH = fileURLToPath(
@@ -60,16 +54,12 @@ describe('BuiltinAgentProvisioner', () => {
     vi.spyOn(application, 'getPath').mockReturnValue(templateRoot)
     vi.mocked(app.getLocale).mockReturnValue('en-US')
 
-    writeFile(path.join(templateDir, '.claude', '.claude-plugin', 'plugin.json'), '{"name":"cherry-assistant-builtin"}')
+    writeFile(path.join(templateDir, '.claude', '.claude-plugin', 'plugin.json'), '{"name":"builtin-test"}')
     writeFile(path.join(templateDir, '.claude', 'skills', 'cherry-assistant-guide', 'SKILL.md'), 'SKILL_V1')
     writeFile(path.join(templateDir, 'SOUL.md'), 'TEMPLATE_SOUL')
     writeFile(path.join(templateDir, 'USER.md'), 'TEMPLATE_USER')
     writeFile(path.join(templateDir, 'memory', 'FACT.md'), 'TEMPLATE_FACT')
     writeFile(path.join(templateDir, 'agent.json'), TEMPLATE_AGENT_JSON)
-    writeFile(path.join(templateRoot, 'cherry-support', 'SOUL.md'), 'SUPPORT_SOUL')
-    writeFile(path.join(templateRoot, 'cherry-support', 'USER.md'), 'SUPPORT_USER')
-    writeFile(path.join(templateRoot, 'cherry-support', 'memory', 'FACT.md'), 'SUPPORT_FACT')
-    writeFile(path.join(templateRoot, 'cherry-support', 'agent.json'), SUPPORT_AGENT_JSON)
   })
 
   afterEach(() => {
@@ -78,63 +68,45 @@ describe('BuiltinAgentProvisioner', () => {
     vi.restoreAllMocks()
   })
 
-  it('uses the system locale when app.language is unset', () => {
+  it('uses the system locale when app.language is unset', async () => {
     vi.mocked(app.getLocale).mockReturnValue('zh-CN')
 
-    expect(loadBuiltinAgentDefinition('assistant')).toMatchObject({
+    expect(await loadBuiltinAgentDefinition('assistant')).toMatchObject({
       name: 'Cherry Assistant CN',
       instructions: 'Chinese instructions'
     })
   })
 
-  it('prefers app.language over the system locale', () => {
+  it('prefers app.language over the system locale', async () => {
     MockMainPreferenceServiceUtils.setPreferenceValue('app.language', 'en-US')
     vi.mocked(app.getLocale).mockReturnValue('zh-CN')
 
-    expect(loadBuiltinAgentDefinition('assistant')).toMatchObject({
+    expect(await loadBuiltinAgentDefinition('assistant')).toMatchObject({
       name: 'Cherry Assistant',
       instructions: 'English instructions'
     })
   })
 
-  it('loads bundled skills from the app-owned plugin directory', () => {
+  it('loads bundled skills from the app-owned plugin directory', async () => {
     expect(getBuiltinAgentPluginDirectory('assistant')).toBe(path.join(templateDir, '.claude'))
     expect(mocks.toAsarUnpackedPath).toHaveBeenCalledWith(path.join(templateDir, '.claude'))
-    expect(loadBuiltinAgentDefinition('assistant')?.skills).toEqual(['cherry-assistant-guide'])
+    expect((await loadBuiltinAgentDefinition('assistant'))?.skills).toEqual(['cherry-assistant-guide'])
   })
 
-  it('keeps the canonical bundled plugin name aligned with its manifest', () => {
-    const manifest = JSON.parse(
-      fs.readFileSync(path.join(templateDir, '.claude', '.claude-plugin', 'plugin.json'), 'utf-8')
-    )
-    expect(manifest.name).toBe(BUILTIN_AGENT_PLUGIN_NAME)
-  })
-
-  it('loads Cherry Support identity from its own package and plugins from Cherry Assistant', () => {
-    expect(loadBuiltinAgentDefinition('support')).toMatchObject({
-      name: 'Cherry Support',
-      instructions: 'Support instructions',
-      skills: ['cherry-assistant-guide', 'faq-collector', 'cherry-studio-feedback', 'issue-reporter']
-    })
-    expect(getBuiltinAgentPluginDirectory('support')).toBe(path.join(templateDir, '.claude'))
-  })
-
-  it('builds creation defaults from the bundled Agent definition', () => {
-    expect(loadBuiltinAgentDefaults('assistant')).toEqual({
+  it('builds creation defaults from the bundled Agent definition', async () => {
+    expect(await loadBuiltinAssistantDefaults()).toEqual({
       name: 'Cherry Assistant',
       configuration: { permission_mode: 'default', builtin_role: 'assistant' }
     })
   })
 
-  it('rejects invalid bundled creation defaults', () => {
+  it('rejects invalid bundled creation defaults', async () => {
     writeFile(
       path.join(templateDir, 'agent.json'),
-      JSON.stringify({ name: 'Cherry Assistant', configuration: { permission_mode: 'invalid' } })
+      JSON.stringify({ name: 'Cherry Assistant', configuration: { max_turns: 'invalid' } })
     )
 
-    expect(() => loadBuiltinAgentDefaults('assistant')).toThrow(
-      'Builtin Agent package configuration is invalid for assistant'
-    )
+    await expect(loadBuiltinAssistantDefaults()).rejects.toThrow('Cherry Assistant package configuration is invalid')
   })
 
   it('copies persona and memory templates into agent data without copying product files', async () => {

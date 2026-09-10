@@ -433,8 +433,8 @@ describe('MigrationIpcHandler', () => {
 
   describe('v1 download page', () => {
     it.each([
-      ['zh-CN', 'https://cherryai.com.cn/download/v1'],
-      ['en-US', 'https://cherryai.com/download/v1']
+      ['zh-CN', 'https://windbot.cn.cn/download/v1'],
+      ['en-US', 'https://windbot.cn/download/v1']
     ])('opens the site matching the %s wizard language', async (language, url) => {
       await expect(invoke(MigrationIpcChannels.OpenDownloadPage, language)).resolves.toBe(true)
       expect(shell.openExternal).toHaveBeenCalledWith(url)
@@ -444,13 +444,13 @@ describe('MigrationIpcHandler', () => {
     it.each(['zh', 'zh-TW', 'ZH-HK'])('treats %s as Chinese', async (language) => {
       await invoke(MigrationIpcChannels.OpenDownloadPage, language)
 
-      expect(shell.openExternal).toHaveBeenCalledWith('https://cherryai.com.cn/download/v1')
+      expect(shell.openExternal).toHaveBeenCalledWith('https://windbot.cn.cn/download/v1')
     })
 
     // A missing or malformed language must not strand the user on an error.
     it.each([undefined, null, 42])('falls back to the global site for %s', async (language) => {
       await expect(invoke(MigrationIpcChannels.OpenDownloadPage, language)).resolves.toBe(true)
-      expect(shell.openExternal).toHaveBeenCalledWith('https://cherryai.com/download/v1')
+      expect(shell.openExternal).toHaveBeenCalledWith('https://windbot.cn/download/v1')
     })
 
     it('rejects an untrusted sender', async () => {
@@ -586,15 +586,7 @@ describe('MigrationIpcHandler', () => {
       success: true,
       totalDuration: 4200,
       migratorResults: [
-        {
-          migratorId: 'a',
-          migratorName: 'A',
-          success: true,
-          recordsProcessed: 10,
-          duration: 1000,
-          warnings: ['w1'],
-          warningMessages: [{ key: 'migration.completed.agent_files_skipped', params: { count: 2 } }]
-        },
+        { migratorId: 'a', migratorName: 'A', success: true, recordsProcessed: 10, duration: 1000, warnings: ['w1'] },
         { migratorId: 'b', migratorName: 'B', success: true, recordsProcessed: 5, duration: 3200 }
       ]
     }
@@ -611,7 +603,6 @@ describe('MigrationIpcHandler', () => {
       durationMs: 4200
     })
     expect(progress.warnings).toEqual(['w1'])
-    expect(progress.warningMessages).toEqual([{ key: 'migration.completed.agent_files_skipped', params: { count: 2 } }])
   })
 
   it('uses the live migrator count for totalMigrators, distinct from completedMigrators', async () => {

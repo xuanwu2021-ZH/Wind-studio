@@ -2,7 +2,8 @@ import { LOCAL_EMBEDDING_PROVIDER_ID } from '@shared/data/presets/localEmbedding
 import type { Provider } from '@shared/data/types/provider'
 import { describe, expect, it, vi } from 'vitest'
 
-// Stub imported i18n and provider helpers so these tests stay focused on provider eligibility.
+// isProviderSettingsListVisibleProvider only reads the provider id; stub the i18n +
+// CherryAI helpers the module imports so the test stays focused on visibility.
 vi.mock('@renderer/i18n', () => ({ default: { t: (k: string) => k } }))
 vi.mock('@renderer/i18n/label', () => ({ getProviderLabelKey: (id: string) => id }))
 vi.mock('@shared/utils/provider', () => ({
@@ -11,10 +12,14 @@ vi.mock('@shared/utils/provider', () => ({
     p.authMethods !== undefined && p.authMethods.length > 0 && !p.authMethods.includes('api-key')
 }))
 
-const { isProviderPresetInstanceSource } = await import('../providerDisplay')
-const { isProviderSettingsListVisibleProvider } = await import('@renderer/utils/providerSettings')
+const { isProviderPresetInstanceSource, isProviderSettingsListVisibleProvider } = await import('../providerDisplay')
 
-const provider = (id: string): Provider => ({ id }) as Provider
+const provider = (idOrPartial: string | Partial<Provider>): Provider => {
+  if (typeof idOrPartial === 'string') {
+    return { id: idOrPartial } as Provider
+  }
+  return idOrPartial as Provider
+}
 const presetSource = (overrides: Partial<Provider> = {}): Provider =>
   ({
     id: 'openai',
@@ -39,6 +44,61 @@ describe('isProviderSettingsListVisibleProvider', () => {
 
   it('keeps a normal provider visible', () => {
     expect(isProviderSettingsListVisibleProvider(provider('openai'))).toBe(true)
+  })
+
+  it('hides canonical preset providers that are not on the Windbot allow-list', () => {
+    expect(
+      isProviderSettingsListVisibleProvider(provider({ id: 'gemini', presetProviderId: 'gemini' }))
+    ).toBe(false)
+    expect(
+      isProviderSettingsListVisibleProvider(provider({ id: 'github', presetProviderId: 'github' }))
+    ).toBe(false)
+  })
+
+  it('keeps canonical preset providers on the Windbot allow-list visible', () => {
+    expect(
+      isProviderSettingsListVisibleProvider(provider({ id: 'deepseek', presetProviderId: 'deepseek' }))
+    ).toBe(true)
+    expect(
+      isProviderSettingsListVisibleProvider(provider({ id: 'anthropic', presetProviderId: 'anthropic' }))
+    ).toBe(true)
+    expect(
+      isProviderSettingsListVisibleProvider(provider({ id: 'zhipu', presetProviderId: 'zhipu' }))
+    ).toBe(true)
+    expect(
+      isProviderSettingsListVisibleProvider(provider({ id: 'claude-code', presetProviderId: 'claude-code' }))
+    ).toBe(true)
+    expect(
+      isProviderSettingsListVisibleProvider(provider({ id: 'openai', presetProviderId: 'openai' }))
+    ).toBe(true)
+    expect(
+      isProviderSettingsListVisibleProvider(provider({ id: 'minimax', presetProviderId: 'minimax' }))
+    ).toBe(true)
+    expect(
+      isProviderSettingsListVisibleProvider(provider({ id: 'minimax-global', presetProviderId: 'minimax-global' }))
+    ).toBe(true)
+    expect(
+      isProviderSettingsListVisibleProvider(provider({ id: 'moonshot', presetProviderId: 'moonshot' }))
+    ).toBe(true)
+  })
+
+  it('keeps user-added custom providers visible (regression: http://192.168.100.19:1234/v1)', () => {
+    // Custom provider added by the user via "Add provider" — no presetProviderId,
+    // arbitrary id, no canonical preset backing it.
+    expect(
+      isProviderSettingsListVisibleProvider(provider({ id: 'local-llm-1234' }))
+    ).toBe(true)
+  })
+
+  it('keeps user-added preset forks visible (e.g. an OpenAI work instance)', () => {
+    // User cloned the OpenAI preset to point at a different base URL: id differs
+    // from presetProviderId. Must remain visible regardless of the allow-list.
+    expect(
+      isProviderSettingsListVisibleProvider(provider({ id: 'openai-work', presetProviderId: 'openai' }))
+    ).toBe(true)
+    expect(
+      isProviderSettingsListVisibleProvider(provider({ id: 'gemini-personal', presetProviderId: 'gemini' }))
+    ).toBe(true)
   })
 })
 

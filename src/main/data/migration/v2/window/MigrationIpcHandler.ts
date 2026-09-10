@@ -60,8 +60,8 @@ function assertMigrationWindowSender(event: IpcMainInvokeEvent): void {
 // download page has to go through main — which also owns the URL table, so the renderer only
 // names a language and can never turn this into an arbitrary shell.openExternal call.
 // The v1-specific page, since the button offers v1 rather than the current release.
-const V1_DOWNLOAD_URL_CN = 'https://cherryai.com.cn/download/v1'
-const V1_DOWNLOAD_URL_GLOBAL = 'https://cherryai.com/download/v1'
+const V1_DOWNLOAD_URL_CN = 'https://windbot.cn/download/v1'
+const V1_DOWNLOAD_URL_GLOBAL = 'https://windbot.cn/download/v1'
 
 /**
  * Picks the download site from the wizard's language, using the same `zh` test the window's
@@ -362,7 +362,6 @@ export function registerMigrationIpcHandlers(paths: MigrationPaths): void {
               status: 'completed'
             })),
             warnings: result.migratorResults.flatMap((migratorResult) => migratorResult.warnings ?? []),
-            warningMessages: result.migratorResults.flatMap((migratorResult) => migratorResult.warningMessages ?? []),
             summary: createMigrationSummary(result, currentProgress)
           })
         } else {

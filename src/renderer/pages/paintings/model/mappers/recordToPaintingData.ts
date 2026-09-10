@@ -35,7 +35,7 @@ function normalizeStoredPaintingModel(value: unknown): string | undefined {
  * files do resolve.
  *
  * TODO(#15353): Drop the adapt-to-FileMetadata step once paintings consume
- * `FileEntry` directly and the Artboard uses the `cherrystudio://file/...`
+ * `FileEntry` directly and the Artboard uses the `windbot://file/...`
  * custom protocol. `resolveFiles` would then be a thin DataApi pass-through
  * returning `FileEntry[]`.
  */
@@ -63,10 +63,8 @@ async function resolveEntries(ids: string[]): Promise<FileEntry[]> {
  * a different tab.
  */
 export async function recordToPaintingData(record: PaintingRecord): Promise<PaintingData> {
-  const [outputEntries, inputFiles] = await Promise.all([
-    resolveEntries(record.files.output),
-    resolveEntries(record.files.input)
-  ])
+  const outputEntries = await resolveEntries(record.files.output)
+  const inputFiles = await resolveEntries(record.files.input)
   const files = await Promise.all(outputEntries.map(fileEntryToMetadata))
 
   const model = normalizeStoredPaintingModel(record.modelId)

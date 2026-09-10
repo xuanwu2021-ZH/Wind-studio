@@ -8,20 +8,14 @@ import { modelService } from '@data/services/ModelService'
 import { providerService } from '@data/services/ProviderService'
 import { loggerService } from '@logger'
 import { createAgent as createAgentCommand } from '@main/ai/agents/createAgent'
-import { type AssistantToolName, DEFAULT_ASSISTANT_TOOL_NAMES } from '@main/ai/toolApproval/assistantToolNames'
+import { redactUrlToOrigin } from '@main/utils/redactUrl'
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import type { Tool } from '@modelcontextprotocol/sdk/types.js'
 import { CallToolRequestSchema, ErrorCode, ListToolsRequestSchema, McpError } from '@modelcontextprotocol/sdk/types.js'
 import { ErrorCode as DataApiErrorCode, isDataApiError } from '@shared/data/api/errors'
 import { ThemeMode } from '@shared/data/preference/preferenceTypes'
 import { parseUniqueModelId, type UniqueModelId, UniqueModelIdSchema } from '@shared/data/types/model'
-import {
-  DIAGNOSTIC_DESCRIPTION_MAX_BYTES,
-  diagnosticDescriptionByteLength,
-  normalizeDiagnosticDescription
-} from '@shared/utils/diagnostics'
 import { isAllowedNavigationPath } from '@shared/utils/navigationPath'
-import { redactUrlToOrigin } from '@shared/utils/redaction'
 import { app } from 'electron'
 
 const logger = loggerService.withContext('McpServer:Assistant')
@@ -74,7 +68,7 @@ export function isAllowedAssistantNavigationPath(path: string, allowedRoutes: re
 const NAVIGATE_TOOL: Tool = {
   name: 'navigate',
   description:
-    'Create a clickable entry for a route returned by product_info. Use this in the same turn whenever answering where to find, open, configure, or use a Cherry Studio page or feature; written UI steps are not a substitute.',
+    'Create a clickable entry for a route returned by product_info. Use this in the same turn whenever answering where to find, open, configure, or use a Windbot Studio page or feature; written UI steps are not a substitute.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -95,7 +89,7 @@ const NAVIGATE_TOOL: Tool = {
 const DIAGNOSE_TOOL: Tool = {
   name: 'diagnose',
   description:
-    'Read Cherry Studio runtime state for troubleshooting. Use this to inspect app info, provider config, connectivity, logs, and MCP server status.',
+    'Read Windbot Studio runtime state for troubleshooting. Use this to inspect app info, provider config, connectivity, logs, and MCP server status.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -125,7 +119,7 @@ const DIAGNOSE_TOOL: Tool = {
 const PRODUCT_INFO_TOOL: Tool = {
   name: 'product_info',
   description:
-    'Read current Cherry Studio product facts from the installed package manifest. Request only the relevant section to keep context small.',
+    'Read current Windbot Studio product facts from the installed package manifest. Request only the relevant section to keep context small.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -172,14 +166,14 @@ const APPLY_SETTING_REGISTRY: Record<string, ApplySettingEntry> = {
 
 const CREATE_AGENT_TOOL: Tool = {
   name: 'create_agent',
-  description: `Create a new Cherry Studio Agent on behalf of the user. Use this when the user explicitly asks to create / build / make a new agent (e.g. "帮我建一个专门做 Python 代码 review 的 Agent"). MUST collect requirements via conversation first, then SHOW the proposed config to the user for confirmation, and only call this tool after explicit user agreement.
+  description: `Create a new Windbot Studio Agent on behalf of the user. Use this when the user explicitly asks to create / build / make a new agent (e.g. "帮我建一个专门做 Python 代码 review 的 Agent"). MUST collect requirements via conversation first, then SHOW the proposed config to the user for confirmation, and only call this tool after explicit user agreement.
 
 Safety rules:
 - type is fixed to 'claude-code' (channel-backed agents are out of scope here)
 - a workspace is selected when the user opens a session for the new agent
 - permission_mode defaults to 'default' (read-mostly); user can change later in the UI
 
-The tool returns the new agent details, and Cherry Studio presents a Go to chat action. Do not call navigate after a successful creation.`,
+The tool returns the new agent id. After creation, query product_info and navigate to the current package's Agents route.`,
   inputSchema: {
     type: 'object',
     properties: {
@@ -203,23 +197,12 @@ The tool returns the new agent details, and Cherry Studio presents a Go to chat 
       }
     },
     required: ['name', 'instructions']
-  },
-  outputSchema: {
-    type: 'object',
-    properties: {
-      ok: { type: 'boolean', const: true },
-      agentId: { type: 'string' },
-      name: { type: 'string' },
-      model: { type: 'string' }
-    },
-    required: ['ok', 'agentId', 'name', 'model'],
-    additionalProperties: false
   }
 }
 
 const APPLY_SETTING_TOOL: Tool = {
   name: 'apply_setting',
-  description: `Apply a low-risk Cherry Studio setting change directly. Only the whitelist below is supported; destructive operations are never exposed here.
+  description: `Apply a low-risk Windbot Studio setting change directly. Only the whitelist below is supported; destructive operations are never exposed here.
 
 Supported settings:
 ${Object.values(APPLY_SETTING_REGISTRY)
@@ -242,54 +225,14 @@ ${Object.values(APPLY_SETTING_REGISTRY)
   }
 }
 
-const PREPARE_DIAGNOSTIC_REPORT_TOOL: Tool = {
-  name: 'prepare_diagnostic_report',
-  description:
-    'Prepare an editable diagnostic report description for Cherry Studio to present as a user-clickable review action. This tool only prepares draft data; it DOES NOT open UI, acknowledge user consent, collect diagnostics, write files, or submit a report.',
-  inputSchema: {
-    type: 'object',
-    properties: {
-      description: {
-        type: 'string',
-        description: 'Editable report description. Maximum 4096 UTF-8 bytes after line endings are normalized to CRLF.'
-      }
-    },
-    required: ['description'],
-    additionalProperties: false
-  },
-  outputSchema: {
-    type: 'object',
-    properties: {
-      ok: { type: 'boolean', const: true },
-      description: { type: 'string' }
-    },
-    required: ['ok', 'description'],
-    additionalProperties: false
-  }
-}
-
-const ASSISTANT_TOOLS = {
-  navigate: NAVIGATE_TOOL,
-  diagnose: DIAGNOSE_TOOL,
-  product_info: PRODUCT_INFO_TOOL,
-  apply_setting: APPLY_SETTING_TOOL,
-  create_agent: CREATE_AGENT_TOOL,
-  prepare_diagnostic_report: PREPARE_DIAGNOSTIC_REPORT_TOOL
-} as const satisfies Record<AssistantToolName, Tool>
-
+// Health check cache: { providerId -> { result, timestamp } }
+const healthCache = new Map<string, { result: unknown; timestamp: number }>()
 const HEALTH_CACHE_TTL = 30_000 // 30 seconds
-const healthCacheKey = (providerId: string) => `assistant:health:${providerId}`
 
 class AssistantServer {
   public mcpServer: McpServer
 
-  private readonly enabledToolNames: ReadonlySet<AssistantToolName>
-
-  constructor(
-    private readonly defaultModel?: UniqueModelId,
-    enabledToolNames: readonly AssistantToolName[] = DEFAULT_ASSISTANT_TOOL_NAMES
-  ) {
-    this.enabledToolNames = new Set(enabledToolNames)
+  constructor(private readonly defaultModel?: UniqueModelId) {
     this.mcpServer = new McpServer(
       {
         name: 'assistant',
@@ -306,7 +249,7 @@ class AssistantServer {
 
   private setupHandlers() {
     this.mcpServer.server.setRequestHandler(ListToolsRequestSchema, async () => ({
-      tools: Array.from(this.enabledToolNames, (name) => ASSISTANT_TOOLS[name])
+      tools: [NAVIGATE_TOOL, DIAGNOSE_TOOL, PRODUCT_INFO_TOOL, APPLY_SETTING_TOOL, CREATE_AGENT_TOOL]
     }))
 
     this.mcpServer.server.setRequestHandler(CallToolRequestSchema, async (request) => {
@@ -314,9 +257,6 @@ class AssistantServer {
       const args = request.params.arguments ?? {}
 
       try {
-        if (!this.enabledToolNames.has(toolName as AssistantToolName)) {
-          throw new McpError(ErrorCode.MethodNotFound, `Unknown tool: ${toolName}`)
-        }
         switch (toolName) {
           case 'navigate':
             return await this.navigate(args as Record<string, string | Record<string, string> | undefined>)
@@ -328,8 +268,6 @@ class AssistantServer {
             return await this.applySetting(args as Record<string, string | undefined>)
           case 'create_agent':
             return await this.createAgent(args as Record<string, string | undefined>)
-          case 'prepare_diagnostic_report':
-            return this.prepareDiagnosticReport(args)
           default:
             throw new McpError(ErrorCode.MethodNotFound, `Unknown tool: ${toolName}`)
         }
@@ -342,32 +280,6 @@ class AssistantServer {
         }
       }
     })
-  }
-
-  private prepareDiagnosticReport(args: Record<string, unknown>) {
-    if (Object.keys(args).length !== 1 || !Object.hasOwn(args, 'description')) {
-      throw new McpError(ErrorCode.InvalidParams, 'prepare_diagnostic_report accepts only description')
-    }
-    if (typeof args.description !== 'string') {
-      throw new McpError(ErrorCode.InvalidParams, 'description must be a string')
-    }
-
-    const description = normalizeDiagnosticDescription(args.description.trim())
-    if (!description) {
-      throw new McpError(ErrorCode.InvalidParams, 'description must not be blank')
-    }
-    if (diagnosticDescriptionByteLength(description) > DIAGNOSTIC_DESCRIPTION_MAX_BYTES) {
-      throw new McpError(
-        ErrorCode.InvalidParams,
-        `description must not exceed ${DIAGNOSTIC_DESCRIPTION_MAX_BYTES} UTF-8 bytes after CRLF normalization`
-      )
-    }
-
-    const output = { ok: true as const, description }
-    return {
-      content: [{ type: 'text' as const, text: JSON.stringify(output) }],
-      structuredContent: output
-    }
   }
 
   private readProductManifest(): Record<string, unknown> {
@@ -544,7 +456,7 @@ class AssistantServer {
       modelService.getByKey(providerId, modelId)
     } catch (error) {
       if (isDataApiError(error) && error.code === DataApiErrorCode.NOT_FOUND) {
-        throw new McpError(ErrorCode.InvalidParams, `Model is not configured in Cherry Studio: ${parsedModel.data}`)
+        throw new McpError(ErrorCode.InvalidParams, `Model is not configured in Windbot Studio: ${parsedModel.data}`)
       }
       throw error
     }
@@ -558,19 +470,18 @@ class AssistantServer {
         model: parsedModel.data,
         configuration: {
           permission_mode: 'default',
+          max_turns: 100,
           env_vars: {}
         }
       })
       logger.info('create_agent succeeded', { agentId: result.id, name })
-      const output = {
-        ok: true as const,
-        agentId: result.id,
-        name: result.name,
-        model: result.model
-      }
       return {
-        content: [{ type: 'text' as const, text: JSON.stringify(output) }],
-        structuredContent: output
+        content: [
+          {
+            type: 'text' as const,
+            text: `Agent created. id=${result.id}, name=${result.name}, model=${result.model}. Query product_info for the current Agents route, then use navigate to open it.`
+          }
+        ]
       }
     } catch (error) {
       const msg = error instanceof Error ? error.message : String(error)
@@ -680,9 +591,11 @@ class AssistantServer {
       throw new McpError(ErrorCode.InvalidParams, "'provider_id' is required for health action")
     }
 
-    const cacheService = application.get('CacheService')
-    const cached = cacheService.get<unknown>(healthCacheKey(providerId))
-    if (cached) return cached as ReturnType<typeof this.diagnoseHealth>
+    // Check cache first (30s TTL)
+    const cached = healthCache.get(providerId)
+    if (cached && Date.now() - cached.timestamp < HEALTH_CACHE_TTL) {
+      return cached.result as ReturnType<typeof this.diagnoseHealth>
+    }
 
     try {
       let provider: ReturnType<typeof providerService.getByProviderId> | null = null
@@ -722,7 +635,7 @@ class AssistantServer {
             }
           ]
         }
-        cacheService.set(healthCacheKey(providerId), result, HEALTH_CACHE_TTL)
+        healthCache.set(providerId, { result, timestamp: Date.now() })
         return result
       }
 
@@ -758,7 +671,7 @@ class AssistantServer {
             }
           ]
         }
-        cacheService.set(healthCacheKey(providerId), result, HEALTH_CACHE_TTL)
+        healthCache.set(providerId, { result, timestamp: Date.now() })
         return result
       } catch (fetchError) {
         const latency = Date.now() - startTime
@@ -781,7 +694,7 @@ class AssistantServer {
             }
           ]
         }
-        cacheService.set(healthCacheKey(providerId), result, HEALTH_CACHE_TTL)
+        healthCache.set(providerId, { result, timestamp: Date.now() })
         return result
       } finally {
         if (timeout !== undefined) clearTimeout(timeout)
@@ -972,7 +885,7 @@ class AssistantServer {
         proxy: proxy ? redactUrlToOrigin(proxy) : proxy,
         zoomFactor: preferenceService.get('app.zoom_factor'),
         defaultModel: this.describeModelId(preferenceService.get('chat.default_model_id')),
-        quickModel: this.describeModelId(preferenceService.get('feature.quick_assistant.model_id')),
+        topicNamingModel: this.describeModelId(preferenceService.get('topic.naming.model_id')),
         tray: preferenceService.get('app.tray.enabled'),
         trayOnClose: preferenceService.get('app.tray.on_close'),
         launchToTray: preferenceService.get('app.tray.on_launch'),

@@ -1,6 +1,8 @@
 import { application } from '@application'
 import { loggerService } from '@logger'
-import { BaseService, type Disposable, Injectable, Phase, ServicePhase } from '@main/core/lifecycle'
+import { BaseService, DependsOn, type Disposable, Injectable, Phase, ServicePhase } from '@main/core/lifecycle'
+import { WindowType } from '@main/core/window/types'
+import { IpcChannel } from '@shared/IpcChannel'
 import type { StorageHealth, StorageHealthLevel } from '@shared/types/storageMonitor'
 import { GB } from '@shared/utils/constants'
 import { statfs } from 'fs/promises'
@@ -29,23 +31,27 @@ export function intervalForFree(freeBytes: number): number {
 }
 
 /**
- * Monitors free disk space on the volume hosting Cherry Studio's user-data
+ * Monitors free disk space on the volume hosting Windbot Studio's user-data
  * directory (where the SQLite database lives) and warns the main window when it
  * runs low.
  *
  * Detection lives in main because the disk is a main-owned resource: a single
- * capacity-adaptive timer replaces renderer-driven polling, and the latest
- * health snapshot is published through the shared cache.
+ * capacity-adaptive timer replaces the former renderer-driven polling, and only
+ * health transitions (ok <-> low) are pushed — to the main window only.
  */
 @Injectable('StorageMonitorService')
 @ServicePhase(Phase.WhenReady)
+@DependsOn(['WindowManager'])
 export class StorageMonitorService extends BaseService {
   private health: StorageHealth = { level: 'ok', freeBytes: 0, totalBytes: 0, checkedAt: 0 }
   private intervalDisposable: Disposable | null = null
   private currentIntervalMs = 0
 
   protected onInit(): void {
-    application.get('CacheService').setShared('storage.health', this.health)
+    // Renderer pulls the current health on mount to seed its initial state,
+    // closing the startup race where the first transition push could precede
+    // the renderer subscription.
+    this.ipcHandle(IpcChannel.StorageMonitor_GetHealth, () => this.health)
   }
 
   protected onReady(): void {
@@ -75,10 +81,12 @@ export class StorageMonitorService extends BaseService {
     const level: StorageHealthLevel = freeBytes < STORAGE_LOW_THRESHOLD_BYTES ? 'low' : 'ok'
     const previousLevel = this.health.level
     this.health = { level, freeBytes, totalBytes, checkedAt: Date.now() }
-    application.get('CacheService').setShared('storage.health', this.health)
 
     if (level !== previousLevel) {
       logger.info(`Disk space health changed: ${previousLevel} -> ${level}`, { freeBytes, totalBytes })
+      application
+        .get('WindowManager')
+        .broadcastToType(WindowType.Main, IpcChannel.StorageMonitor_HealthChanged, this.health)
     }
   }
 

@@ -129,12 +129,12 @@ describe('MenuRegistry', () => {
 
 describe('resolveMenuPresentationMode', () => {
   it('keeps app and tray menus native', () => {
-    expect(resolveMenuPresentationMode('app.menu', 'cherry')).toBe('native')
-    expect(resolveMenuPresentationMode('tray.menu', 'cherry')).toBe('native')
+    expect(resolveMenuPresentationMode('app.menu', 'wind')).toBe('native')
+    expect(resolveMenuPresentationMode('tray.menu', 'wind')).toBe('native')
   })
 
   it('uses the preferred mode for renderer menu locations', () => {
     expect(resolveMenuPresentationMode('chat.input.tools.context', 'native')).toBe('native')
-    expect(resolveMenuPresentationMode('chat.input.tools.context', 'cherry')).toBe('cherry')
+    expect(resolveMenuPresentationMode('chat.input.tools.context', 'wind')).toBe('wind')
   })
 })

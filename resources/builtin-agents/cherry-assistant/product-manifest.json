@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
   "package": {
-    "name": "CherryStudio",
-    "version": "2.0.14",
-    "description": "A powerful AI assistant for producer.",
-    "homepage": "https://github.com/CherryHQ/cherry-studio"
+    "name": "WindbotStudio",
+    "version": "2.0.0",
+    "description": "A powerful AI assistant for wind resource assessment.",
+    "homepage": "https://github.com/windbot/windbot-studio"
   },
   "routes": {
     "primary": [
       {
-        "id": "agents",
-        "path": "/app/agents"
-      },
-      {
         "id": "assistants",
         "path": "/app/chat"
+      },
+      {
+        "id": "agents",
+        "path": "/app/agents"
       },
       {
         "id": "paintings",
@@ -56,7 +56,6 @@
       "/app/knowledge",
       "/app/launchpad",
       "/app/notes",
-      "/app/release-notes",
       "/app/translate",
       "/settings/about",
       "/settings/api-gateway",
@@ -66,18 +65,14 @@
       "/settings/data",
       "/settings/dependencies",
       "/settings/file-processing",
-      "/settings/general",
       "/settings/local-models",
       "/settings/mcp",
       "/settings/model",
       "/settings/notifications",
       "/settings/ocr",
-      "/settings/prompts",
       "/settings/provider",
       "/settings/quick-assistant",
       "/settings/scheduled-tasks",
-      "/settings/screenshot",
-      "/settings/search",
       "/settings/selection-assistant",
       "/settings/shortcut",
       "/settings/skills",
@@ -108,8 +103,7 @@
         "defaultBinding": [
           "Escape"
         ],
-        "editable": false,
-        "when": "!webview.focused"
+        "editable": false
       }
     },
     {
@@ -185,11 +179,6 @@
         "additionalBindings": [
           [
             "CommandOrControl",
-            "Shift",
-            "="
-          ],
-          [
-            "CommandOrControl",
             "numadd"
           ]
         ],
@@ -226,19 +215,6 @@
           "0"
         ],
         "editable": false
-      }
-    },
-    {
-      "id": "chat.input.focus",
-      "titleKey": "settings.shortcuts.focus_input",
-      "categoryKey": "settings.shortcuts.chat",
-      "scope": "renderer",
-      "keybinding": {
-        "defaultBinding": [
-          "CommandOrControl",
-          "I"
-        ],
-        "when": "!webview.focused"
       }
     },
     {
@@ -354,39 +330,6 @@
       }
     },
     {
-      "id": "screenshot.capture",
-      "titleKey": "settings.shortcuts.screenshot_capture",
-      "categoryKey": "settings.shortcuts.feature.screenshot",
-      "scope": "main",
-      "enablement": "feature.screenshot.enabled",
-      "keybinding": {
-        "defaultBinding": [
-          "CommandOrControl",
-          "Shift",
-          "A"
-        ],
-        "global": true,
-        "when": "feature.screenshot.enabled",
-        "supportedPlatforms": [
-          "darwin",
-          "win32",
-          "linux"
-        ]
-      }
-    },
-    {
-      "id": "topic.clear_messages",
-      "titleKey": "chat.topics.clear.title",
-      "categoryKey": "settings.shortcuts.topic",
-      "scope": "renderer",
-      "keybinding": {
-        "defaultBinding": [
-          "CommandOrControl",
-          "L"
-        ]
-      }
-    },
-    {
       "id": "topic.create",
       "titleKey": "settings.shortcuts.new_topic",
       "categoryKey": "settings.shortcuts.topic",
@@ -421,53 +364,19 @@
           "]"
         ]
       }
-    },
-    {
-      "id": "tab.next",
-      "titleKey": "settings.shortcuts.next_tab",
-      "categoryKey": "settings.shortcuts.general",
-      "scope": "renderer",
-      "keybinding": {
-        "defaultBinding": {
-          "default": [
-            "CommandOrControl",
-            "Tab"
-          ],
-          "darwin": [
-            "Ctrl",
-            "Tab"
-          ]
-        }
-      }
-    },
-    {
-      "id": "tab.prev",
-      "titleKey": "settings.shortcuts.prev_tab",
-      "categoryKey": "settings.shortcuts.general",
-      "scope": "renderer",
-      "keybinding": {
-        "defaultBinding": {
-          "default": [
-            "CommandOrControl",
-            "Shift",
-            "Tab"
-          ],
-          "darwin": [
-            "Ctrl",
-            "Shift",
-            "Tab"
-          ]
-        }
-      }
     }
   ],
   "providers": {
-    "version": "e47c80cffa19d83b",
+    "version": "7e60b48af9eec108",
     "count": 62,
     "entries": [
       {
         "id": "cherryin",
         "name": "CherryIN"
+      },
+      {
+        "id": "radeon-cloud",
+        "name": "AMD GPU Cloud"
       },
       {
         "id": "silicon",
@@ -542,14 +451,6 @@
         "name": "Ollama"
       },
       {
-        "id": "radeon-cloud",
-        "name": "AMD GPU Cloud"
-      },
-      {
-        "id": "tokendance",
-        "name": "TokenDance"
-      },
-      {
         "id": "new-api",
         "name": "New API"
       },
@@ -592,6 +493,10 @@
       {
         "id": "vertexai",
         "name": "VertexAI"
+      },
+      {
+        "id": "github",
+        "name": "Github Models"
       },
       {
         "id": "copilot",
@@ -775,11 +680,6 @@
       "value": "vi-VN",
       "flag": "🇻🇳",
       "label": "Tiếng Việt"
-    },
-    {
-      "value": "tr-TR",
-      "flag": "🇹🇷",
-      "label": "Türkçe"
     }
   ],
   "agents": {
@@ -803,72 +703,11 @@
         "openai-codex",
         "opencode",
         "openclaw",
-        "deepseek-harness",
         "gemini-cli",
-        "antigravity-cli",
         "qwen-code",
         "kimi-code",
         "qoder-cli",
-        "github-copilot-cli",
-        "pi",
-        "hermes"
-      ]
-    }
-  },
-  "features": {
-    "context": {
-      "defaults": {
-        "enabled": true,
-        "truncateThreshold": 50000,
-        "maxMessages": null,
-        "compress": {
-          "enabled": true,
-          "modelId": null,
-          "thresholdPercent": 80
-        }
-      },
-      "limits": {
-        "minTruncateThreshold": 2000,
-        "compressionMinOutputTokens": 4096,
-        "compressionMaxOutputTokens": 16384
-      }
-    },
-    "mcp": {
-      "serverTypes": [
-        "stdio",
-        "sse",
-        "streamableHttp",
-        "inMemory"
-      ],
-      "installSources": [
-        "builtin",
-        "manual",
-        "ai_assisted",
-        "protocol",
-        "unknown"
-      ]
-    },
-    "knowledge": {
-      "supportedFileExtensions": [
-        ".txt",
-        ".markdown",
-        ".md",
-        ".mdx",
-        ".pdf",
-        ".html",
-        ".htm",
-        ".xlsx",
-        ".xls",
-        ".docx",
-        ".csv",
-        ".doc",
-        ".pptx",
-        ".ppt",
-        ".epub",
-        ".draftsexport"
-      ],
-      "fileProcessingExtensions": [
-        ".pdf"
+        "github-copilot-cli"
       ]
     }
   }

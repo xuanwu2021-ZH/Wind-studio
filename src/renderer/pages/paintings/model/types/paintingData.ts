@@ -24,7 +24,7 @@ export type PaintingGenerationStatus = 'running' | 'failed' | 'canceled'
  * `inputFiles` is v2-native `FileEntry[]` (the prompt-box attachment
  * surface registers each File via `window.api.file.createInternalEntry`
  * and pushes the returned `FileEntry`). `files` (output) still uses v1
- * `FileMetadata` until the `cherrystudio://file/internal/{uuid}.{ext}`
+ * `FileMetadata` until the `windbot://file/internal/{uuid}.{ext}`
  * custom protocol cleanup tracked at TODO #15353 lands.
  */
 export interface PaintingData {

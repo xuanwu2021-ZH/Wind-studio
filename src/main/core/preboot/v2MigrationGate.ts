@@ -9,8 +9,6 @@
  * keeps no domain files (see core/preboot/README.md, Membership criteria).
  */
 
-import { promises as fs } from 'node:fs'
-
 import { application } from '@application'
 import {
   evaluateCandidateVersion,
@@ -271,7 +269,7 @@ export async function runV2MigrationGate(): Promise<V2MigrationGateResult> {
       unregisterMigrationIpcHandlers()
       dialog.showErrorBox(
         'Migration Required - Application Cannot Start',
-        `This version of Cherry Studio requires data migration to function properly.\n\nMigration window failed to start: ${(migrationError as Error).message}\n\nThe application will now exit. Please try starting again or contact support if the problem persists.`
+        `This version of Windbot Studio requires data migration to function properly.\n\nMigration window failed to start: ${(migrationError as Error).message}\n\nThe application will now exit. Please try starting again or contact support if the problem persists.`
       )
       logger.error('Exiting application due to failed migration startup')
       application.quit()
@@ -282,16 +280,6 @@ export async function runV2MigrationGate(): Promise<V2MigrationGateResult> {
   // Normal path: no migration needed. Release the bare DB handle so the
   // lifecycle DbService can open its own connection when bootstrap runs.
   migrationEngine.close()
-
-  // Migration is no longer pending: sweep the renderer-export staging tree
-  // (plaintext v1 dumps) that the engine's own cleanup paths can miss.
-  try {
-    await fs.rm(paths.migrationTempDir, { recursive: true, force: true })
-  } catch (error) {
-    logger.warn('Failed to sweep legacy migration export staging', error as Error, {
-      path: paths.migrationTempDir
-    })
-  }
 
   // Edge case: userData was redirected from legacy config but migration is
   // not needed (e.g. boot-config.json was manually deleted after a

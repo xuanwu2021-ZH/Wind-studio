@@ -1,7 +1,7 @@
 import i18n from '@renderer/i18n/resolver'
 
 /** Base URL for parsing relative route paths */
-const BASE_URL = 'https://www.cherry-ai.com/'
+const BASE_URL = 'https://windbot.cn/'
 
 /**
  * Route to i18n key mapping for default tab titles
@@ -17,7 +17,6 @@ const routeTitleKeys: Record<string, string> = {
   '/app/files': 'title.files',
   '/app/code': 'title.code',
   '/app/notes': 'title.notes',
-  '/app/release-notes': 'settings.about.releases.title',
   '/settings': 'title.settings'
 }
 

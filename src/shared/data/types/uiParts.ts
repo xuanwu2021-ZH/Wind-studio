@@ -1,5 +1,5 @@
 /**
- * Custom DataUIPart schemas for Cherry Studio.
+ * Custom DataUIPart schemas for Windbot Studio.
  *
  * These extend AI SDK's UIMessage.parts with application-specific
  * part types that have no built-in equivalent.
@@ -20,7 +20,6 @@
  * - data-knowledge-scope (knowledge bases available to this user turn)
  * - data-clear (context boundary marker)
  * - data-code (code blocks)
- * - data-retry (transient model-retry/fallback status; shown live, never persisted)
  */
 
 import type { CompactionAnchorData } from '@shared/ai/compaction'
@@ -109,31 +108,12 @@ export interface CodePartData {
   language: string
 }
 
-/**
- * Model retry/fallback status. Transient: emitted live while a chat model call
- * is being retried or failed over to a fallback model, and stripped before the
- * assistant message is persisted (see PersistenceListener). Never written to DB.
- */
-export type RetryPartData =
-  | {
-      state: 'retrying'
-      /** Model id that will handle the upcoming attempt. */
-      modelId: string
-      /** 1-based number of the upcoming attempt, including the original call. */
-      attempt: number
-      /** Short human reason, e.g. "http 429: rate limit exceeded". */
-      reason: string
-    }
-  | {
-      state: 'settled'
-    }
-
 // ============================================================================
 // Cherry DataUIPart type map (for useChat dataPartSchemas)
 // ============================================================================
 
 /**
- * All custom DataUIPart types for Cherry Studio.
+ * All custom DataUIPart types for Windbot Studio.
  * Used with `useChat({ dataPartSchemas })` to enable type-safe custom parts.
  */
 export type CherryDataPartTypes = {
@@ -147,7 +127,6 @@ export type CherryDataPartTypes = {
   'knowledge-scope': KnowledgeScopePartData
   clear: ClearPartData
   code: CodePartData
-  retry: RetryPartData
 }
 
 // ============================================================================
@@ -176,8 +155,6 @@ export interface CherryToolMeta {
   transport?: string
   /** Tool name (used by approval bridge before the part has been finalized). */
   toolName?: string
-  /** Runtime-neutral subagent linkage: the spawning tool call this part nests under. */
-  parentToolCallId?: string
   /** MCP / builtin tool identity. Matches `ToolType` consumed by `toolResponse.ts`. */
   tool?: {
     serverId?: string
@@ -363,15 +340,6 @@ export function createClearContextPart(): ClearContextPart {
 /** Whether a message's persisted parts contain a model-context boundary. */
 export function hasClearContextPart(parts: readonly CherryMessagePart[] | undefined): boolean {
   return parts?.some((part) => part.type === CLEAR_CONTEXT_PART_TYPE) ?? false
-}
-
-/** Whether persisted message values describe a blank user turn, without making any tree-level claim. */
-export function isBlankUserTurn(input: {
-  role: string
-  status: string | undefined
-  parts: readonly unknown[] | undefined
-}): boolean {
-  return input.role === 'user' && input.status === 'success' && (input.parts?.length ?? 0) === 0
 }
 
 /** Replace the aggregate knowledge scope part while preserving every content part. */

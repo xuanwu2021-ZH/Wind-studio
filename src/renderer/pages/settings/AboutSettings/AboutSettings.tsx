@@ -10,7 +10,6 @@ import {
 } from '@cherrystudio/ui'
 import { usePreference } from '@data/hooks/usePreference'
 import AppLogo from '@renderer/assets/images/logo.png'
-import { FeedbackDialog } from '@renderer/components/feedback/FeedbackDialog'
 import LogoAvatar from '@renderer/components/icons/LogoAvatar'
 import IndicatorLight from '@renderer/components/IndicatorLight'
 import { ReleaseNotes } from '@renderer/components/ReleaseNotes'
@@ -23,13 +22,13 @@ import {
 } from '@renderer/components/SettingsPrimitives'
 import UpdateDialogPopup from '@renderer/components/UpdateDialogPopup'
 import { useAppUpdateState } from '@renderer/hooks/useAppUpdateState'
-import { useOpenReleaseNotes } from '@renderer/hooks/useOpenReleaseNotes'
+import { useMiniAppPopup } from '@renderer/hooks/useMiniAppPopup'
 import { useTheme } from '@renderer/hooks/useTheme'
 import i18n from '@renderer/i18n/resolver'
 import { ipcApi } from '@renderer/ipc'
 import { toast } from '@renderer/services/toast'
 import { cn } from '@renderer/utils/style'
-import { UpgradeChannel } from '@shared/data/preference/preferenceTypes'
+import { ThemeMode, UpgradeChannel } from '@shared/data/preference/preferenceTypes'
 import { debounce } from 'es-toolkit/compat'
 import {
   BadgeQuestionMark,
@@ -47,6 +46,7 @@ import type { FC, ReactNode } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { FeedbackDialog } from '../FeedbackDialog'
 import DiagnosticBundleDialog from './DiagnosticBundleDialog'
 
 const AboutSettings: FC = () => {
@@ -60,7 +60,7 @@ const AboutSettings: FC = () => {
   const [feedbackOpen, setFeedbackOpen] = useState(false)
   const { t } = useTranslation()
   const { theme } = useTheme()
-  const showReleases = useOpenReleaseNotes()
+  const { openSmartMiniApp } = useMiniAppPopup()
 
   const { appUpdateState, updateAppUpdateState } = useAppUpdateState()
 
@@ -95,8 +95,8 @@ const AboutSettings: FC = () => {
   }
 
   const mailto = async () => {
-    const email = 'support@cherry-ai.com'
-    const subject = 'Cherry Studio Feedback'
+    const email = 'support@windbot.cn'
+    const subject = 'Windbot Studio Feedback'
     const version = (await ipcApi.request('app.get_info')).version
     const platform = window.electron.process.platform
     const url = `mailto:${email}?subject=${subject}&body=%0A%0AVersion: ${version} | Platform: ${platform}`
@@ -108,7 +108,17 @@ const AboutSettings: FC = () => {
   }
 
   const showEnterprise = async () => {
-    onOpenWebsite('https://enterprise.cherry-ai.com')
+    onOpenWebsite('https://enterprise.windbot.cn')
+  }
+
+  const showReleases = async () => {
+    const { appPath } = await ipcApi.request('app.get_info')
+    openSmartMiniApp({
+      appId: 'windbot-releases',
+      name: t('settings.about.releases.title'),
+      url: `file://${appPath}/resources/cherry-studio/releases.html?theme=${theme === ThemeMode.dark ? 'dark' : 'light'}`,
+      logo: AppLogo
+    })
   }
 
   const currentChannelByVersion =
@@ -182,7 +192,7 @@ const AboutSettings: FC = () => {
     const isChinese = i18n.language.startsWith('zh')
     void ipcApi.request(
       'system.shell.open_website',
-      isChinese ? 'https://docs.cherry-ai.com/' : 'https://docs.cherry-ai.com/docs/en-us'
+      isChinese ? 'https://docs.windbot.cn/' : 'https://docs.windbot.cn/docs/en-us'
     )
   }
 
@@ -201,9 +211,9 @@ const AboutSettings: FC = () => {
           <button
             type="button"
             aria-label={t('settings.about.repository')}
-            onClick={() => onOpenWebsite('https://github.com/CherryHQ/cherry-studio')}
+            onClick={() => onOpenWebsite('https://github.com/windbot/windbot-studio')}
             className="inline-flex items-center justify-center rounded-md p-1 text-foreground transition-colors hover:bg-muted">
-            <Github aria-hidden="true" className="size-5" />
+            <Github className="size-5" />
           </button>
         </SettingTitle>
 
@@ -213,33 +223,31 @@ const AboutSettings: FC = () => {
           <div className="flex min-w-0 flex-1 items-center gap-3">
             <button
               type="button"
-              aria-label={t('settings.about.repository')}
-              onClick={() => onOpenWebsite('https://github.com/CherryHQ/cherry-studio')}
+              aria-label="Windbot Studio"
+              onClick={() => onOpenWebsite('https://github.com/windbot/windbot-studio')}
               className="relative cursor-pointer">
-              <span aria-hidden="true">
-                {appUpdateState.downloading && appUpdateState.downloadProgress > 0 && (
-                  <div className="-top-0.5 -left-0.5 pointer-events-none absolute">
-                    <CircularProgress
-                      value={appUpdateState.downloadProgress}
-                      size={76}
-                      strokeWidth={4}
-                      shape="square"
-                      className="stroke-transparent"
-                      progressClassName="stroke-[#67ad5b]"
-                    />
-                  </div>
-                )}
-                <LogoAvatar logo={AppLogo} size={72} className="rounded-full" alt="" />
-              </span>
+              {appUpdateState.downloading && appUpdateState.downloadProgress > 0 && (
+                <div className="-top-0.5 -left-0.5 pointer-events-none absolute">
+                  <CircularProgress
+                    value={appUpdateState.downloadProgress}
+                    size={76}
+                    strokeWidth={4}
+                    shape="square"
+                    className="stroke-transparent"
+                    progressClassName="stroke-[#67ad5b]"
+                  />
+                </div>
+              )}
+              <LogoAvatar logo={AppLogo} size={72} className="rounded-full" />
             </button>
 
             <div className="flex min-h-18 flex-col items-start justify-center">
-              <div className="mb-1 font-bold text-foreground text-lg">Cherry Studio</div>
+              <div className="mb-1 font-bold text-foreground text-lg">Windbot Studio</div>
               <div className="text-muted-foreground text-sm">{t('settings.about.description')}</div>
               <button
                 type="button"
                 aria-label={t('settings.about.releases.title')}
-                onClick={() => onOpenWebsite('https://github.com/CherryHQ/cherry-studio/releases')}
+                onClick={() => onOpenWebsite('https://github.com/windbot/windbot-studio/releases')}
                 className="mt-1.5">
                 <Badge className="cursor-pointer rounded-md border-primary/20 bg-primary/10 px-1.5 py-0 text-[11px] text-primary leading-4 transition-colors hover:bg-primary/15">
                   v{version}
@@ -248,7 +256,7 @@ const AboutSettings: FC = () => {
             </div>
           </div>
 
-          {!isPortable && (
+          {!isPortable && false /* hidden: check-update button */ && (
             <div className="flex shrink-0 items-center justify-end">
               <Button
                 size="sm"
@@ -271,10 +279,10 @@ const AboutSettings: FC = () => {
           )}
         </div>
 
-        {!isPortable && (
+        {!isPortable && false /* hidden: auto-update + test-plan switch */ && (
           <>
             <Divider className="my-3" />
-            <SettingRow id="setting-about-auto-check-update" className="scroll-mt-6 gap-3">
+            <SettingRow className="gap-3">
               <SettingRowTitle>{t('settings.general.auto_check_update.title')}</SettingRowTitle>
               <Switch checked={autoCheckUpdate} onCheckedChange={(v) => setAutoCheckUpdate(v)} />
             </SettingRow>
@@ -309,87 +317,93 @@ const AboutSettings: FC = () => {
         )}
       </SettingGroup>
 
-      {appUpdateState.info && appUpdateState.available && (
-        <SettingGroup theme={theme}>
-          <SettingRow className="gap-3">
-            <SettingRowTitle className="gap-2.5">
-              {t('settings.about.updateAvailable', { version: appUpdateState.info.version })}
-              <IndicatorLight color="var(--success)" />
-            </SettingRowTitle>
-          </SettingRow>
-          <Divider className="my-3" />
-          <Scrollbar className="max-h-96 overflow-x-hidden pr-2">
-            <ReleaseNotes content={releaseNotesText} />
-          </Scrollbar>
-        </SettingGroup>
-      )}
+      {false /* hidden: new-version block for Windbot Studio */ && (
+              <SettingGroup theme={theme}>
+                <SettingRow className="gap-3">
+                  <SettingRowTitle className="gap-2.5">
+                    {(() => {
+                                                              const info = appUpdateState.info
+                                                              if (info == null) return null
+                                                              return t('settings.about.updateAvailable', { version: info!.version })
+                                                            })()}
+                    <IndicatorLight color="var(--success)" />
+                  </SettingRowTitle>
+                </SettingRow>
+                <Divider className="my-3" />
+                <Scrollbar className="max-h-96 overflow-x-hidden pr-2">
+                  <ReleaseNotes content={releaseNotesText} />
+                </Scrollbar>
+              </SettingGroup>
+            )}
 
-      <SettingGroup theme={theme}>
-        <AboutActionRow
-          icon={<BadgeQuestionMark className="size-4.5" />}
-          title={t('docs.title')}
-          actionLabel={t('settings.about.website.button')}
-          onAction={onOpenDocs}
-        />
-        <Divider className="my-3" />
-        <AboutActionRow
-          icon={<Rss className="size-4.5" />}
-          title={t('settings.about.releases.title')}
-          actionLabel={t('settings.about.releases.button')}
-          onAction={showReleases}
-        />
-        <Divider className="my-3" />
-        <AboutActionRow
-          icon={<Globe className="size-4.5" />}
-          title={t('settings.about.website.title')}
-          actionLabel={t('settings.about.website.button')}
-          onAction={() => onOpenWebsite('https://cherry-ai.com')}
-        />
-        <Divider className="my-3" />
-        <AboutActionRow
-          icon={<MessageSquareText className="size-4.5" />}
-          title={t('settings.about.feedback.title')}
-          actionLabel={t('settings.about.feedback.button')}
-          onAction={() => setFeedbackOpen(true)}
-        />
-        <Divider className="my-3" />
-        <AboutActionRow
-          icon={<Building2 className="size-4.5" />}
-          title={t('settings.about.enterprise.title')}
-          actionLabel={t('settings.about.website.button')}
-          onAction={showEnterprise}
-        />
-        <Divider className="my-3" />
-        <AboutActionRow
-          icon={<Mail className="size-4.5" />}
-          title={t('settings.about.contact.title')}
-          actionLabel={t('settings.about.contact.button')}
-          onAction={mailto}
-        />
-        <Divider className="my-3" />
-        <AboutActionRow
-          icon={<Briefcase className="size-4.5" />}
-          title={t('settings.about.careers.title')}
-          actionLabel={t('settings.about.careers.button')}
-          onAction={() => onOpenWebsite('https://www.cherry-ai.com/careers')}
-        />
-        <Divider className="my-3" />
-        <AboutActionRow
-          id="setting-about-diagnostics"
-          icon={<FileArchive className="size-4.5" />}
-          title={t('settings.about.diagnostics.entry.title')}
-          actionLabel={t('settings.about.diagnostics.entry.button')}
-          onAction={() => setIsDiagnosticDialogOpen(true)}
-        />
-        <Divider className="my-3" />
-        <AboutActionRow
-          id="setting-about-debug-tools"
-          icon={<Bug className="size-4.5" />}
-          title={t('settings.about.debug.title')}
-          actionLabel={t('settings.about.debug.open')}
-          onAction={debug}
-        />
-      </SettingGroup>
+            <SettingGroup theme={theme}>
+              <AboutActionRow
+                icon={<BadgeQuestionMark className="size-4.5" />}
+                title={t('docs.title')}
+                actionLabel={t('settings.about.website.button')}
+                onAction={onOpenDocs}
+              />
+              <Divider className="my-3" />
+              <AboutActionRow
+                icon={<Mail className="size-4.5" />}
+                title={t('settings.about.contact.title')}
+                actionLabel={t('settings.about.contact.button')}
+                onAction={mailto}
+              />
+              {false /* hidden: releases, website, feedback, enterprise, careers, diagnostics, debug */ && (
+                <>
+                  <Divider className="my-3" />
+                  <AboutActionRow
+                    icon={<Rss className="size-4.5" />}
+                    title={t('settings.about.releases.title')}
+                    actionLabel={t('settings.about.releases.button')}
+                    onAction={showReleases}
+                  />
+                  <Divider className="my-3" />
+                  <AboutActionRow
+                    icon={<Globe className="size-4.5" />}
+                    title={t('settings.about.website.title')}
+                    actionLabel={t('settings.about.website.button')}
+                    onAction={() => onOpenWebsite('https://windbot.cn')}
+                  />
+                  <Divider className="my-3" />
+                  <AboutActionRow
+                    icon={<MessageSquareText className="size-4.5" />}
+                    title={t('settings.about.feedback.title')}
+                    actionLabel={t('settings.about.feedback.button')}
+                    onAction={() => setFeedbackOpen(true)}
+                  />
+                  <Divider className="my-3" />
+                  <AboutActionRow
+                    icon={<Building2 className="size-4.5" />}
+                    title={t('settings.about.enterprise.title')}
+                    actionLabel={t('settings.about.website.button')}
+                    onAction={showEnterprise}
+                  />
+                  <Divider className="my-3" />
+                  <AboutActionRow
+                    icon={<Briefcase className="size-4.5" />}
+                    title={t('settings.about.careers.title')}
+                    actionLabel={t('settings.about.careers.button')}
+                    onAction={() => onOpenWebsite('https://www.windbot.cn/careers')}
+                  />
+                  <Divider className="my-3" />
+                  <AboutActionRow
+                    icon={<FileArchive className="size-4.5" />}
+                    title={t('settings.about.diagnostics.entry.title')}
+                    actionLabel={t('settings.about.diagnostics.entry.button')}
+                    onAction={() => setIsDiagnosticDialogOpen(true)}
+                  />
+                  <Divider className="my-3" />
+                  <AboutActionRow
+                    icon={<Bug className="size-4.5" />}
+                    title={t('settings.about.debug.title')}
+                    actionLabel={t('settings.about.debug.open')}
+                    onAction={debug}
+                  />
+                </>
+              )}
+            </SettingGroup>
       <DiagnosticBundleDialog
         appVersion={version}
         open={isDiagnosticDialogOpen}
@@ -403,18 +417,16 @@ const AboutSettings: FC = () => {
 function AboutActionRow({
   actionLabel,
   icon,
-  id,
   onAction,
   title
 }: {
   actionLabel: string
   icon: ReactNode
-  id?: string
   onAction: () => void | Promise<void>
   title: string
 }) {
   return (
-    <SettingRow id={id} className={id ? 'scroll-mt-6 gap-3' : 'gap-3'}>
+    <SettingRow className="gap-3">
       <SettingRowTitle className="gap-2.5">
         {icon}
         {title}

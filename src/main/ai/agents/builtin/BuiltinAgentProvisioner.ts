@@ -14,7 +14,6 @@ import path from 'path'
 
 import {
   type BuiltinAgentDefinition,
-  getBuiltinAgentPluginTemplateDirectory,
   getBuiltinAgentTemplateDirectory,
   loadBuiltinAgentDefinition
 } from './builtinAgentDefinition'
@@ -46,7 +45,7 @@ function sha256(buffer: Buffer): string {
 }
 
 export function getBuiltinAgentPluginDirectory(builtinRole: string): string | undefined {
-  const templateDir = getBuiltinAgentPluginTemplateDirectory(builtinRole)
+  const templateDir = getBuiltinAgentTemplateDirectory(builtinRole)
   if (!templateDir) return undefined
 
   // Claude Code runs out of process and cannot resolve Electron's virtual app.asar paths.
@@ -85,7 +84,7 @@ export { loadBuiltinAgentDefinition } from './builtinAgentDefinition'
  * modified by this function. Bundled skills are loaded from the app-owned plugin directory.
  *
  * @param agentDataPath - The agent's persistent identity and memory directory
- * @param builtinRole - The built-in role identifier
+ * @param builtinRole - The built-in role identifier (currently only 'assistant')
  * @returns The parsed agent.json config, or undefined if not found
  */
 export async function provisionBuiltinAgent(
@@ -100,7 +99,7 @@ export async function provisionBuiltinAgent(
     return undefined
   }
 
-  const definition = loadBuiltinAgentDefinition(builtinRole)
+  const definition = await loadBuiltinAgentDefinition(builtinRole)
   if (!definition) return undefined
 
   try {
