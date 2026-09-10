@@ -23,7 +23,7 @@ import { useTranslation } from 'react-i18next'
 
 const DiagnosticUploadDialog = lazy(() => import('./DiagnosticUploadDialog'))
 
-export const FEEDBACK_GITHUB_URL = 'https://github.com/CherryHQ/cherry-studio/issues/new/choose'
+export const FEEDBACK_GITHUB_URL = 'https://github.com/windbot/windbot-studio/issues/new/choose'
 
 const logger = loggerService.withContext('FeedbackDialog')
 

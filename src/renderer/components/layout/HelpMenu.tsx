@@ -9,7 +9,7 @@ import { BookOpen, CircleQuestionMark, Github, MessageSquareText, Sparkles } fro
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-const GITHUB_REPOSITORY_URL = 'https://github.com/CherryHQ/cherry-studio'
+const GITHUB_REPOSITORY_URL = 'https://github.com/windbot/windbot-studio'
 const logger = loggerService.withContext('HelpMenu')
 
 export function HelpMenu({

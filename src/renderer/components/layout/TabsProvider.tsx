@@ -57,7 +57,7 @@ const CODE_ROUTE_PATH = '/app/code'
 function routePathOfTab(tab: Tab): string | null {
   if (tab.type !== 'route') return null
   try {
-    return new URL(tab.url, 'https://www.cherry-ai.com').pathname
+    return new URL(tab.url, 'https://www.windbot.cn').pathname
   } catch {
     return null
   }

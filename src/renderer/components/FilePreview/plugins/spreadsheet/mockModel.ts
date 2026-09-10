@@ -76,7 +76,7 @@ export const createMockWorkbookModel = (): WorkbookRenderModel => ({
         '10:1': {
           text: 'Cherry Studio',
           raw: 'Cherry Studio',
-          hyperlink: 'https://github.com/CherryHQ/cherry-studio'
+          hyperlink: 'https://github.com/windbot/windbot-studio'
         },
         // Far cell used to verify virtual scrolling.
         '60:10': { text: 'Scroll to me', raw: 'Scroll to me' }
