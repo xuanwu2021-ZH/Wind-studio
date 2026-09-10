@@ -19,7 +19,7 @@
     "bootstrap_completed": true,
     "builtin_role": "assistant",
     "env_vars": {},
-    "avatar_image": "wind.ico"
+    "avatar_image": "wind.png"
   },
   "skills": [
     "cherry-assistant-guide",
