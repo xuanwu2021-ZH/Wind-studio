@@ -1,6 +1,6 @@
 {
   "name": "WindbotStudio",
-  "version": "2.0.0",
+  "version": "2.0.14",
   "private": true,
   "description": "A powerful AI assistant for wind resource assessment.",
   "desktopName": "WindbotStudio.desktop",
