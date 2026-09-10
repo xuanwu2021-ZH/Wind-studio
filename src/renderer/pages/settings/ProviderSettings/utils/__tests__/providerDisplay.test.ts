@@ -40,6 +40,34 @@ describe('isProviderSettingsListVisibleProvider', () => {
   it('keeps a normal provider visible', () => {
     expect(isProviderSettingsListVisibleProvider(provider('openai'))).toBe(true)
   })
+
+  // --- Windbot Studio allowlist tests ---
+  it('hides canonical preset providers outside the allowlist', () => {
+    // gemini / github are real preset providers but not in WINDBOT_VISIBLE_PRESET_IDS
+    const gemini = { id: 'gemini', presetProviderId: 'gemini' } as Provider
+    const github = { id: 'github', presetProviderId: 'github' } as Provider
+    expect(isProviderSettingsListVisibleProvider(gemini)).toBe(false)
+    expect(isProviderSettingsListVisibleProvider(github)).toBe(false)
+  })
+
+  it('shows the 8 canonical preset providers in the allowlist', () => {
+    for (const id of ['deepseek', 'anthropic', 'zhipu', 'claude-code', 'openai', 'minimax', 'minimax-global', 'moonshot']) {
+      const p = { id, presetProviderId: id } as Provider
+      expect(isProviderSettingsListVisibleProvider(p)).toBe(true)
+    }
+  })
+
+  it('shows user-added custom providers even when not in the allowlist', () => {
+    const localLLM = { id: 'local-llm-1234' } as Provider
+    expect(isProviderSettingsListVisibleProvider(localLLM)).toBe(true)
+  })
+
+  it('shows user-added preset forks (id !== presetProviderId)', () => {
+    const openaiWork = { id: 'openai-work', presetProviderId: 'openai' } as Provider
+    const geminiPersonal = { id: 'gemini-personal', presetProviderId: 'gemini' } as Provider
+    expect(isProviderSettingsListVisibleProvider(openaiWork)).toBe(true)
+    expect(isProviderSettingsListVisibleProvider(geminiPersonal)).toBe(true)
+  })
 })
 
 describe('isProviderPresetInstanceSource', () => {
