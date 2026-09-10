@@ -57,7 +57,7 @@ describe('useWebSearchProviderCheck', () => {
 
     expect(ipcRequestMock).toHaveBeenCalledWith('web_search.search_keywords', {
       providerId: 'tavily',
-      keywords: ['Windbot Studio']
+      keywords: ['Cherry Studio']
     })
     expect(toast.success).toHaveBeenCalledWith('settings.tool.websearch.check_success')
   })

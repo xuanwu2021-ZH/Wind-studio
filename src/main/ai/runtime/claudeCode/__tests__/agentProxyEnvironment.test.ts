@@ -270,7 +270,7 @@ describe('createAgentProxyEnvironmentFingerprint', () => {
     expect(first).not.toBe(second)
   })
 
-  it('does not include Windbot Studio internal proxy variables', () => {
+  it('does not include Cherry Studio internal proxy variables', () => {
     const environment = { HTTP_PROXY: 'http://proxy.example.com:8080' }
     const first = createAgentProxyEnvironmentFingerprint({
       ...environment,

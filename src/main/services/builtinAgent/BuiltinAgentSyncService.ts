@@ -1,4 +1,4 @@
-import { ensureBuiltinAssistant } from '@main/ai/agents/ensureBuiltinAssistant'
+import { ensureBuiltinAgent } from '@main/ai/agents/ensureBuiltinAgent'
 import { loggerService } from '@logger'
 import { BaseService } from '@main/core/lifecycle/BaseService'
 import { Injectable, ServicePhase } from '@main/core/lifecycle/decorators'
@@ -27,7 +27,7 @@ const logger = loggerService.withContext('BuiltinAgentSyncService')
 export class BuiltinAgentSyncService extends BaseService {
   protected async onInit(): Promise<void> {
     try {
-      await ensureBuiltinAssistant()
+      await ensureBuiltinAgent()
       logger.debug('Built-in agent synced on boot')
     } catch (error) {
       logger.warn('Failed to sync built-in agent on boot', {

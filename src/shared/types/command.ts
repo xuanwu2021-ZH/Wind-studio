@@ -27,9 +27,14 @@ export type ContextExpr =
 
 export type SupportedPlatform = Extract<NodeJS.Platform, 'darwin' | 'win32' | 'linux'>
 
+/** A binding for every platform, or a base binding with per-platform overrides. */
+export type PlatformDefaultBinding =
+  | ShortcutBinding
+  | ({ default: ShortcutBinding } & Partial<Record<SupportedPlatform, ShortcutBinding>>)
+
 export interface KeybindingRule<TCommand extends string = string> {
   command: TCommand
-  defaultBinding: ShortcutBinding
+  defaultBinding: PlatformDefaultBinding
   additionalBindings?: readonly ShortcutBinding[]
   scope: CommandScope
   global?: boolean
@@ -63,7 +68,7 @@ export interface RegisteredKeybindingRule<TCommand extends string = string>
   whenSource?: ContextExprSource
 }
 
-export type MenuPresentationMode = 'native' | 'wind'
+export type MenuPresentationMode = 'native' | 'cherry'
 
 export type MenuLocation =
   | 'app.menu'

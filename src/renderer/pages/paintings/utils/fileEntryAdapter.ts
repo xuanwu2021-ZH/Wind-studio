@@ -12,9 +12,9 @@ import type { FileEntry } from '@shared/data/types/file'
  *   - `downloadImages` (url branch)
  *   - `recordToPaintingData` (history hydration)
  *
- * TODO(#15353): Delete this whole module once the `windbot://file/internal/{uuid}`
+ * TODO(#15353): Delete this whole module once the `cherrystudio://file/internal/{uuid}`
  * custom protocol scheme lands. Paintings should consume `FileEntry` directly
- * and the Artboard should set `<img src={`windbot://file/internal/${id}.${ext}`}>`
+ * and the Artboard should set `<img src={`cherrystudio://file/internal/${id}.${ext}`}>`
  * — no more v1 `FileMetadata` shape, no `getPhysicalPath` round-trip.
  */
 export async function fileEntryToMetadata(entry: FileEntry): Promise<FileMetadata> {

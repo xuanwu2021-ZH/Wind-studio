@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 
 import { useMigrationActions } from '../hooks/useMigrationProgress'
 
-const SUPPORT_EMAIL = 'support@windbot.cn'
+const SUPPORT_EMAIL = 'support@cherry-ai.com'
 const logger = loggerService.withContext('MigrationDiagnosticPanel')
 
 type DiagnosticStatus = 'idle' | 'saving' | 'saved_with_logs' | 'saved_without_logs' | 'failed'

@@ -18,12 +18,12 @@ vi.mock('node:fs/promises', () => ({
 import { lstat, open, readdir, realpath } from 'node:fs/promises'
 
 import type { AgentConfiguration } from '@shared/data/types/agent'
+import { MockMainCacheServiceUtils } from '@test-mocks/main/CacheService'
 
 import { PromptBuilder } from '../prompt'
 
 const baseConfig: AgentConfiguration = {
   permission_mode: 'bypassPermissions',
-  max_turns: 100,
   env_vars: {}
 }
 
@@ -100,6 +100,7 @@ describe('PromptBuilder', () => {
   let builder: PromptBuilder
 
   beforeEach(() => {
+    MockMainCacheServiceUtils.resetMocks()
     builder = new PromptBuilder()
     vi.clearAllMocks()
   })
@@ -109,10 +110,10 @@ describe('PromptBuilder', () => {
 
     const { base, context: result } = await builder.buildPromptParts('/workspace')
 
-    // No system.md → keep the Claude Code preset as the base and append Cherry content;
+    // No system.md → keep the runtime-native prompt as the base and append Cherry content;
     // the old embedded "personal assistant" preamble must be gone.
-    expect(base).toEqual({ kind: 'claude_code' })
-    expect(result).not.toContain('You are a personal assistant running inside Windbot Studio')
+    expect(base).toEqual({ kind: 'native' })
+    expect(result).not.toContain('You are a personal assistant running inside Cherry Studio')
     expect(result).toContain('## Memories')
     expect(result).toContain('`/workspace/SOUL.md`')
   })
@@ -198,7 +199,32 @@ describe('PromptBuilder', () => {
     expect(result).toContain('<soul>')
     expect(result).toContain('Warm but direct. Lead with answers.')
     expect(result).toContain('</soul>')
-    expect(result).toContain('WHO you are')
+    expect(result).toContain('HOW you present yourself')
+  })
+
+  it('defines SOUL.md as presentation persona rather than the Agent role', async () => {
+    setupFiles({ '/workspace/SOUL.md': 'Warm, concise, and direct.' })
+
+    const { context } = await builder.buildPromptParts('/workspace', baseConfig, true)
+
+    expect(context).toContain('HOW you present yourself — name, personality, tone, and communication style')
+    expect(context).not.toContain('WHO you are — personality, tone, communication style, core principles')
+  })
+
+  it('preserves legacy SOUL.md content verbatim', async () => {
+    const legacySoul = `# Role
+Legacy research assistant
+
+## Goals
+Complete every research task thoroughly.
+
+## Principles
+Always cite primary sources.`
+    setupFiles({ '/workspace/SOUL.md': legacySoul })
+
+    const { context } = await builder.buildPromptParts('/workspace', baseConfig, true)
+
+    expect(context).toContain(`<soul>\n${legacySoul}\n</soul>`)
   })
 
   it('includes user.md in memories section', async () => {
@@ -216,13 +242,13 @@ describe('PromptBuilder', () => {
 
   it('includes memory/FACT.md in memories section', async () => {
     setupFiles({
-      '/workspace/memory/FACT.md': '# Active Projects\n\n- Windbot Studio'
+      '/workspace/memory/FACT.md': '# Active Projects\n\n- Cherry Studio'
     })
 
     const { context: result } = await builder.buildPromptParts('/workspace')
 
     expect(result).toContain('<facts>')
-    expect(result).toContain('Windbot Studio')
+    expect(result).toContain('Cherry Studio')
     expect(result).toContain('</facts>')
     expect(result).toContain('WHAT you know')
   })
@@ -231,7 +257,7 @@ describe('PromptBuilder', () => {
     setupFiles({
       '/workspace/soul.md': 'Be concise.',
       '/workspace/user.md': 'Name: V',
-      '/workspace/memory/FACT.md': 'Project: Windbot Studio'
+      '/workspace/memory/FACT.md': 'Project: Cherry Studio'
     })
 
     const { context: result } = await builder.buildPromptParts('/workspace')
@@ -247,7 +273,7 @@ describe('PromptBuilder', () => {
     setupFiles({
       '/workspace/SOUL.md': 'Be concise.',
       '/workspace/USER.md': 'Name: V',
-      '/workspace/memory/FACT.md': 'Project: Windbot Studio'
+      '/workspace/memory/FACT.md': 'Project: Cherry Studio'
     })
 
     const result = await builder.buildMemoriesSection('/workspace')
@@ -255,8 +281,8 @@ describe('PromptBuilder', () => {
     expect(result).toContain('## Memories')
     expect(result).toContain('Be concise.')
     expect(result).toContain('Name: V')
-    expect(result).toContain('Project: Windbot Studio')
-    expect(result).not.toContain('You are a personal assistant running inside Windbot Studio')
+    expect(result).toContain('Project: Cherry Studio')
+    expect(result).not.toContain('You are a personal assistant running inside Cherry Studio')
     expect(result).not.toContain('## Autonomy Tools')
   })
 
@@ -364,6 +390,9 @@ describe('PromptBuilder', () => {
       const { context: result } = await builder.buildPromptParts('/workspace')
 
       expect(result).toContain('## Bootstrap Mode')
+      expect(result).toContain('**Discover the role**')
+      expect(result).toContain('with your role definition')
+      expect(result).not.toContain('The configured Agent System Prompt already defines your role')
       expect(result).toContain('complete_bootstrap')
     })
 
@@ -390,6 +419,31 @@ describe('PromptBuilder', () => {
       )
 
       expect(result).toContain('## Bootstrap Mode')
+    })
+
+    it('onboards persona and user context without redefining the configured Agent role', async () => {
+      setupFiles({})
+
+      const { context } = await builder.buildPromptParts(
+        '/workspace',
+        { ...baseConfig, bootstrap_completed: false },
+        true
+      )
+
+      expect(context).toContain('The configured Agent System Prompt already defines your role')
+      expect(context).toContain('Never change, restate, or replace the Agent System Prompt')
+      expect(context).toContain('**Discover your presentation**')
+      expect(context).toContain('**Learn about the user**')
+      expect(context).toContain(
+        'Update `SOUL.md` with your name, personality, tone, and communication style. Do not put role, goals, capability scope, or behavioral constraints in this file.'
+      )
+      expect(context).toContain(
+        'Update `USER.md` with everything you learned about the user. Use Write if the file is missing; use Edit if it already exists.'
+      )
+      expect(context).toContain('During bootstrap, write persona and user-profile files at these exact absolute paths:')
+      expect(context).not.toContain('figure out what role you should play')
+      expect(context).not.toContain('**Discover the role**')
+      expect(context).not.toContain('with your role definition')
     })
 
     it('skips bootstrap when bootstrap_completed is true', async () => {

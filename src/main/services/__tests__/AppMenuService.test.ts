@@ -41,7 +41,7 @@ const {
       openExternal: vi.fn()
     },
     appMock: {
-      name: 'Windbot Studio',
+      name: 'Cherry Studio',
       getLocale: vi.fn(() => 'en-US')
     }
   }
@@ -150,6 +150,6 @@ describe('AppMenuService', () => {
     const quitItem = (latestTemplate()[0].submenu as MenuItemConstructorOptions[]).find((item) => item.role === 'quit')
 
     expect(copyItem).toMatchObject({ role: 'copy', label: 'Copy' })
-    expect(quitItem).toMatchObject({ role: 'quit', label: 'Quit Windbot Studio' })
+    expect(quitItem).toMatchObject({ role: 'quit', label: 'Quit Cherry Studio' })
   })
 })

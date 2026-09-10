@@ -8,7 +8,7 @@ import { application } from '@application'
 import { mcpServerService } from '@data/services/McpServerService'
 import { loggerService } from '@logger'
 import { BaseService, Injectable, Phase, ServicePhase } from '@main/core/lifecycle'
-import { isLinux } from '@main/core/platform'
+import { isLinux, isPortable, isWin } from '@main/core/platform'
 import { WindowType } from '@main/core/window/types'
 import { openSettingsInMainWindow } from '@main/services/mainWindowNavigation'
 import type { ProtocolMcpInstallRequest } from '@shared/data/types/mcpProtocolInstall'
@@ -19,9 +19,9 @@ import { parseMcpInstallProtocolUrl } from './handlers/mcpInstall'
 import { handleNavigateProtocolUrl } from './handlers/navigate'
 import { handleProvidersProtocolUrl } from './handlers/providersImport'
 
-export const WINDBOT_STUDIO_PROTOCOL = 'windbot'
+export const CHERRY_STUDIO_PROTOCOL = 'cherrystudio'
 
-const DESKTOP_FILE_NAME = 'windbot-url-handler.desktop'
+const DESKTOP_FILE_NAME = 'cherrystudio-url-handler.desktop'
 const execAsync = promisify(exec)
 const logger = loggerService.withContext('ProtocolService')
 
@@ -66,14 +66,14 @@ export class ProtocolService extends BaseService {
     this.registerDisposable(() => app.removeListener('open-url', openUrlHandler))
 
     // 3) Windows/Linux second-instance: sole owner.
-    //    - argv carries `windbot://...` → dispatch to URL handler; each handler
+    //    - argv carries `cherrystudio://...` → dispatch to URL handler; each handler
     //      self-routes focus (mcp / navigate raise Main, providers / oauth do not),
     //      so we never raise Main behind their backs.
     //    - argv carries no URL → plain re-launch (user double-clicked the icon while
     //      the app is running); surface the main window. MainWindowService is
     //      WhenReady, fully alive by the time any 'second-instance' can fire.
     const secondInstanceHandler = (_event: Electron.Event, argv: string[]) => {
-      const url = argv.find((arg) => arg.startsWith(`${WINDBOT_STUDIO_PROTOCOL}://`))
+      const url = argv.find((arg) => arg.startsWith(`${CHERRY_STUDIO_PROTOCOL}://`))
       if (url) {
         this.handleProtocolUrl(url)
       } else {
@@ -146,10 +146,12 @@ export class ProtocolService extends BaseService {
       if (process.argv.length >= 2) {
         const entry = process.argv[1]
         const absoluteEntry = path.isAbsolute(entry) ? entry : path.resolve(process.cwd(), entry)
-        app.setAsDefaultProtocolClient(WINDBOT_STUDIO_PROTOCOL, process.execPath, [absoluteEntry])
+        app.setAsDefaultProtocolClient(CHERRY_STUDIO_PROTOCOL, process.execPath, [absoluteEntry])
       }
+    } else if (isWin && isPortable && process.env.PORTABLE_EXECUTABLE_FILE) {
+      app.setAsDefaultProtocolClient(CHERRY_STUDIO_PROTOCOL, process.env.PORTABLE_EXECUTABLE_FILE, [])
     } else {
-      app.setAsDefaultProtocolClient(WINDBOT_STUDIO_PROTOCOL)
+      app.setAsDefaultProtocolClient(CHERRY_STUDIO_PROTOCOL)
     }
   }
 
@@ -238,13 +240,13 @@ export class ProtocolService extends BaseService {
   }
 
   private handleArgvForUrl(args: string[]) {
-    const url = args.find((arg) => arg.startsWith(WINDBOT_STUDIO_PROTOCOL + '://'))
+    const url = args.find((arg) => arg.startsWith(CHERRY_STUDIO_PROTOCOL + '://'))
     if (url) this.handleProtocolUrl(url)
   }
 
   /**
    * Sets up deep linking for the AppImage build on Linux by creating a .desktop file.
-   * This allows the OS to open windbot:// URLs with this App.
+   * This allows the OS to open cherrystudio:// URLs with this App.
    */
   private async setupAppImageDeepLink(): Promise<void> {
     // Only run on Linux and when packaged as an AppImage
@@ -262,11 +264,11 @@ export class ProtocolService extends BaseService {
       }
 
       const desktopFileContent = `[Desktop Entry]
-Name=Windbot Studio
+Name=Cherry Studio
 Exec=${escapePathForExec(appPath)} %U
 Terminal=false
 Type=Application
-MimeType=x-scheme-handler/${WINDBOT_STUDIO_PROTOCOL};
+MimeType=x-scheme-handler/${CHERRY_STUDIO_PROTOCOL};
 NoDisplay=true
 `
 

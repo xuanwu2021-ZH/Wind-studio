@@ -5,12 +5,12 @@ import { normalizeSettingsPath } from '@shared/data/types/settingsPath'
 const logger = loggerService.withContext('ProtocolService:navigate')
 
 /**
- * Handle windbot://navigate/<path> deep links.
+ * Handle cherrystudio://navigate/<path> deep links.
  *
  * Examples:
- *   windbot://navigate/settings/provider
- *   windbot://navigate/agents
- *   windbot://navigate/knowledge
+ *   cherrystudio://navigate/settings/provider
+ *   cherrystudio://navigate/agents
+ *   cherrystudio://navigate/knowledge
  *
  * Delivery (window creation, focus, live-window event vs cold-start init data)
  * is entirely owned by openRouteInMainWindow — no retry loop is needed here.

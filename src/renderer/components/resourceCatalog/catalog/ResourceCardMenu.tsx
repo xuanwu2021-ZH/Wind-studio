@@ -194,7 +194,7 @@ export function ResourceCardMenu({ triggerClassName, ...props }: ResourceCardMen
       align="end"
       side="bottom"
       sideOffset={6}
-      presentationMode="wind"
+      presentationMode="cherry"
       contentClassName="min-w-32 rounded-xl border-border p-1.5">
       <Button
         variant="ghost"
