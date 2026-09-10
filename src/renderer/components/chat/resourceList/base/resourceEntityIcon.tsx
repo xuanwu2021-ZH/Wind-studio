@@ -1,7 +1,8 @@
 import ModelAvatar from '@renderer/components/Avatar/ModelAvatar'
 import type { ActionDescriptor, ResolvedAction } from '@renderer/components/chat/actions/actionTypes'
+import AgentAvatar from '@renderer/components/AgentAvatar'
 import EmojiIcon from '@renderer/components/EmojiIcon'
-import { getAgentAvatarFromConfiguration } from '@renderer/utils/agent'
+import { getAgentAvatarFromConfiguration, resolveAgentAvatarImage } from '@renderer/utils/agent'
 import type { AgentConfiguration } from '@shared/data/api/schemas/agents'
 import type { AssistantIconType } from '@shared/data/preference/preferenceTypes'
 import { DEFAULT_ASSISTANT_EMOJI } from '@shared/data/presets/defaultAssistant'
@@ -78,9 +79,13 @@ export function renderAgentEntityIcon(
   const modelAvatarModel = buildModelAvatarModel(agent?.model ?? fallbackModelId, agent?.modelName)
   if (iconType === 'model' && modelAvatarModel) return <ModelAvatar model={modelAvatarModel} size={size} />
 
+  const emoji = getAgentAvatarFromConfiguration(agent?.configuration) || DEFAULT_ASSISTANT_EMOJI
+  // avatar_image is a loose field — not in the Zod schema — so cast for the resolver.
+  const imageSrc = resolveAgentAvatarImage(agent?.configuration as { avatar_image?: unknown } | null | undefined)
   return (
-    <EmojiIcon
-      emoji={getAgentAvatarFromConfiguration(agent?.configuration) || DEFAULT_ASSISTANT_EMOJI}
+    <AgentAvatar
+      imageSrc={imageSrc}
+      emoji={emoji}
       size={size}
       fontSize={Math.round(size * 0.58)}
       className="mr-0"

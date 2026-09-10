@@ -129,6 +129,14 @@ vi.mock('@logger', () => ({
 vi.mock('@renderer/components/EmojiIcon', () => ({
   default: ({ emoji }: { emoji: string }) => <span>{emoji}</span>
 }))
+vi.mock('@renderer/components/AgentAvatar', () => ({
+  default: ({ imageSrc, emoji }: { imageSrc?: string; emoji: string }) =>
+    imageSrc ? (
+      <img data-mocked-image src={imageSrc} alt={emoji} />
+    ) : (
+      <span data-mocked-emoji={emoji}>{emoji}</span>
+    )
+}))
 
 vi.mock('@renderer/components/Avatar/ModelAvatar', () => ({
   default: () => <span data-testid="model-avatar" />
@@ -379,7 +387,8 @@ vi.mock('@renderer/utils/chat/sessionListHelpers', () => ({
 }))
 
 vi.mock('@renderer/utils/agent', () => ({
-  getAgentAvatarFromConfiguration: () => 'A'
+  getAgentAvatarFromConfiguration: () => 'A',
+  resolveAgentAvatarImage: () => undefined
 }))
 
 vi.mock('@renderer/utils/error', () => ({
