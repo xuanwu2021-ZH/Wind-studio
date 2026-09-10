@@ -1,5 +1,13 @@
-appId: com.kangfenmao.CherryStudio
-productName: Cherry Studio
+appId: com.windbot.WindbotStudio
+productName: Windbot Studio
+# electron-builder's built-in @electron/rebuild tries to recompile every native
+# dependency from source. That breaks `@paymoapp/electron-shutdown-handler` on
+# toolchains that don't ship the full MSVC build prerequisites, so we manage
+# rebuild ourselves in the `build:win*` / `build:mac*` / `build:linux*` npm
+# scripts (see `rebuild:electron`, which only rebuilds `better-sqlite3` and
+# `sqlite-vec` — the modules whose ABI must match Electron's). Use
+# `pnpm run rebuild:electron:native` if you ever need to force a full rebuild.
+npmRebuild: false
 extraMetadata:
   cherryEdition: global
 electronLanguages:
@@ -16,9 +24,9 @@ directories:
   buildResources: build
 
 protocols:
-  - name: Cherry Studio
+  - name: Windbot Studio
     schemes:
-      - cherrystudio
+      - windbot
 files:
   - "**/*"
   - "!**/{.vscode,.yarn,.yarn-lock,.github,.cursorrules,.prettierrc}"
@@ -106,7 +114,7 @@ extraResources:
   - from: "packages/provider-registry/data"
     to: "provider-registry"
 win:
-  executableName: Cherry Studio
+  executableName: Windbot Studio
   artifactName: ${productName}-${version}-${arch}-setup.${ext}
   extraResources:
     - from: "node_modules/@aiany/sqlite-vec-windows-${arch}/vec0.dll"
@@ -150,7 +158,7 @@ dmg:
   writeUpdateInfo: false
 linux:
   artifactName: ${productName}-${version}-${arch}.${ext}
-  executableName: CherryStudio
+  executableName: WindbotStudio
   target:
     - target: AppImage
     - target: deb
