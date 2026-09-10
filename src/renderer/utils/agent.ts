@@ -13,6 +13,36 @@ export function getAgentAvatar(avatar?: unknown) {
   return typeof avatar === 'string' ? avatar.trim() || DEFAULT_AGENT_AVATAR : DEFAULT_AGENT_AVATAR
 }
 
+/**
+ * Returns the absolute on-disk path to the agent's avatar image, or `undefined`
+ * if the agent only has an emoji avatar. The image is resolved relative to the
+ * builtin agent's resource directory when the path is relative.
+ *
+ * For non-builtin agents the caller should provide the absolute path via
+ * the AgentService or via a custom icon resolver; this helper returns `undefined`
+ * when the image cannot be located on disk.
+ *
+ * Reads `avatar_image` from the configuration blob (loose field, not in the
+ * Zod schema) and resolves it to a path the renderer can load.
+ */
+export function resolveAgentAvatarImage(
+  configuration: { avatar_image?: unknown } | null | undefined,
+  builtinImageRoot?: string
+): string | undefined {
+  const ref = configuration?.avatar_image
+  if (typeof ref !== 'string' || !ref.trim()) return undefined
+  const trimmed = ref.trim()
+  // Absolute path — use as-is.
+  if (/^[a-zA-Z]:[\\/]/.test(trimmed) || trimmed.startsWith('/') || trimmed.startsWith('\\')) {
+    return trimmed
+  }
+  // Relative — resolve under the builtin agent's resource folder if provided.
+  if (builtinImageRoot) {
+    return builtinImageRoot.replace(/[\\/]+$/, '') + '/' + trimmed.replace(/^[\\/]+/, '')
+  }
+  return undefined
+}
+
 export function getAgentAvatarFromConfiguration(configuration?: Pick<AgentConfiguration, 'avatar'> | null) {
   return getAgentAvatar(configuration?.avatar)
 }
