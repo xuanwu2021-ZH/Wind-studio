@@ -116,8 +116,8 @@
       Your system: $1$\r$\n\
       App architecture: $3$\r$\n$\r$\n\
       Please download the correct version from:$\r$\n\
-      https://www.cherry-ai.com/"
-    ExecShell "open" "https://www.cherry-ai.com/"
+      https://www.windbot.cn/"
+    ExecShell "open" "https://www.windbot.cn/"
     Abort
   ${EndIf}
 

@@ -115,6 +115,11 @@ extraResources:
     to: "provider-registry"
 win:
   executableName: Windbot Studio
+  # Explicit: keep the NSIS installer/uninstaller and the app exe on the same
+  # Windbot ICO. Without this, electron-builder falls back to build/icon.ico
+  # anyway, but making it explicit prevents a future build/installerIcon.ico
+  # from silently overriding the rebrand.
+  icon: build/icon.ico
   artifactName: ${productName}-${version}-${arch}-setup.${ext}
   extraResources:
     - from: "node_modules/@aiany/sqlite-vec-windows-${arch}/vec0.dll"
@@ -129,6 +134,8 @@ nsis:
   # Preserve the existing global installer identity so either edition replaces the same Windows installation.
   guid: 41a4ccd8-bcc0-5710-9eee-0e164da68057
   artifactName: ${productName}-${version}-${arch}-setup.${ext}
+  installerIcon: build/icon.ico
+  uninstallerIcon: build/icon.ico
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
