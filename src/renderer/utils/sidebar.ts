@@ -126,7 +126,16 @@ export function tabBelongsToApp(app: SidebarApp, url: string): boolean {
  * 侧边栏支持的完整菜单顺序。
  * Preference 默认值可能不包含新菜单，管理态列表仍需要覆盖当前全部支持项。
  */
-export const SIDEBAR_FAVORITE_ORDER: SidebarAppId[] = SIDEBAR_APPS.map((app) => app.id)
+// --- Windbot Studio rebrand: hide non-wind-resource sidebar entries -------------
+const WINDBOT_HIDDEN_SIDEBAR_IDS: ReadonlySet<SidebarAppId> = new Set<SidebarAppId>([
+  'paintings', // image generation — out of scope for wind-resource workflows
+  'translate'  // text translation — out of scope for wind-resource workflows
+])
+
+/** The sidebar app ids that should be rendered in the Windbot Studio sidebar. */
+export const SIDEBAR_FAVORITE_ORDER: SidebarAppId[] = SIDEBAR_APPS
+  .map((app) => app.id)
+  .filter((id) => !WINDBOT_HIDDEN_SIDEBAR_IDS.has(id))
 
 const sidebarFavoriteSet = new Set<SidebarAppId>(SIDEBAR_FAVORITE_ORDER)
 
@@ -455,6 +464,8 @@ export function getOrderedLaunchpadApps(stored: readonly string[] | undefined): 
       ordered.push(id)
     }
   }
+  // Filter out Windbot-hidden apps from the launchpad too.
+  return ordered.filter((id) => !WINDBOT_HIDDEN_SIDEBAR_IDS.has(id))
 
   return ordered
 }

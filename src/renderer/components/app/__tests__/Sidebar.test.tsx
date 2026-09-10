@@ -138,9 +138,8 @@ vi.mock('@renderer/utils/routeTitle', () => ({
     ({
       '/app/agents': 'Work',
       '/app/chat': 'Chat',
-      '/app/files': 'Files',
       '/app/launchpad': 'Launchpad',
-      '/app/translate': 'Translate'
+      '/app/files': 'Files'
     })[url] ?? 'Chat'
 }))
 
@@ -517,14 +516,14 @@ describe('app Sidebar', () => {
   })
 
   it('renders sidebar menu items in visible preference order', () => {
-    mocks.sidebarFavorites = [appFavorite('translate'), appFavorite('assistants'), appFavorite('agents')]
+    mocks.sidebarFavorites = [appFavorite('files'), appFavorite('assistants'), appFavorite('agents')]
 
     render(<Sidebar />)
 
     const labels = Array.from(screen.getByTestId('sidebar-items').querySelectorAll('span')).map(
       (element) => element.textContent
     )
-    expect(labels).toEqual(['Translate', 'Chat', 'Work'])
+    expect(labels).toEqual(['files', 'Chat', 'Work'])
   })
 
   it('removes a sidebar app favorite from the context menu', () => {
@@ -898,7 +897,7 @@ describe('app Sidebar', () => {
   })
 
   it('clears route-specific metadata when reusing the active tab', () => {
-    mocks.sidebarFavorites = [appFavorite('translate')]
+    mocks.sidebarFavorites = [appFavorite('files')]
     mocks.activeTab = {
       id: 'chat',
       type: 'route',
@@ -909,11 +908,11 @@ describe('app Sidebar', () => {
     }
 
     render(<Sidebar />)
-    fireEvent.click(screen.getByTestId('sidebar-item-translate'))
+    fireEvent.click(screen.getByTestId('sidebar-item-files'))
 
     expect(mocks.updateTab).toHaveBeenCalledWith('chat', {
-      url: '/app/translate',
-      title: 'Translate',
+      url: '/app/files',
+      title: 'Files',
       icon: undefined,
       metadata: undefined
     })
@@ -922,7 +921,7 @@ describe('app Sidebar', () => {
   })
 
   it('reuses the active tab for single-policy routes too', () => {
-    mocks.sidebarFavorites = [appFavorite('translate')]
+    mocks.sidebarFavorites = [appFavorite('files')]
     mocks.activeTab = {
       id: 'chat',
       type: 'route',
@@ -931,11 +930,11 @@ describe('app Sidebar', () => {
     }
 
     render(<Sidebar />)
-    fireEvent.click(screen.getByTestId('sidebar-item-translate'))
+    fireEvent.click(screen.getByTestId('sidebar-item-files'))
 
     expect(mocks.updateTab).toHaveBeenCalledWith('chat', {
-      url: '/app/translate',
-      title: 'Translate',
+      url: '/app/files',
+      title: 'Files',
       icon: undefined,
       metadata: undefined
     })
