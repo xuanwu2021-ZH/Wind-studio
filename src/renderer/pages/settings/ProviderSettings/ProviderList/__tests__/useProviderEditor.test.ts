@@ -17,21 +17,43 @@ const invalidateMock = vi.fn()
 
 vi.mock('@renderer/hooks/useProvider', () => ({
   useProviders: (...args: any[]) => useProvidersMock(...args),
-  useProviderActions: (...args: any[]) => useProviderActionsMock(...args)
+  useProviderActions: (...args: any[]) => useProviderActionsMock(...args),
+  // useProviderModelSync looks up the new provider by id. Default to "not found"
+  // so the sync no-ops on the fetch path; tests that want to exercise the
+  // sync can override useProviderMock per-test.
+  useProvider: (...args: any[]) => useProviderMock(...args)
 }))
+
+const useQueryMock = vi.fn().mockReturnValue({ data: [], isLoading: false, refetch: vi.fn() })
+const useMutationMock = vi.fn().mockReturnValue({
+  trigger: vi.fn(),
+  isLoading: false,
+  error: undefined
+})
+const useDataChangeMock = vi.fn()
 
 vi.mock('@data/hooks/useDataApi', () => ({
-  useInvalidateCache: () => invalidateMock
+  useInvalidateCache: () => invalidateMock,
+  useQuery: (...args: any[]) => useQueryMock(...args),
+  useMutation: (...args: any[]) => useMutationMock(...args),
+  useDataChange: (...args: any[]) => useDataChangeMock(...args)
 }))
 
-vi.mock('react-i18next', () => ({
-  useTranslation: () => ({ t: (key: string) => key })
+const dataApiGetMock = vi.fn().mockResolvedValue([])
+vi.mock('@data/DataApiService', () => ({
+  dataApiService: { get: (...args: any[]) => dataApiGetMock(...args), post: vi.fn() }
 }))
-
-const ipcRequestMock = vi.fn()
+const ipcRequestMock = vi.fn().mockResolvedValue(undefined)
 vi.mock('@renderer/ipc', () => ({
+  // Default route returns nothing; tests that exercise the model sync can
+  // override this for the specific `ai.provider.model.list` route.
   ipcApi: { request: (...args: any[]) => ipcRequestMock(...args) }
 }))
+
+// useProviderModelSync also calls useProvider(providerId). Stub it with no provider
+// so the sync path's downstream checks no-op; tests that need to exercise the
+// sync behaviour can override useProviderMock per-test.
+const useProviderMock = vi.fn().mockReturnValue({ provider: undefined })
 
 // Canvas isn't available in jsdom; stub the renderer normalize step to fixed bytes.
 vi.mock('@renderer/utils/image', async (importOriginal) => ({
@@ -350,13 +372,66 @@ describe('useProviderEditor', () => {
 
     it('does not call onProviderCreated on update', async () => {
       const { result } = renderHook(() => useProviderEditor(makeParams()))
-
       act(() => result.current.startEdit(provider))
       await act(async () => {
         await result.current.submit({ mode: 'edit', name: 'Renamed', defaultChatEndpoint: endpoint })
       })
 
       expect(onProviderCreatedMock).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('auto-sync models on preset provider create', () => {
+    /**
+     * The new behavior: when the user creates a preset-backed provider (presetProviderId
+     * is set), the editor must call the model-sync hook so the agent-composer picker
+     * shows models under the new provider without requiring a manual "Sync Models"
+     * trip into the settings UI. Custom providers (no presetProviderId) skip the
+     * sync entirely — the user types their own model ids in the next step.
+     */
+    it('auto-syncs models for a preset-backed provider', async () => {
+      const { result } = renderHook(() => useProviderEditor(makeParams()))
+
+      act(() => result.current.startAdd())
+      await act(async () => {
+        await result.current.submit({
+          mode: 'create',
+          name: 'DeepSeek',
+          defaultChatEndpoint: endpoint,
+          presetProviderId: 'deepseek'
+        })
+      })
+
+      // The auto-sync dispatches the IPC `ai.provider.model.list` route
+      // (mocked by ipcRequestMock) for the new provider. The mock throws
+      // synchronously — the editor catches it and continues, so the test
+      // only needs to verify the route was hit.
+      const modelListCalls = ipcRequestMock.mock.calls.filter(
+        ([route]) => route === 'ai.provider.model.list'
+      )
+      expect(modelListCalls).toHaveLength(1)
+      expect(modelListCalls[0][1]).toMatchObject({ providerId: 'new-provider-id' })
+    })
+
+    it('does not auto-sync for a custom (non-preset) provider', async () => {
+      const { result } = renderHook(() => useProviderEditor(makeParams()))
+
+      act(() => result.current.startAdd())
+      ipcRequestMock.mockClear()
+      await act(async () => {
+        await result.current.submit({
+          mode: 'create',
+          name: 'My custom LLM',
+          defaultChatEndpoint: endpoint
+        })
+      })
+
+      // Without presetProviderId, the auto-sync code path is skipped entirely.
+      const modelListCalls = ipcRequestMock.mock.calls.filter(
+        ([route]) => route === 'ai.provider.model.list'
+      )
+      expect(modelListCalls).toHaveLength(0)
+      expect(createProviderMock).toHaveBeenCalled()
     })
   })
 })

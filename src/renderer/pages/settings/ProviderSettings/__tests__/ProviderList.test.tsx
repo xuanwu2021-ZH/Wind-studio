@@ -9,6 +9,7 @@ import { ProviderList } from '../ProviderList'
 const reorderSpy = vi.fn()
 const useProvidersMock = vi.fn()
 const useProviderActionsMock = vi.fn()
+const useProviderMock = vi.fn().mockReturnValue({ provider: undefined })
 const useModelsMock = vi.fn()
 const useReorderMock = vi.fn()
 const useOvmsSupportMock = vi.fn()
@@ -44,11 +45,20 @@ vi.mock('@cherrystudio/ui', async (importOriginal) => {
 
 vi.mock('@renderer/hooks/useProvider', () => ({
   useProviders: (...args: any[]) => useProvidersMock(...args),
-  useProviderActions: (...args: any[]) => useProviderActionsMock(...args)
+  useProviderActions: (...args: any[]) => useProviderActionsMock(...args),
+  // useProviderModelSync (called from useProviderEditor's auto-sync path) looks up
+  // the new provider by id; stub the default to "not found" so the sync no-ops.
+  useProvider: (...args: any[]) => useProviderMock(...args)
 }))
 
 vi.mock('@renderer/hooks/useModel', () => ({
-  useModels: (...args: any[]) => useModelsMock(...args)
+  useModels: (...args: any[]) => useModelsMock(...args),
+  // useProviderModelSync (auto-sync path on preset provider create) calls
+  // useModelMutations to bulk-insert the resolved models.
+  useModelMutations: () => ({
+    createModels: vi.fn().mockResolvedValue([]),
+    isCreating: false
+  })
 }))
 
 vi.mock('@renderer/components/Scrollbar', () => ({

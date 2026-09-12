@@ -10,6 +10,8 @@ import type { ApiKeyEntry, AuthConfig, EndpointConfig, Provider } from '@shared/
 import { useCallback, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { useProviderModelSync } from '../hooks/useProviderModelSync'
+
 const logger = loggerService.withContext('useProviderEditor')
 
 /**
@@ -64,6 +66,14 @@ export function useProviderEditor({ onProviderCreated }: UseProviderEditorParams
   const editingProvider = mode?.kind === 'edit' ? mode.provider : null
   // Preset key or an existing uploaded logo's main-resolved URL (logoSrc).
   const initialLogo = editingProvider?.logo ?? editingProvider?.logoSrc
+
+  // Auto-sync models after adding a preset-backed provider. Hooks are unconditional
+  // (React rules of hooks); the sync is only triggered inside `submit` when the
+  // new row has a presetProviderId. Without this, a freshly added preset provider
+  // ships an empty `user_model` table, so the agent-composer model picker shows
+  // the provider but no models under it until the user manually opens the
+  // provider settings and runs the "Sync Models" action.
+  const { syncProviderModels } = useProviderModelSync(uuid())
 
   const updateMode = useCallback((next: ProviderEditorMode | null) => {
     submitTokenRef.current += 1
@@ -152,12 +162,35 @@ export function useProviderEditor({ onProviderCreated }: UseProviderEditorParams
         await applyLogo(provider.id, params.logo)
       }
 
+      // Sync the preset's models into `user_model` so the agent-composer picker
+      // can show them. Best-effort: a failed sync (e.g. provider has no
+      // remote list endpoint, or upstream rate-limits) leaves the provider
+      // usable with zero models; the user can re-run "Sync Models" from the
+      // provider settings. We must NOT block on this — the row is already
+      // persisted and the user is waiting for the drawer to close.
+      if (params.presetProviderId) {
+        try {
+          const synced = await syncProviderModels(provider)
+          logger.info('Auto-synced models after preset provider creation', {
+            providerId: provider.id,
+            presetProviderId: params.presetProviderId,
+            modelCount: synced.length
+          })
+        } catch (error) {
+          logger.warn('Auto model sync after preset provider creation failed', {
+            providerId: provider.id,
+            presetProviderId: params.presetProviderId,
+            error
+          })
+        }
+      }
+
       if (submitTokenRef.current === submitToken && modeRef.current?.kind !== 'edit') {
         onProviderCreated(provider.id)
         cancel()
       }
     },
-    [applyLogo, cancel, createProvider, editingProvider, onProviderCreated, updateProviderById]
+    [applyLogo, cancel, createProvider, editingProvider, onProviderCreated, syncProviderModels, updateProviderById]
   )
 
   return {
